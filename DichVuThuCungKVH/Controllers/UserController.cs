@@ -26,7 +26,7 @@ namespace DichVuThuCungKVH.Controllers
         public ActionResult DangKy(FormCollection collection, KhachHang kh , TaiKhoan tk)
         {
             var sHoTen = collection["HoTen"];
-            var sTenTK = collection["TenTK"];
+            var sTenTK = collection["TenDN"];
             var sMatKhau = collection["MatKhau"];
             var sMatKhauNhapLai = collection["MatKhauNL"];
             var sDiaChi = collection["DiaChi"];
