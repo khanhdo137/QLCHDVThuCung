@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DichVuThuCungKVH.Model;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,7 +9,8 @@ using System.Web.Mvc;
 namespace DichVuThuCungKVH.Controllers
 {
     public class UserController : Controller
-    {
+    {   
+        private DACSDataContext data = new DACSDataContext(ConfigurationManager.ConnectionStrings["DACSConnectionString"].ConnectionString);
         // GET: User
         public ActionResult Index()
         {
@@ -20,10 +23,10 @@ namespace DichVuThuCungKVH.Controllers
         }
 
         [HttpPost]
-        public ActionResult DangKy(FormCollection collection, KHACHHANG kh)
+        public ActionResult DangKy(FormCollection collection, KhachHang kh , TaiKhoan tk)
         {
             var sHoTen = collection["HoTen"];
-            var sTenDN = collection["TenDN"];
+            var sTenTK = collection["TenTK"];
             var sMatKhau = collection["MatKhau"];
             var sMatKhauNhapLai = collection["MatKhauNL"];
             var sDiaChi = collection["DiaChi"];
@@ -35,7 +38,7 @@ namespace DichVuThuCungKVH.Controllers
             {
                 ViewData["err1"] = "Họ tên không được rỗng";
             }
-            else if (String.IsNullOrEmpty(sTenDN))
+            else if (String.IsNullOrEmpty(sTenTK))
             {
                 ViewData["err2"] = "Tên đăng nhập không được rỗng";
             }
@@ -59,26 +62,26 @@ namespace DichVuThuCungKVH.Controllers
             {
                 ViewData["err6"] = "Email không được rỗng";
             }
-            else if (db.KHACHHANGs.Any(n => n.TaiKhoan == sTenDN))
+            else if (data.TaiKhoans.Any(n => n.TenTK == sTenTK))
             {
                 ViewBag.ThongBao = "Tên đăng nhập đã tồn tại";
             }
-            else if (db.KHACHHANGs.Any(n => n.Email == sEmail))
+            else if (data.KhachHangs.Any(n => n.Email == sEmail))
             {
                 ViewBag.ThongBao = "Email đã được sử dụng";
             }
             else
             {
-                kh.HoTen = sHoTen;
-                kh.TaiKhoan = sTenDN;
-                kh.MatKhau = sMatKhau;
+                kh.TenKH = sHoTen;
+                tk.TenTK = sTenTK;
+                tk.MatKhau = sMatKhau;
                 kh.Email = sEmail;
                 kh.DiaChi = sDiaChi;
-                kh.DienThoai = sDienThoai;
+                kh.SDT = sDienThoai;
                 kh.NgaySinh = DateTime.Parse(dNgaySinh);
 
-                db.KHACHHANGs.InsertOnSubmit(kh);
-                db.SubmitChanges();
+                data.KhachHangs.InsertOnSubmit(kh);
+                data.SubmitChanges();
                 return RedirectToAction("DangNhap");
             }
             return View();
@@ -105,11 +108,11 @@ namespace DichVuThuCungKVH.Controllers
             }
             else
             {
-                KHACHHANG kh = db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTenDN && n.MatKhau == sMatKhau);
-                if (kh != null)
+                TaiKhoan tk = data.TaiKhoans.SingleOrDefault(n => n.TenTK   == sTenDN && n.MatKhau == sMatKhau);
+                if (tk != null)
                 {
                     // Đăng nhập thành công, lưu thông tin người dùng vào Session
-                    Session["TaiKhoan"] = kh;
+                    Session["TaiKhoan"] = tk;
 
                     // Kiểm tra xem người dùng có từ trang giỏ hàng không
                     string returnUrl = Session["ReturnUrl"] as string;
