@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="281aa1c716a641058e8f81c77c9d4b33" Name="Diagram1">
+        <EntityTypeShape EntityType="LTWModel.CTDonHang" Width="1.5" PointX="10.5" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.CTPhieuNhan_DichVu" Width="1.5" PointX="9.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.CTPhieuNhapKho" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.DichVu" Width="1.5" PointX="7.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.DonHang" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.KhachHang" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.NhanVien" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.PhieuNhan" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.PhieuNhapKho" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.SanPham" Width="1.5" PointX="8.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.SuDungDichVu" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.TaiKhoan" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTWModel.ThuCung" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="LTWModel.FK_CTDDatHang_DonHang" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_CTDDatHang_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_CTPhieuNhan_DichVu" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_CTPhieuNhan_DichVu_PhieuNhan" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_CTPhieuNhapKHo_PhieuNhapKho" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_CTPhieuNhapKHo_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_DonHang_KhachHang1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_DonHang_NhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_KhachHang_TaiKhoan" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_SuDungDichVu_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_ThuCung_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_NhanVien_TaiKhoan" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_PhieuNhapKho_NhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_PhieuNhan_SuDungDichVu" ManuallyRouted="false" />
+        <AssociationConnector Association="LTWModel.FK_PhieuNhan_ThuCung" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
