@@ -1,0 +1,46 @@
+﻿@model DichVuThuCungKVH.Model.KhachHang
+
+
+@if (Model != null)
+{
+    <table align="center">
+        @using (Html.BeginForm())
+
+        {
+            @Html.ValidationSummary(true)
+            <tr style="height:40px;">
+                <td> Họ tên khách hàng:</td>
+                <td style="font-weight:bold"> @Model.TenKH </td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Địa chỉ:</td>
+                <td style="font-weight:bold"> @Model.DiaChi </td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Điện thoại:</td>
+                <td style="font-weight:bold"> @Model.SDT </td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Ngày đặt:</td>
+                <td style="font-weight:bold"> @DateTime.Now.ToShortDateString() </td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Ngày giao dự kiến:</td>
+                <td style="font-weight:bold">
+                    <input type="date" name="NgayGiao" />
+                </td>
+            </tr>
+            <tr style="height:40px;">
+                <td></td>
+                <td>
+                    <input type="submit" value="ĐẶT HÀNG" />
+                </td>
+            </tr>
+
+        }
+    </table>
+}
+else
+{
+    <p>Không tìm thấy thông tin khách hàng.</p>
+}

@@ -9,13 +9,14 @@ using System.Web.Mvc;
 namespace DichVuThuCungKVH.Controllers
 {
     public class UserController : Controller
-    {   
-        private DACSDataContext data = new DACSDataContext(ConfigurationManager.ConnectionStrings["DACSConnectionString"].ConnectionString);
-        // GET: User
+    {
+        private LTWEntities db = new LTWEntities();
+
         public ActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
         public ActionResult DangKy()
         {
@@ -23,7 +24,7 @@ namespace DichVuThuCungKVH.Controllers
         }
 
         [HttpPost]
-        public ActionResult DangKy(FormCollection collection, KhachHang kh , TaiKhoan tk)
+        public ActionResult DangKy(FormCollection collection)
         {
             var sHoTen = collection["HoTen"];
             var sTenTK = collection["TenDN"];
@@ -32,7 +33,7 @@ namespace DichVuThuCungKVH.Controllers
             var sDiaChi = collection["DiaChi"];
             var sEmail = collection["Email"];
             var sDienThoai = collection["DienThoai"];
-            var dNgaySinh = String.Format("{0:MM/dd/yyyy}", collection["NgaySinh"]); // Không cần định dạng ngày
+            var dNgaySinh = String.Format("{0:MM/dd/yyyy}", collection["NgaySinh"]);
 
             if (String.IsNullOrEmpty(sHoTen))
             {
@@ -62,26 +63,34 @@ namespace DichVuThuCungKVH.Controllers
             {
                 ViewData["err6"] = "Email không được rỗng";
             }
-            else if (data.TaiKhoans.Any(n => n.TenTK == sTenTK))
+            else if (db.TaiKhoans.Any(n => n.TenTK == sTenTK))
             {
                 ViewBag.ThongBao = "Tên đăng nhập đã tồn tại";
             }
-            else if (data.KhachHangs.Any(n => n.Email == sEmail))
+            else if (db.KhachHangs.Any(n => n.Email == sEmail))
             {
                 ViewBag.ThongBao = "Email đã được sử dụng";
             }
             else
             {
-                kh.TenKH = sHoTen;
-                tk.TenTK = sTenTK;
-                tk.MatKhau = sMatKhau;
-                kh.Email = sEmail;
-                kh.DiaChi = sDiaChi;
-                kh.SDT = sDienThoai;
-                kh.NgaySinh = DateTime.Parse(dNgaySinh);
+                KhachHang kh = new KhachHang
+                {
+                    TenKH = sHoTen,
+                    Email = sEmail,
+                    DiaChi = sDiaChi,
+                    SDT = sDienThoai,
+                    NgaySinh = DateTime.Parse(dNgaySinh)
+                };
 
-                data.KhachHangs.InsertOnSubmit(kh);
-                data.SubmitChanges();
+                TaiKhoan tk = new TaiKhoan
+                {
+                    TenTK = sTenTK,
+                    MatKhau = sMatKhau
+                };
+
+                db.KhachHangs.Add(kh);
+                db.TaiKhoans.Add(tk);
+                db.SaveChanges();
                 return RedirectToAction("DangNhap");
             }
             return View();
@@ -96,6 +105,8 @@ namespace DichVuThuCungKVH.Controllers
         [HttpPost]
         public ActionResult DangNhap(FormCollection collection)
         {
+
+
             var sTenDN = collection["TenDN"];
             var sMatKhau = collection["Matkhau"];
             if (String.IsNullOrEmpty(sTenDN))
@@ -108,29 +119,25 @@ namespace DichVuThuCungKVH.Controllers
             }
             else
             {
-                TaiKhoan tk = data.TaiKhoans.SingleOrDefault(n => n.TenTK   == sTenDN && n.MatKhau == sMatKhau);
+
+                TaiKhoan tk = db.TaiKhoans.SingleOrDefault(n => n.TenTK == sTenDN && n.MatKhau == sMatKhau);
                 if (tk != null)
                 {
-                    // Đăng nhập thành công, lưu thông tin người dùng vào Session
+                    ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
                     Session["TaiKhoan"] = tk;
-
-                    // Kiểm tra xem người dùng có từ trang giỏ hàng không
-                    string returnUrl = Session["ReturnUrl"] as string;
-                    if (!string.IsNullOrEmpty(returnUrl))
-                    {
-                        Session["ReturnUrl"] = null;
-                        return Redirect(returnUrl);
-                    }
-
-                    // Nếu không, chuyển hướng về trang chính
-                    return RedirectToAction("Index", "SachOnline");
+                    Session["MaTaiKhoan"] = tk.MaTK;
+                    return RedirectToAction("Index", "DVTC");
                 }
+
                 else
                 {
                     ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng";
                 }
+
             }
             return View();
+
+
         }
     }
 }

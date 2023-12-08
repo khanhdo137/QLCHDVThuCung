@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DichVuThuCungKVH.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace DichVuThuCung.Controllers
 {
     public class DVTCController : Controller
     {
+        private LTWEntities db = new LTWEntities();
         // GET: DVTC
         public ActionResult Index()
         {
@@ -23,7 +25,8 @@ namespace DichVuThuCung.Controllers
         }
         public ActionResult SanPhamPartial()
         {
-            return PartialView();
+            var listSanPham = (from cd in db.SanPhams select cd).ToList();
+            return PartialView(listSanPham);
         }
         public ActionResult NavPartial()
         {
@@ -36,6 +39,13 @@ namespace DichVuThuCung.Controllers
         public ActionResult FormDatLich()
         {
             return View();
+        }
+        public ActionResult ChiTietSanPham(int id)
+        {
+            var sanpham = from sp in db.SanPhams
+                          where sp.MaSP == id
+                          select sp;
+            return View(sanpham.Single());
         }
     }
 }

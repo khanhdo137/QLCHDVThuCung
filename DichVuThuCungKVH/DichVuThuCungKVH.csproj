@@ -130,10 +130,63 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Model\DACS.designer.cs">
+    <Compile Include="Model\CTDonHang.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CTPhieuNhan_DichVu.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CTPhieuNhapKho.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DichVu.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DonHang.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GioHang.cs" />
+    <Compile Include="Model\KhachHang.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LTW.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DACS.dbml</DependentUpon>
+      <DependentUpon>LTW.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LTW.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LTW.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LTW.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhanVien.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PhieuNhan.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PhieuNhapKho.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SanPham.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SuDungDichVu.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TaiKhoan.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ThuCung.cs">
+      <DependentUpon>LTW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,26 +231,51 @@
     <Content Include="Images\Logo.jpg" />
     <Content Include="Images\LogoKVH.png" />
     <Content Include="Images\phone-icon.jpg" />
+    <Content Include="Images\SanPham\bat-an-danh-cho-thu-cung-1.jpg" />
+    <Content Include="Images\SanPham\BatAnChoMEo.jpg" />
+    <Content Include="Images\SanPham\Burn.jpeg" />
+    <Content Include="Images\SanPham\chuongthu1.jpg" />
+    <Content Include="Images\SanPham\Pepsi.jpg" />
+    <Content Include="Images\SanPham\Picture3.png" />
+    <Content Include="Images\SanPham\QuanAo1.jpg" />
+    <Content Include="Images\SanPham\thuanmeo4.jpg" />
+    <Content Include="Images\SanPham\thucancho1.jpg" />
+    <Content Include="Images\SanPham\thucancho2.jpg" />
+    <Content Include="Images\SanPham\thucancho3.jpg" />
+    <Content Include="Images\SanPham\thucanmeo2.jpg" />
+    <Content Include="Images\SanPham\thucanmeo3.jpg" />
+    <Content Include="Images\SanPham\thungcapnuoc1.jpg" />
+    <Content Include="Images\SanPham\VongCo1.jpg" />
+    <Content Include="Images\SanPham\whikas-hat.jpg" />
     <Content Include="Images\Slider\pethotel.jpg" />
     <Content Include="Images\Slider\petshop.jpg" />
     <Content Include="Images\Slider\petspa.jpg" />
     <Content Include="Images\thoi-trangjpg.jpg" />
     <Content Include="Images\tw-icon.jpg" />
     <Content Include="Images\yt_iocn.jpg" />
+    <Content Include="Model\LTW.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LTW.edmx</DependentUpon>
+      <LastGenOutput>LTW.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\LTW.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LTW.edmx</DependentUpon>
+      <LastGenOutput>LTW.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Model\DACS.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DACS.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+    <EntityDeploy Include="Model\LTW.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LTW.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\LTW.edmx.diagram">
+      <DependentUpon>LTW.edmx</DependentUpon>
     </Content>
-    <None Include="Model\DACS.dbml.layout">
-      <DependentUpon>DACS.dbml</DependentUpon>
-    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -231,6 +309,11 @@
     <Content Include="Views\DVTC\Slider.cshtml" />
     <Content Include="Views\GioHang\GioHang.cshtml" />
     <Content Include="Views\DVTC\FormDatLich.cshtml" />
+    <Content Include="Views\DVTC\ChiTietSanPham.cshtml" />
+    <Content Include="Views\GioHang\GioHangPartial.cshtml" />
+    <Content Include="Views\GioHang\DatHang.cshtml" />
+    <Content Include="Views\GioHang\DatHangPartial.cshtml" />
+    <Content Include="Views\GioHang\XacNhanDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -264,6 +347,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

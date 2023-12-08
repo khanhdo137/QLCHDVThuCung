@@ -1,0 +1,28 @@
+﻿
+<h2 class="text-center">CHI TIẾT SẢN PHẨM</h2>
+<hr>
+
+<div class="thumbnail" style=" border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
+    <div class="text-center">
+        <h4 class="tensp" style=" color: #333; font-size: 20px; margin-top: 10px;">
+            @Model.TenSP
+        </h4>
+    </div>
+
+    <img src="~/Images/SanPham/@Model.Anh" alt="@Model.TenSP" />
+    <br>
+    <br>
+    <div class="mota" style=" margin-top: 15px;">
+        <p style=" text-indent: 20px;line-height: 1.6; font-size: 18px;">
+            @Html.Raw(Model.MoTaSP.ToString().Replace("\n", "</p><p>&nbsp&nbsp&nbsp&nbsp&nbsp"))
+        </p>
+    </div>
+    <div class="text-right">
+        <p style="font-size: 18px; color: #e44d26;font-weight: bold; margin-top: 15px;" class="giaban">Giá bán: <span>@Html.FormatValue(@Model.GiaBan, "{0:#,##0}") VNĐ</span></p>
+        <p style="font-size:20px; font-weight:bold;">
+            <a href="@Url.Action("ThemGioHang","GioHang", new { ms = @Model.MaSP, url = Request.Url.ToString() })" ; data-id="@Model.MaSP">
+                Chọn mua
+            </a>
+        </p>
+    </div>
+</div>

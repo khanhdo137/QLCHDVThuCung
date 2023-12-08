@@ -1,91 +1,76 @@
-﻿
-@{
-    ViewBag.Title = "GioHang";
+﻿@using DichVuThuCungKVH.Model
+@model List<GioHang>
+
+@{ ViewBag.Title = "GioHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container mt-4">
-    <div id="thongbao" class="alert alert-danger d-none face" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </div>
+@{
+    int stt = 1; //tangstt
+}
 
-    <h1 class="text-center">Giỏ hàng</h1>
-    <div class="row">
-        <div class="col col-md-12">
-            <table class="table table-bordered">
-                <thead> 
-                    <tr>
-                        <th>STT</th>
-                        <th>Ảnh đại diện</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng</th>
-                        <th>Đơn giá</th>
-                        <th>Thành tiền</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody id="datarow">
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <img src="" class="hinhdaidien">
-                        </td>
-                        <td>Ten sp 1 </td>
-                        <td class="text-right">2</td>
-                        <td class="text-right">11,800,000.00</td>
-                        <td class="text-right">23,600,000</td>
-                        <td>
-                            <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
-                            <a id="delete_1" data-sp-ma="2" class="btn btn-danger btn-delete-sanpham">
-                                <i class="fa fa-trash" aria-hidden="true"></i> Xóa
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <img src="" class="hinhdaidien">
-                        </td>
-                        <td>Ten sp 2 </td>
-                        <td class="text-right">4</td>
-                        <td class="text-right">2,699,000.00</td>
-                        <td class="text-right">1,0796,000</td>
-                        <td>
-                            <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
-                            <a id="delete_2" data-sp-ma="6" class="btn btn-danger btn-delete-sanpham">
-                                <i class="fa fa-trash" aria-hidden="true"></i> Xóa
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <img src="" class="hinhdaidien">
-                        </td>
-                        <td>Ten sp</td>
-                        <td class="text-right">8</td>
-                        <td class="text-right">1,4990,000.00</td>
-                        <td class="text-right">119,920,000</td>
-                        <td>
-                            <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
-                            <a id="delete_3" data-sp-ma="4" class="btn btn-danger btn-delete-sanpham">
-                                <i class="fa fa-trash" aria-hidden="true"></i> Xóa
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+@if (ViewBag.GioHangTrong != null)
+{
+    <p style=" text-align:center; font-size: 25px;">@ViewBag.GioHangTrong</p>
+}
+else
+{
+    <h2 style="text-align:center;">THÔNG TIN GIỎ HÀNG</h2>
+    <table border="1">
+        <tr>
+            <th>STT</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Ảnh Sản Phẩm</th>
+            <th>Số Lượng</th>
+            <th>Đơn Giá</th>
+            <th>Thành Tiền</th>
+            <th></th>
+            <th></th>
 
-            <a href="@Url.Action("index","DVTC") " class="btn btn-warning btn-md">
-                <i class="fa fa-arrow-left"
-                   aria-hidden="true"></i>&nbsp;Quay
-                về trang chủ
-            </a>
-            <a href="checkout.html" class="btn btn-primary btn-md">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Thanh toán
-            </a>
-        </div>
-    </div>
-</div>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@stt</td>
+                <td>@item.sTenSP</td>
+                <td><img src="~/Images/SanPham/@item.sAnh" style="width:100px;"></td>
+
+                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSP = item.iMaSanPham }))
+                {
+                    <td align="center">
+                        <input type="number" min="1" name="txtSoLuong" value="@item.iSoLuong" />
+                    </td>
+                    <td align="center">@string.Format("{0:#,##0,0}", @item.dDonGia)</td>
+                    <td align="center">@string.Format("{0:#,##0,0}", @item.dThanhTien)</td>
+                    <td>
+                        @Html.ActionLink("Xóa", "XoaSPKhoiGioHang", new { @iMaSP = item.iMaSanPham })
+                    </td>
+                    <td>
+                        <input type="submit" value="Cập nhật" />
+                    </td>
+                }
+            </tr>
+            { stt++; }
+        }
+        <tr>
+            <td colspan="4">
+                Tổng số lượng: @string.Format("{0:#,##0}", @ViewBag.TongSoLuong)
+            </td>
+            <td colspan="5">
+                Tổng tiền: @string.Format("{0:#,##0,0}", @ViewBag.TongTien) VNĐ
+            </td>
+        </tr>
+        <tr style="font-weight:bold; color:blue; text-align:right;">
+            <td colspan="9">
+                @Html.ActionLink("Xóa giỏ hàng", "XoaGioHang")
+            </td>
+        </tr>
+        <tr style="font-weight:bold; color:blue; text-align:center;">
+            <td colspan="9">
+                @Html.ActionLink("ĐẶT HÀNG", "DatHang", "GioHang")
+            </td>
+        </tr>
+
+    </table>
+}
+
 
