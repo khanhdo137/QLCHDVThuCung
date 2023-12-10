@@ -1,0 +1,71 @@
+﻿@model DichVuThuCungKVH.Model.ThuCung
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h4>Thú Cưng</h4>
+                <hr />
+
+                @Html.HiddenFor(model => model.MaTC)
+
+                <div class="mb-3">
+                    <p>Tên thú cưng</p>
+                    @Html.EditorFor(model => model.TenTC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenTC, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <P>Hình ảnh của thú cưng</P>
+
+                    @Html.EditorFor(model => model.HinhAnh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <h5>Ảnh Thú Cưng</h5>
+                    <img src="~/Images/ThuCung/@Model.HinhAnh" alt="Hình ảnh hiện tại" class="img-thumbnail" style="max-width: 200px;" />
+                </div>
+
+                <div class="mb-3">
+                    <p>Đặc điểm</p>
+                    @Html.EditorFor(model => model.DacDiem, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DacDiem, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Loại thú cưng</p>
+                    @Html.EditorFor(model => model.Loai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Loai, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Màu lông</p>
+                    @Html.EditorFor(model => model.MauLong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MauLong, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Cân nặng</p>
+                    @Html.EditorFor(model => model.CanNang, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CanNang, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a class="btn btn-secondary" href="@Url.Action("Index", "ThuCungs")">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

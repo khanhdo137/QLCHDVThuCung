@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DichVuThuCungKVH.Model.SanPham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quản Lý Sản Phẩm</h2>
+
+<p>
+    <a href="@Url.Action("Create", "SanPhams")" class="btn btn-primary">Tạo mới</a>
+</p>
+
+<div class="table-responsive-xxl">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã Sản Phẩm</th>
+                <th>Tên</th>
+                <th>Ảnh</th>
+                <th>Loại Sản Phẩm</th>
+                <th>Giá Bán</th>
+                <th>Mô Tả</th>
+                <th>Số Lượng Còn Lại</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaSP)</td>
+                <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                <td><img src="~/Images/SanPham/@item.Anh" style="width:50px;" /></td> 
+                <td>@Html.DisplayFor(modelItem => item.LoaiSP)</td>
+                <td>@Html.DisplayFor(modelItem => item.GiaBan)</td>
+                <td>@Html.DisplayFor(modelItem => item.MoTaSP)</td>
+                <td>@Html.DisplayFor(modelItem => item.SoLuongConLai)</td>
+
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="@Url.Action("Edit", "SanPhams", new { id = item.MaSP})" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="@Url.Action("Details", "SanPhams", new { id = item.MaSP })" class="btn btn-info btn-sm">Chi tiết</a>
+                        <a href="@Url.Action("Delete", "SanPhams", new { id = item.MaSP})" class="btn btn-danger btn-sm">Xóa</a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

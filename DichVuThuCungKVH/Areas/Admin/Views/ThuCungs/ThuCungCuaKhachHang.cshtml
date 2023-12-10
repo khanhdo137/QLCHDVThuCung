@@ -1,0 +1,57 @@
+﻿@model List<DichVuThuCungKVH.Model.ThuCung>
+
+@{
+    ViewBag.Title = "ThuCung";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mb-4">Danh sách Thú Cưng</h2>
+<p>
+    @Html.ActionLink("Tạo mới", "Create", "ThuCungs", new { maKH = ViewBag.MaKH }, new { @class = "btn btn-primary" })
+</p>
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Tên</th>
+                    <th>Loại</th>
+                    <th>Màu lông</th>
+                    <th>Hình ảnh</th>
+                    <th>Đặc điểm</th>
+                    <th>Cân Nặng</th>
+                    <th></th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pet in Model)
+                {
+                    <tr>
+
+                        <td>@pet.TenTC</td>
+                        <td>@pet.Loai</td>
+                        <td>@pet.MauLong</td>
+                        <td>
+                            <img src="~/Images/ThuCung/@pet.HinhAnh" style="width:100px;" />
+
+                        </td>
+                        <td>@pet.DacDiem</td>
+                        <td>@pet.CanNang Kg</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @Html.ActionLink("Sửa"  , "Edit", new { id = pet.MaTC }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Xóa", "Delete", new { id = pet.MaTC }, new { @class = "btn btn-danger btn-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="alert alert-info">Khách hàng chưa có thú cưng.</p>
+}

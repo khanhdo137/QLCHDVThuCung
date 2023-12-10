@@ -1,0 +1,81 @@
+﻿@model DichVuThuCungKVH.Model.ThuCung
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "ThuCungs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MaKH)
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                @if (ViewBag.MaKH != null && ViewBag.MaKH > 0)
+                {
+                    <h4>THÚ CƯNG - Mã Khách Hàng: @ViewBag.MaKH</h4>
+                }
+
+                <hr />
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="mb-3">
+                    <p>Tên của thú cưng</p>
+                    @Html.EditorFor(model => model.TenTC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenTC, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Hình ảnh</p>
+                    <input type="file" id="PetFile" name="PetFile" accept="image/*" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+
+                    <div class="mt-2">
+                        <img id="PetPreview" src="#" alt="Hình ảnh đã chọn" style="max-width: 200px; display: none;" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <p>Đặc điểm</p>
+                    @Html.EditorFor(model => model.DacDiem, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DacDiem, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Loại thú cưng</p>
+                    @Html.EditorFor(model => model.Loai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Loai, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Màu lông</p>
+                    @Html.EditorFor(model => model.MauLong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MauLong, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <p>Cân nặng</p>
+                    @Html.EditorFor(model => model.CanNang, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CanNang, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a href="@Request.UrlReferrer?.ToString()" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    document.getElementById('PetFile').addEventListener('change', function (e) {
+        var preview = document.getElementById('PetPreview');
+        preview.src = URL.createObjectURL(e.target.files[0]);
+        preview.style.display = 'block';
+    });
+</script>

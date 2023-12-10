@@ -66,10 +66,10 @@
           <Property Name="MaKH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaTK" Type="int" />
           <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
-          <Property Name="NgaySinh" Type="smalldatetime" />
+          <Property Name="NgaySinh" Type="date" />
           <Property Name="SDT" Type="nvarchar" MaxLength="10" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
-          <Property Name="GioiTinh" Type="bit" />
+          <Property Name="GioiTinh" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="ThoiGianDangKy" Type="datetime" />
           <Property Name="TinhTrangLienHe" Type="bit" />
@@ -83,10 +83,10 @@
           <Property Name="TenNV" Type="nvarchar" MaxLength="50" />
           <Property Name="ChucVu" Type="nvarchar" MaxLength="50" />
           <Property Name="ChiNhanh" Type="nvarchar" MaxLength="50" />
-          <Property Name="NgaySinh" Type="datetime" />
+          <Property Name="NgaySinh" Type="date" />
           <Property Name="SDT" Type="nvarchar" MaxLength="50" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
-          <Property Name="GioiTinh" Type="bit" />
+          <Property Name="GioiTinh" Type="nvarchar" MaxLength="50" />
           <Property Name="MaTK" Type="int" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -507,7 +507,7 @@
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="SDT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GioiTinh" Type="Boolean" />
+          <Property Name="GioiTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ThoiGianDangKy" Type="DateTime" Precision="3" />
           <Property Name="TinhTrangLienHe" Type="Boolean" />
@@ -525,10 +525,10 @@
           <Property Name="TenNV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ChucVu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ChiNhanh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NgaySinh" Type="DateTime" Precision="3" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GioiTinh" Type="Boolean" />
+          <Property Name="GioiTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MaTK" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_NhanVien" FromRole="NhanVien" ToRole="DonHang" />
