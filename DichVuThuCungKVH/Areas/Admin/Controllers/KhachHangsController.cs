@@ -12,8 +12,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class KhachHangsController : Controller
     {
-        private readonly LTWEntities db = new LTWEntities();
-
+        private readonly DACSEntities db = new DACSEntities();
 
         // GET: Admin/KhachHangs
         public ActionResult Index()

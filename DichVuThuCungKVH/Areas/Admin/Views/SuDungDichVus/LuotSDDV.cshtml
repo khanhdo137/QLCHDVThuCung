@@ -1,0 +1,60 @@
+﻿@model IEnumerable<DichVuThuCungKVH.Model.SuDungDichVu>
+@{
+    ViewBag.Title = "LuotSDDV";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mb-4">Lượt sử dụng dịch vụ</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", new { maKH = ViewBag.MaKH })
+</p>
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ngay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GhiChu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.TenKH)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                </td>
+                <td>
+                    <!-- Hành động -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Action
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="@Url.Action("Details", "SuDungDichVus", new { id = item.MaSDDV })">Details</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Edit", "SuDungDichVus",  new { id = item.MaSDDV })">Edit</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Delete", "SuDungDichVus",  new { id = item.MaSDDV })">Delete</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("PhieuCuaLuotSDDV", "PhieuNhans",  new { id = item.MaSDDV })">Xem  phiếu</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p class="alert alert-info">Khách hàng chưa có lượt sử dụng dịch vụ.</p>
+}

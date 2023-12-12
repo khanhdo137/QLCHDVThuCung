@@ -12,7 +12,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class TaiKhoansController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private DACSEntities db = new DACSEntities();
 
         // GET: Admin/TaiKhoans
         public ActionResult Index()

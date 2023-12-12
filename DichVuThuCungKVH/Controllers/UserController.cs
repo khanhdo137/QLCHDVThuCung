@@ -10,7 +10,7 @@ namespace DichVuThuCungKVH.Controllers
 {
     public class UserController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private DACSEntities db = new DACSEntities();
 
         public ActionResult Index()
         {

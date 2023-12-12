@@ -10,7 +10,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private DACSEntities db = new DACSEntities();
 
         // GET: Admin/SanPhams
         public ActionResult Index()

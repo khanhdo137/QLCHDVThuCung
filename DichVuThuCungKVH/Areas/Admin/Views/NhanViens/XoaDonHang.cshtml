@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "XoaDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model DichVuThuCungKVH.Model.DonHang
+
+<h2>Xóa Đơn Hàng</h2>
+
+<p>Bạn có chắc muốn xóa đơn hàng này?</p>
+
+@using (Html.BeginForm("XoaDonHang", "NhanViens", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MaDH)
+
+    <input type="submit" value="Xác nhận" class="btn btn-danger" />
+    <a href="@Url.Action("DonHangDaDat", "NhanViens")" class="btn btn-default">Hủy bỏ</a>
+}

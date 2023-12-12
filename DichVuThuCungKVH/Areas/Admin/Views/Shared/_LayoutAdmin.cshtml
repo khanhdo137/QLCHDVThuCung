@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,6 +42,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">Quản Lý Khách Hàng</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "SuDungDichVus")">Sử dụng dịch vụ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "PhieuNhans")">Quản lý phiếu nhận</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="@Url.Action("DonHangDaDat", "NhanViens")">Quản Lý Đơn Hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("DanhSachSuDungDichVu", "NhanViens")">Quản Lý Đơn Dịch Vụ</a>
+                        </li>
                     }
                 </ul>
             </div>
@@ -51,7 +69,6 @@
     </footer>
 
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
 @RenderSection("scripts", required: false)

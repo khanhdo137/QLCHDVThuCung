@@ -28,7 +28,7 @@ namespace DichVuThuCungKVH.Model
         public Nullable<System.DateTime> NgaySinh { get; set; }
         public string SDT { get; set; }
         public string DiaChi { get; set; }
-        public string GioiTinh { get; set; }
+        public Nullable<bool> GioiTinh { get; set; }
         public int MaTK { get; set; }
         public string Email { get; set; }
     

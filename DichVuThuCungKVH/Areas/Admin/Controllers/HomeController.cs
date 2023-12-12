@@ -7,7 +7,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private readonly DACSEntities db = new DACSEntities();
 
         // GET: Admin/Home
         public ActionResult Index()

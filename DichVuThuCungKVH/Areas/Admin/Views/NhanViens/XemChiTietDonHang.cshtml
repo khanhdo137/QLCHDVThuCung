@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "XemChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model DichVuThuCungKVH.Model.DonHang
+
+
+<h2>Thông tin chi tiết đơn hàng</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaDH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaDH)
+        </dd>
+        <!-- Add other properties of DonHang that you want to display -->
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayDat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayDat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayGiao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NgayGiao)
+        </dd>
+        <!-- Add other properties of DonHang that you want to display -->
+    </dl>
+</div>
+
+<div>
+    <h4>Chi tiết đơn hàng</h4>
+    <table class="table">
+        <tr>
+            <th>Mã sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+        </tr>
+        @foreach (var ctDonHang in Model.CTDonHangs)
+        {
+            <tr>
+                <td>@ctDonHang.MaSP</td>
+                <td>@ctDonHang.SoLuong</td>
+                <td>@ctDonHang.DonGia</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Quay lại danh sách đơn hàng", "Index")
+</p>

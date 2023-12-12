@@ -1,0 +1,128 @@
+﻿@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
+
+@{
+    ViewBag.Title = "Details of Receiving Vouchers";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "PhieuNhans", new { maSDDV = ViewBag.MaSDDV })">Create New</a>
+</p>
+
+<h2 class="mb-4">Danh sách các phiếu của  @ViewBag.MaSDDV</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaPhieu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaTC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaSDDV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangTruocTiepNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangSauTiepNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NguoiGiao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NguoiNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangDichVu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayTra)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NguoiTra)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GhiChu)
+                </th>
+                <th>
+                    <!-- Hành động -->
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaPhieu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaTC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaSDDV)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.TinhTrangTruocTiepNhan))
+                        {
+                            <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + item.TinhTrangTruocTiepNhan)" alt="Image" class="img-thumbnail" />
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.TinhTrangSauTiepNhan))
+                        {
+                            <img src="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + item.TinhTrangSauTiepNhan)" alt="Image" class="img-thumbnail" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiGiao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiNhan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayNhan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TinhTrangDichVu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayTra)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiTra)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                        <!-- Hành động -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Details", "PhieuNhans", new { id = item.MaPhieu })">Details</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Edit", "PhieuNhans", new { id = item.MaPhieu })">Edit</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Delete", "PhieuNhans", new { id = item.MaPhieu })">Delete</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("ChiTietPhieu", "CTPhieuNhan_DichVu", new { maPhieu = item.MaPhieu })">Xem chi tiết phiếu</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="alert alert-info">Lượt sử dụng dịch vụ này vẫn chưa có phiếu.</p>
+}

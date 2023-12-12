@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "DonHangDaDat";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<DichVuThuCungKVH.Model.DonHang>
+
+@{
+    ViewBag.Title = "Đơn Hàng Đã Đặt";
+}
+
+<h2>Đơn Hàng Đã Đặt</h2>
+
+<table class="table">
+    <tr>
+        <th>Mã Đơn Hàng</th>
+
+        <th>Ngày Đặt</th>
+        <th>Ngày Giao</th>
+        <th>Trạng Thái Thanh Toán</th>
+    </tr>
+
+    @foreach (var donHang in Model)
+    {
+        <tr>
+            <td>@donHang.MaDH</td>
+
+            <td>@donHang.NgayDat</td>
+            <td>@donHang.NgayGiao</td>
+            <td>@(donHang.TrangThaiThanhToan == true ? "Đã thanh toán" : "Chưa thanh toán")</td>
+            <td>
+                @Html.ActionLink("Sửa đơn hàng", "SuaDonHang", "NhanViens", new { id = donHang.MaDH }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Xem chi tiết đơn hàng", "XemChiTietDonHang", "NhanViens", new { id = donHang.MaDH }, new { @class = "btn btn-primary" })
+                <a href="@Url.Action("XoaDonHang", "NhanViens", new { id = donHang.MaDH })" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+</table>

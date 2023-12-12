@@ -1,0 +1,22 @@
+﻿
+@using DichVuThuCungKVH.Model
+@{
+    TaiKhoan tk = (TaiKhoan)Session["TaiKhoan"];
+}
+
+@if (Session["TaiKhoan"] == null)//login
+{
+    <li> <a href="~/User/DangKy"><span class="glyphicon glyphicon-user"></span>Đăng ký</a></li>
+    <li>
+        <a href="@Url.Action("DangNhap","User", new { url = Request.Url.ToString() })">
+            <span class="glyphicon glyphicon-log-in"></span> Đăng nhập
+        </a>
+    </li>
+}
+else // logout
+{
+    <li> <a href="#"><span class="glyphicon glyphicon-user"></span>Xin chào:@tk.TenTK</a></li>
+    <li> <a href="@Url.Action("DangXuat","User")"><span class="glyphicon glyphicon-log-out"></span>Đăng xuất </a></li>
+}
+
+

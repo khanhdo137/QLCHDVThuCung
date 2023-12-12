@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DichVuThuCungKVH.Model.CTPhieuNhan_DichVu>
+@{
+    ViewBag.Title = "ChiTietPhieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<p>
+    @Html.ActionLink("Create New", "Create", new { maPhieu = ViewBag.MaPhieu })
+</p>
+
+<h2>Danh sách dịch vụ của phiếu</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaCT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaPhieu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaPhieu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DichVuSuDung)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThucHien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGian)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GhiChu)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaCT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaPhieu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaDV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DichVuSuDung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NguoiThucHien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThoiGian)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonGia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    <!-- Hành động -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Action
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="">Details</a></li>
+                            <li><a class="dropdown-item" href="">Edit</a></li>
+                            <li><a class="dropdown-item" href="">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p class="alert alert-info">Chưa có dịch vụ cho phiếu</p>
+}

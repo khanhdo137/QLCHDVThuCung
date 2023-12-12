@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -46,17 +47,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -67,7 +72,26 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.3.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.3.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -80,36 +104,10 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -124,78 +122,84 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CTPhieuNhan_DichVuController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhachHangsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanViensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhieuNhansController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SuDungDichVusController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaiKhoansController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuCungsController.cs" />
     <Compile Include="Controllers\DichVuController.cs" />
+    <Compile Include="Controllers\DSachThuCungController.cs" />
     <Compile Include="Controllers\DVTCController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\CTDonHang.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CTPhieuNhan_DichVu.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CTPhieuNhapKho.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DACS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DACS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DACS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DACS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DACS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DACS.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\DichVu.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DonHang.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GioHang.cs" />
     <Compile Include="Model\KhachHang.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LTW.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LTW.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LTW.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LTW.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LTW.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LTW.edmx</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NhanVien.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PhieuNhan.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PhieuNhapKho.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SanPham.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DACS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SuDungDichVu.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sysdiagram.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TaiKhoan.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ThuCung.cs">
-      <DependentUpon>LTW.tt</DependentUpon>
+      <DependentUpon>DACS.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -236,16 +240,11 @@
     <Content Include="Images\DichVu\trong-gui.jpg" />
     <Content Include="Images\DichVu\TrongGiuThuCung.jpg" />
     <Content Include="Images\icon-pinterest.png" />
-    <Content Include="Images\instagram-icon-logo-symbol-free-png.jpg" />
     <Content Include="Images\Logo.jpg" />
     <Content Include="Images\LogoKVH.png" />
     <Content Include="Images\phone-icon.jpg" />
     <Content Include="Images\SanPham\bat-an-danh-cho-thu-cung-1.jpg" />
-    <Content Include="Images\SanPham\BatAnChoMEo.jpg" />
-    <Content Include="Images\SanPham\Burn.jpeg" />
     <Content Include="Images\SanPham\chuongthu1.jpg" />
-    <Content Include="Images\SanPham\Pepsi.jpg" />
-    <Content Include="Images\SanPham\Picture3.png" />
     <Content Include="Images\SanPham\QuanAo1.jpg" />
     <Content Include="Images\SanPham\thuanmeo4.jpg" />
     <Content Include="Images\SanPham\thucancho1.jpg" />
@@ -260,74 +259,92 @@
     <Content Include="Images\Slider\petshop.jpg" />
     <Content Include="Images\Slider\petspa.jpg" />
     <Content Include="Images\thoi-trangjpg.jpg" />
-    <Content Include="Images\ThuCung\AvatarCat.jpg" />
     <Content Include="Images\ThuCung\Cat1.jpg" />
-    <Content Include="Images\ThuCung\Cat2.jpg" />
-    <Content Include="Images\ThuCung\Cat3.jpg" />
-    <Content Include="Images\ThuCung\cho1.jpg" />
     <Content Include="Images\ThuCung\dog1.jpg" />
-    <Content Include="Images\ThuCung\meo1.jpg" />
-    <Content Include="Images\ThuCung\thucanmeo3.jpg" />
-    <Content Include="Images\tw-icon.jpg" />
-    <Content Include="Images\yt_iocn.jpg" />
-    <Content Include="Model\LTW.Context.tt">
+    <Content Include="Model\DACS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LTW.edmx</DependentUpon>
-      <LastGenOutput>LTW.Context.cs</LastGenOutput>
+      <DependentUpon>DACS.edmx</DependentUpon>
+      <LastGenOutput>DACS.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\LTW.tt">
+    <Content Include="Model\DACS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LTW.edmx</DependentUpon>
-      <LastGenOutput>LTW.cs</LastGenOutput>
+      <DependentUpon>DACS.edmx</DependentUpon>
+      <LastGenOutput>DACS.cs</LastGenOutput>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoans\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoans\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoans\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoans\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoans\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPhams\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPhams\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPhams\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPhams\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPhams\Index.cshtml" />
+    <EntityDeploy Include="Model\DACS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DACS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\DACS.edmx.diagram">
+      <DependentUpon>DACS.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\KhachHangs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHangs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHangs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHangs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHangs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuCungs\ThuCungCuaKhachHang.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuCungs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuCungs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuCungs\Delete.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
-    <Content Include="Areas\Admin\Views\KhachHangs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\KhachHangs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\KhachHangs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\KhachHangs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\KhachHangs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\NhanViens\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\NhanViens\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\NhanViens\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\NhanViens\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\NhanViens\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\SanPhams\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\SanPhams\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\SanPhams\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\SanPhams\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\SanPhams\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\TaiKhoans\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\TaiKhoans\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\TaiKhoans\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\TaiKhoans\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\TaiKhoans\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ThuCungs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\ThuCungs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\ThuCungs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ThuCungs\ThuCungCuaKhachHang.cshtml" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <EntityDeploy Include="Model\LTW.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LTW.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model\LTW.edmx.diagram">
-      <DependentUpon>LTW.edmx</DependentUpon>
-    </Content>
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SuDungDichVus\LuotSDDV.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhans\PhieuCuaLuotSDDV.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\DonHangDaDat.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\SuaDonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\XemChiTietDonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\XoaDonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\ChinhSuaPhieuNhan.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\DanhSachSuDungDichVu.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\CapNhatPhieuNhan.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Chitietphieunhan.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\ChiTietPhieu.cshtml" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -356,17 +373,23 @@
     <Content Include="Views\DVTC\Slider.cshtml" />
     <Content Include="Views\GioHang\GioHang.cshtml" />
     <Content Include="Views\DVTC\FormDatLich.cshtml" />
-    <Content Include="Views\DVTC\ChiTietSanPham.cshtml" />
+    <Content Include="Views\DichVu\Index.cshtml" />
+    <Content Include="Views\DichVu\DVTrongGiu.cshtml" />
+    <Content Include="Views\DichVu\DangKyDichVu.cshtml" />
     <Content Include="Views\GioHang\GioHangPartial.cshtml" />
     <Content Include="Views\GioHang\DatHang.cshtml" />
-    <Content Include="Views\GioHang\DatHangPartial.cshtml" />
     <Content Include="Views\GioHang\XacNhanDonHang.cshtml" />
-    <Content Include="Views\DichVu\DangKyDichVu.cshtml" />
-    <Content Include="Views\KhachHang\KhachHang.cshtml" />
-    <Content Include="Views\KhachHang\DanhSachThuCung.cshtml" />
+    <Content Include="Views\DSachThuCung\DanhSachThuCung.cshtml" />
+    <Content Include="Views\DSachThuCung\KhachHang.cshtml" />
+    <Content Include="Views\DSachThuCung\DonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Default\" />
+    <Folder Include="Images\TinhTrangSauTiepNhan\" />
+    <Folder Include="Images\TinhTrangTruocTiepNhan\" />
+    <Folder Include="Views\NhanVien\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -392,8 +415,8 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -427,13 +450,16 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

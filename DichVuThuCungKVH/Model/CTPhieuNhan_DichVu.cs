@@ -14,6 +14,7 @@ namespace DichVuThuCungKVH.Model
     
     public partial class CTPhieuNhan_DichVu
     {
+        public int MaCT { get; set; }
         public int MaPhieu { get; set; }
         public int MaDV { get; set; }
         public string DichVuSuDung { get; set; }

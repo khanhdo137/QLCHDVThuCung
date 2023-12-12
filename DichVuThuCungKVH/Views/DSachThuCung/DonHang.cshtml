@@ -1,0 +1,39 @@
+﻿@model DichVuThuCungKVH.Model.SanPham
+@{
+    ViewBag.Title = "DonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (Model != null)
+{
+    <table align="center">
+        @using (Html.BeginForm())
+
+        {
+            @Html.ValidationSummary(true)
+            <tr style="height:40px;">
+                <td> Tên sản phẩm:</td>
+                <td style="font-weight:bold"> @Model.TenSP</td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Ảnh:</td>
+                <td style="font-weight:bold"> @Model.Anh</td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Mô tả :</td>
+                <td style="font-weight:bold"> @Model.MoTaSP </td>
+            </tr>
+            <tr style="height:40px;">
+                <td> Đơn giá:</td>
+                <td style="font-weight:bold"> @Model.GiaBan </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Không tìm thấy thông tin khách hàng.</p>
+}
+
+

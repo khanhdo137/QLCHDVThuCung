@@ -1,0 +1,76 @@
+﻿@model IEnumerable<DichVuThuCungKVH.Model.CTPhieuNhan_DichVu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DichVuSuDung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NguoiThucHien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGian)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DonGia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhieuNhan.TinhTrangTruocTiepNhan)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DichVuSuDung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NguoiThucHien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiGian)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DonGia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DichVu.TenDichVu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhieuNhan.TinhTrangTruocTiepNhan)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaCT }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaCT }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaCT })
+        </td>
+    </tr>
+}
+
+</table>

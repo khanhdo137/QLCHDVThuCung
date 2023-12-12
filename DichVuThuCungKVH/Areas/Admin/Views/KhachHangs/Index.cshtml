@@ -8,7 +8,7 @@
 <h2>Quản Lý Khách Hàng</h2>
 
 <p>
-    <a href="@Url.Action("Create", "KhachHangs")" class="btn btn-primary">Tạo mới</a>
+    <a href="@Url.Action("Create", "KhachHangs")" class="btn btn-primary">Create New</a>
 </p>
 
 <div class="table-responsive-xxl">
@@ -45,11 +45,17 @@
                     <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
                     <td>@Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)</td>
                     <td>
-                        <div class="btn-group" role="group">
-                            <a href="@Url.Action("Edit", "KhachHangs", new { id = item.MaKH })" class="btn btn-warning btn-sm">Sửa</a>
-                            <a href="@Url.Action("Details", "KhachHangs", new { id = item.MaKH })" class="btn btn-info btn-sm">Chi tiết</a>
-                            <a href="@Url.Action("Delete", "KhachHangs", new { id = item.MaKH })" class="btn btn-danger btn-sm">Xóa</a>
-                            <a href="@Url.Action("ThuCungCuaKhachHang", "ThuCungs", new { id = item.MaKH })" class="btn btn-success btn-sm">Xem Thú Cưng</a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Edit", "KhachHangs", new { id = item.MaKH })">Edit</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Details", "KhachHangs", new { id = item.MaKH })">Details</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Delete", "KhachHangs", new { id = item.MaKH })">Delete</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("ThuCungCuaKhachHang", "ThuCungs", new { id = item.MaKH })">Xem Thú Cưng</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("LuotSDDV", "SuDungDichVus", new { id = item.MaKH })">Sử dụng dịch vụ </a></li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

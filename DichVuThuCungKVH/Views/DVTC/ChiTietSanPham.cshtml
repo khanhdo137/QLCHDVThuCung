@@ -20,7 +20,7 @@
     <div class="text-right">
         <p style="font-size: 18px; color: #e44d26;font-weight: bold; margin-top: 15px;" class="giaban">Giá bán: <span>@Html.FormatValue(@Model.GiaBan, "{0:#,##0}") VNĐ</span></p>
         <p style="font-size:20px; font-weight:bold;">
-            <a href="@Url.Action("ThemGioHang","GioHang", new { ms = @Model.MaSP, url = Request.Url.ToString() })" ; data-id="@Model.MaSP">
+            <a href="@Url.Action("ThemGioHang","GioHang", new { ms = @Model.MaSP, url = Request.Url.ToString() })"; data-id="@Model.MaSP">
                 Chọn mua
             </a>
         </p>

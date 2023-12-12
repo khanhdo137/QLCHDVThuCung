@@ -9,7 +9,7 @@ namespace DichVuThuCungKVH.Controllers
 {
     public class GioHangController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private DACSEntities db = new DACSEntities();
         // GET: GioHang
 
         public ActionResult GioHang()
@@ -24,6 +24,7 @@ namespace DichVuThuCungKVH.Controllers
             ViewBag.TongTien = TongTien();
             return View(lstGioHang);
         }
+
         public List<GioHang> LayGioHang()
         {
             List<GioHang> lstGioHang = Session["GioHang"] as List<GioHang>;
@@ -51,6 +52,7 @@ namespace DichVuThuCungKVH.Controllers
             }
             return Redirect(url);
         }
+
         private int TongSoLuong()
         {
             int iTongSoLuong = 0;
@@ -58,10 +60,10 @@ namespace DichVuThuCungKVH.Controllers
             if (lstGioHang != null)
             {
                 iTongSoLuong = lstGioHang.Sum(n => n.iSoLuong);
-
             }
             return iTongSoLuong;
         }
+
         private double TongTien()
         {
             double dTongTien = 0;
@@ -71,8 +73,8 @@ namespace DichVuThuCungKVH.Controllers
             }
 
             return dTongTien;
-
         }
+
         public ActionResult GioHangPartial()
         {
             ViewBag.TongSoLuong = TongSoLuong();
@@ -88,7 +90,7 @@ namespace DichVuThuCungKVH.Controllers
             GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP);
             if (sp != null)
             {
-                // Xoa sp 
+                // Xoa sp
                 lstGioHang.Remove(sp);
 
                 if (lstGioHang.Count == 0)
@@ -101,18 +103,18 @@ namespace DichVuThuCungKVH.Controllers
 
             return RedirectToAction("GioHang");
         }
+
         public ActionResult CapNhatGioHang(int iMaSP, FormCollection f)
         {
             List<GioHang> lstGioHang = LayGioHang();
-            GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP); //neu ton tai thi cho sua slg
+            GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP); //Nếu tồn tại thì cho sửa số lượng
             if (sp != null)
             {
-
             }
             sp.iSoLuong = int.Parse(f["txtSoLuong"].ToString());
             return RedirectToAction("GioHang");
-
         }
+
         public ActionResult XoaGioHang()
         {
             List<GioHang> lstGioHang = LayGioHang();
@@ -123,12 +125,12 @@ namespace DichVuThuCungKVH.Controllers
         [HttpGet]
         public ActionResult DatHang()
         {
-            //Ktr DN
+            //Kiểm tra đăng nhập chưa
             if (Session["TaiKhoan"] == null || Session["TaiKhoan"].ToString() == "")
             {
                 return RedirectToAction("DangNhap", "User");
             }
-            //Ktr sp trong ghang
+            //Kiểm tra có hàng trong giỏ chưa
             if (Session["GioHang"] == null)
             {
                 return RedirectToAction("Index", "GioHang");
@@ -139,12 +141,14 @@ namespace DichVuThuCungKVH.Controllers
             ViewBag.TongTien = TongTien();
             return View(lstGioHang);
         }
+
         public ActionResult DatHangPartial()
         {
             var maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"].ToString());
             var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
             return PartialView(kh);
         }
+
         [HttpPost]
         public ActionResult DatHang(FormCollection f)
         {
@@ -159,8 +163,8 @@ namespace DichVuThuCungKVH.Controllers
 
             //ddh.TrangThaiThanhToan = 1;
             ddh.TrangThaiThanhToan = false;
-            //db.DonHangs.InsertOnSubmit(ddh);
-            // db.SubmitChanges();
+            db.DonHangs.Add(ddh);
+            //db.SaveChanges();
             // Thêm chi tiết đơn hàng
             foreach (var item in lstGioHang)
             {
@@ -169,13 +173,11 @@ namespace DichVuThuCungKVH.Controllers
                 ctdh.MaSP = item.iMaSanPham;
                 ctdh.SoLuong = item.iSoLuong;
                 ctdh.DonGia = (decimal)item.dDonGia;
-                //db.CTDonHangs.InsertOnSubmit(ctdh);
+                db.CTDonHangs.Add(ctdh);
             }
-
-           // db.SubmitChanges();
+            //db.SaveChanges();
             Session["GioHang"] = null;
             return RedirectToAction("XacNhanDonHang", "GioHang");
-
         }
 
         public ActionResult XacNhanDonHang()

@@ -1,0 +1,38 @@
+﻿@using DichVuThuCungKVH.Model
+
+@{ ViewBag.Title = "DanhSachThuCung";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+
+                // Lấy mã khách hàng từ ViewBag
+                var maKhachHang = ViewBag.MaKhachHang;
+
+                // Lấy danh sách thú cưng từ ViewBag
+                var danhSachThuCung = ViewBag.DanhSachThuCung as List<ThuCung>; }
+
+<h2>Danh sách thú cưng của bạn</h2>
+
+@if (danhSachThuCung != null && danhSachThuCung.Any())
+{
+<table>
+    <tr>
+        <th>Tên thú cưng</th>
+        <th>Hình Ảnh</th>
+        <th>Đặc Điểm</th>
+        <th>Loại</th>
+        <th>Màu Lông</th>
+        <th>Cân Nặng</th>
+    </tr>
+    @foreach (var pet in danhSachThuCung)
+    {
+<tr>
+    <td>@pet.TenTC</td>
+    <td><img src="@Url.Content("~/Images/ThuCung/" + pet.HinhAnh)" alt="Hình ảnh thú cưng" width="50" height="50" /></td>
+    <td>@pet.DacDiem</td>
+    <td>@pet.Loai</td>
+    <td>@pet.MauLong</td>
+    <td>@pet.CanNang</td>
+</tr>}
+</table> }
+            else
+            {
+<p>Không có thú cưng nào!</p>}

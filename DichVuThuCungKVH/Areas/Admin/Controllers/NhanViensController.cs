@@ -12,7 +12,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class NhanViensController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private readonly DACSEntities db = new DACSEntities();
 
         // GET: Admin/NhanViens
         public ActionResult Index()
@@ -44,7 +44,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         }
 
         // POST: Admin/NhanViens/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,7 +78,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         }
 
         // POST: Admin/NhanViens/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -127,6 +127,176 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult DonHangDaDat()
+        {
+
+            var danhSachDonHang = db.DonHangs.ToList();
+            return View(danhSachDonHang);
+        }
+        public ActionResult SuaDonHang(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            DonHang donHang = db.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(donHang);
+        }
+
+        [HttpPost]
+        public ActionResult SuaDonHang(DonHang donHang)
+        {
+            if (ModelState.IsValid)
+            {
+                // Cập nhật thông tin đơn hàng trong cơ sở dữ liệu
+                db.Entry(donHang).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("DonHangDaDat");
+            }
+
+            return View(donHang);
+        }
+        public ActionResult XemChiTietDonHang(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            DonHang donHang = db.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(donHang);
+        }
+        public ActionResult XoaDonHang(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            DonHang donHang = db.DonHangs.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(donHang);
+        }
+
+        [HttpPost, ActionName("XoaDonHang")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XacNhanXoa(int id)
+        {
+            DonHang donHang = db.DonHangs.Find(id);
+            db.DonHangs.Remove(donHang);
+            db.SaveChanges();
+
+            return RedirectToAction("DonHangDaDat");
+        }
+        public ActionResult DanhSachSuDungDichVu()
+        {
+            // Lấy danh sách phiếu nhận từ cơ sở dữ liệu
+            var danhSachPhieuNhan = db.PhieuNhans.ToList();
+
+            return View(danhSachPhieuNhan);
+        }
+        public ActionResult ChinhSuaPhieuNhan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Lấy thông tin phiếu nhận từ cơ sở dữ liệu theo id
+            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
+
+            if (phieuNhan == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(phieuNhan);
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatPhieuNhan(PhieuNhan phieuNhan)
+        {
+            if (ModelState.IsValid)
+            {
+                // Xử lý cập nhật thông tin phiếu nhận trong cơ sở dữ liệu
+                db.Entry(phieuNhan).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("DanhSachSuDungDichVu");
+            }
+
+            // Nếu ModelState.IsValid là false, có thể in các lỗi ModelState để xem lý do
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+            }
+
+            return View(phieuNhan);
+        }
+
+
+        public ActionResult XoaPhieuNhan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Lấy thông tin phiếu nhận từ cơ sở dữ liệu theo id
+            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
+
+            if (phieuNhan == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(phieuNhan);
+        }
+
+        [HttpPost]
+        public ActionResult XacNhanXoaPhieuNhan(int id)
+        {
+            // Xử lý xác nhận xóa phiếu nhận trong cơ sở dữ liệu
+            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
+            db.PhieuNhans.Remove(phieuNhan);
+            db.SaveChanges();
+
+            return RedirectToAction("DanhSachSuDungDichVu");
+        }
+        public ActionResult Chitietphieunhan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            CTPhieuNhan_DichVu ctPhieuNhan = db.CTPhieuNhan_DichVu.Find(id);
+            if (ctPhieuNhan == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(ctPhieuNhan);
         }
     }
 }

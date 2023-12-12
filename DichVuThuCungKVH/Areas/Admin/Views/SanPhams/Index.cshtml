@@ -5,47 +5,60 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Quản Lý Sản Phẩm</h2>
+<h2 class="text-center">QUẢN LÝ SẢN PHẨM</h2>
 
 <p>
-    <a href="@Url.Action("Create", "SanPhams")" class="btn btn-primary">Tạo mới</a>
+    @Html.ActionLink("Create New", "Create")
 </p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Tên sản phẩm</p>
+        </th>
+        <th>
+            <p>Hình ảnh</p>
+        </th>
+        <th>
+            <p>Loại Sản Phẩm</p>
+        </th>
+        <th>
+            <p>Giá bán</p>
+        </th>
+        <th>
+            <p>Mô tả sản phẩm</p>
+        </th>
+        <th>
+            <p>Số lượng</p>
+        </th>
+        <th></th>
+    </tr>
 
-<div class="table-responsive-xxl">
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Mã Sản Phẩm</th>
-                <th>Tên</th>
-                <th>Ảnh</th>
-                <th>Loại Sản Phẩm</th>
-                <th>Giá Bán</th>
-                <th>Mô Tả</th>
-                <th>Số Lượng Còn Lại</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.MaSP)</td>
-                <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
-                <td><img src="~/Images/SanPham/@item.Anh" style="width:50px;" /></td> 
-                <td>@Html.DisplayFor(modelItem => item.LoaiSP)</td>
-                <td>@Html.DisplayFor(modelItem => item.GiaBan)</td>
-                <td>@Html.DisplayFor(modelItem => item.MoTaSP)</td>
-                <td>@Html.DisplayFor(modelItem => item.SoLuongConLai)</td>
-
-                <td>
-                    <div class="btn-group" role="group">
-                        <a href="@Url.Action("Edit", "SanPhams", new { id = item.MaSP})" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="@Url.Action("Details", "SanPhams", new { id = item.MaSP })" class="btn btn-info btn-sm">Chi tiết</a>
-                        <a href="@Url.Action("Delete", "SanPhams", new { id = item.MaSP})" class="btn btn-danger btn-sm">Xóa</a>
-                    </div>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-</div>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTaSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongConLai)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
+            </td>
+        </tr>
+    }
+</table>

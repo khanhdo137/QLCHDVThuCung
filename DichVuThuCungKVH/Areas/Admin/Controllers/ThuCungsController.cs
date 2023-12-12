@@ -11,12 +11,19 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class ThuCungsController : Controller
     {
-        private LTWEntities db = new LTWEntities();
+        private readonly DACSEntities db = new DACSEntities();
 
         // GET: Admin/ThuCungs/Create
-        public ActionResult Create(int maKH)
+        public ActionResult Create(int? maKH)
         {
-            ViewBag.MaKH = maKH;
+            if (maKH == null)
+            {
+                // Nếu maKH là null, có thể thực hiện xử lý nếu cần
+                // Ví dụ: Redirect hoặc hiển thị thông báo lỗi
+                return RedirectToAction("Error", "Home");
+            }
+
+            ViewBag.MaKH = maKH.Value;
             return View();
         }
 
@@ -24,9 +31,9 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ThuCung thuCung, HttpPostedFileBase PetFile)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     if (PetFile != null && PetFile.ContentLength > 0)
                     {
@@ -41,35 +48,19 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                         PetFile.SaveAs(path);
                         thuCung.HinhAnh = fileName;
                     }
-                    else
-                    {
-                        ModelState.AddModelError("PetFile", "Vui lòng chọn một hình ảnh.");
-                        return View(thuCung);
-                    }
-
-                    // Kiểm tra MaKH có giá trị hợp lệ
-                    if (thuCung.MaKH <= 0)
-                    {
-                        ModelState.AddModelError("MaKH", "Mã khách hàng không hợp lệ.");
-                        return View(thuCung);
-                    }
 
                     db.ThuCungs.Add(thuCung);
                     db.SaveChanges();
 
-                    return RedirectToAction("ThuCungCuaKhachHang", new { id = thuCung.MaKH });
+                    return RedirectToAction("Index", "KhachHangs");
                 }
-                else
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.");
-                    return View(thuCung);
+                    ViewBag.Message = "Lỗi: " + ex.Message;
                 }
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, "Lỗi: " + ex.Message);
-                return View(thuCung);
-            }
+
+            return View(thuCung);
         }
 
         public ActionResult Edit(int? id)

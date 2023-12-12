@@ -1,0 +1,66 @@
+﻿@model DichVuThuCungKVH.Model.CTPhieuNhan_DichVu
+
+@{
+    ViewBag.Title = "Chi tiết phiếu nhận";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết phiếu nhận</h2>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.MaPhieu)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MaPhieu)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.MaDV)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MaDV)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DichVuSuDung)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.DichVuSuDung)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.NguoiThucHien)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.NguoiThucHien)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.ThoiGian)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.ThoiGian)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.SoLuong)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SoLuong)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DonGia)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.DonGia)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.GhiChu)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.GhiChu)
+    </dd>
+</dl>

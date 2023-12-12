@@ -7,7 +7,7 @@ namespace DichVuThuCungKVH.Model
 {
     public class GioHang
     {
-        private LTWEntities db = new LTWEntities();
+        private DACSEntities db = new DACSEntities();
         public int iMaSanPham { get; set; }
         public string sṬenSP { get; set; }
         public string sTenSP { get; }

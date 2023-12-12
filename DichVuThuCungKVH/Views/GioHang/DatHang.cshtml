@@ -24,7 +24,7 @@
             {
                 <td align="center">
                     @item.iSoLuong
-
+                    
                 </td>
                 <td align="center">@string.Format("{0:#,##0,0}", @item.dDonGia)</td>
                 <td align="center">@string.Format("{0:#,##0,0}", @item.dThanhTien)</td>
@@ -49,4 +49,4 @@
 
 
 <h2 style="text-align:center">THÔNG TIN ĐẶT HÀNG</h2>
-@Html.Action("DatHangPartial", "GioHang")
+@Html.Action("DatHangPartial","GioHang")
