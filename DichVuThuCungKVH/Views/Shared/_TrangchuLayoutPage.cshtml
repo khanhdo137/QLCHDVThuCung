@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@model DichVuThuCungKVH.Model.KhachHang
+@{
+    ViewBag.Title = "Register";
+}
+<!-- Bootstrap CSS -->
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>Dịch vụ chăm sóc thú cưng tại TPHCM - Uy tín và chất lượng</title>
+    <title>Pet Shop</title>
 
     <meta name="keywords" content="dịch vụ thú cưng, dịch vụ chăm sóc thú cưng, dịch vụ tắm thú cưng, dịch vụ tắm cho mèo, dịch vụ tắm cho chó">
     <meta name="description" content="Dogs Mom cung cấp dịch vụ chăm sóc thú cưng tại TPHCM như: tắm, trông giữ, cạo lông, cắt móng,.. tư vấn dinh dưỡng cho chó, mèo uy tín tại tphcm. Chuồng trại chúng tôi luôn đảm bảo tốt như: khử trùng, khử mùi, …giúp thú cưng của bạn thật sử khỏe mạnh.">
@@ -17,6 +23,12 @@
     <link href="https://www.petmom.vn/assets/73cf5b46f967c21918605eeb581ff5ee/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" rel="stylesheet" type="text/css" />
     <link href="https://www.petmom.vn/css/main.css?v=0.2.4.6" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap JavaScript và Popper.js (cần thiết cho Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://www.petmom.vn/assets/b545599a487b920482923ad1fd3f5d5f/jquery.min.js" type="text/javascript"></script>
     <script src="https://www.petmom.vn/assets/4b18d08a216b5a87ddc206f234a70db9/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="https://www.petmom.vn/assets/aa471fe8211faf7b8dbce42b8c6b6b46/js/lightslider.min.js" type="text/javascript"></script>
@@ -32,7 +44,9 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166948349-1"></script>
@@ -67,6 +81,22 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap JavaScript và Popper.js (cần thiết cho Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Nút "Đặt Lịch" -->
+    <style>
+        .custom-btn-text {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -85,7 +115,7 @@
                             <div id="custom-search-input">
                                 <div class="input-group">
                                     <input type="text" name="query" class="form-control" placeholder="Nhập từ khóa để tìm kiếm...">
-                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    <button type="submit" font-size=20px class="btn btn-primary">Tìm kiếm</button>
                                 </div>
                             </div>
                         </form>
@@ -103,20 +133,15 @@
                             <a href="">
                                 <img class="img-nav-btn-tel" src="~/Images/icon-facebook.png" alt="Facebook">
                             </a>
-                            <a href="#">
-                                <img class="img-nav-btn-tel" src="~/Images/icon-pinterest.png" alt="Pinterest">
-                            </a>
+
                             <a href="">
                                 <img class="img-nav-btn-tel" src="~/Images/icon-youtube.png" alt="YouTube">
                             </a>
-                            <a href="#">
-                                <img class="img-nav-btn-tel" src="~/Images/icon-twitter.png" alt="Twitter">
-                            </a>
+
                         </div>
                         <div class="hotline-head cart-badge">
-                            <a href="@Url.Action("GioHang","GioHang") " class="ico-head">
+                            <a href="@Url.Action("GioHang","GioHang")" class="ico-head">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span>0</span>
                             </a>
                         </div>
                     </div>
@@ -142,19 +167,79 @@
         <div class=container>
             <div class="row">
 
-                <section class=col-md-12>
+                <section class=col-md-12 id="id1">
                     @Html.Action("CacDichVu", "DVTC")
                 </section>
+                <button id="datdichvu" type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+                    <h5 class="mb-0 custom-btn-text">Đặt Lịch</h5>
+
+                </button>
+                <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="formModalLabel">Đăng Ký Dịch Vụ</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @using (Html.BeginForm("DangKyDichVu", "DichVu", FormMethod.Post))
+                                {
+                                    @Html.ValidationSummary(true)
+
+                                    <div class="text-center">
+                                        <img src="~/Images/LogoKVH.png" class="img-fluid profile-image-pic img-thumbnail my-3 mx-auto d-block" width="200px" alt="profile">
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <label for="TenKH">Tên:</label>
+                                        @Html.TextBoxFor(model => model.TenKH, new { @class = "form-control mx-auto d-block" })
+                                        @Html.ValidationMessageFor(model => model.TenKH)
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <label for="SDT">Số Điện Thoại</label>
+                                        @Html.TextBoxFor(model => model.SDT, new { @class = "form-control mx-auto d-block" })
+                                        @Html.ValidationMessageFor(model => model.SDT)
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <label for="DiaChi">Địa Chỉ:</label>
+                                        @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control mx-auto d-block" })
+                                        @Html.ValidationMessageFor(model => model.DiaChi)
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <label for="Email">Email:</label>
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control mx-auto d-block" })
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <label for="GhiChu">Notes:</label>
+                                        @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control mx-auto d-block", rows = 4, cols = 50 })
+                                        @Html.ValidationMessageFor(model => model.GhiChu)
+                                    </div>
+                                    <div class="text-center">
+                                        <input type="submit" value="Đăng Ký" class="btn btn-primary px-5" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class=container>
+        <div class=container id="id2">
             @Html.Action("SanPhamPartial", "DVTC")
         </div>
+
         <div class="container">
             <div class=row>
                 <div class=col-md-12>
-                   
+
                 </div>
             </div>
             <div class="row">
@@ -219,7 +304,7 @@
     <footer>
         <div class=container>
             <div class=col-md-4>
-                <h3 style="font-size: 14px"><strong>KẾT NỐI MẠNG XÃ HỘI</strong></h3>
+                <h3 style="font-size: 20px"><strong>KẾT NỐI MẠNG XÃ HỘI</strong></h3>
                 <div>
                     <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=100048806028664" data-tabs="timeline" data-width="340" data-height="130"
                          data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="false">
@@ -230,21 +315,21 @@
                 </div>
             </div>
             <div class=col-md-4>
-                <h3 style="text-align:left;font-size: 14px;text-transform: uppercase;"><strong>Hỗ trợ khách hàng</strong></h3>
+                <h3 style="text-align:left;font-size: 20px;text-transform: uppercase;"><strong>Hỗ trợ khách hàng</strong></h3>
                 <div style="padding-left: 0px">
-                    <p style="text-align:left">
+                    <p style="text-align:left; font-size :15px">
                         <a href="#" title="quy trình thiết kế và thi công nội thất" ref="nofollow">Quy Trình Làm Việc</a>
                     </p>
-                    <p style="text-align:left">
+                    <p style="text-align: left; font-size: 15px">
                         <a href="#" title="chính sách bảo hành và đổi trả hàng" ref="nofollow">Bảo Hành - Đổi Trả</a>
                     </p>
-                    <p style="text-align:left">
+                    <p style="text-align: left; font-size: 15px">
                         <a href="#" title="hình thức thanh toán tiền" ref="nofollow">Hình Thức Thanh Toán</a>
                     </p>
-                    <p style="text-align:left">
+                    <p style="text-align: left; font-size: 15px">
                         <a href="#" title="chính sách vận chuyển, giao nhận và lắp đặt" ref="nofollow">Vận Chuyển - Giao Nhận</a>
                     </p>
-                    <p style="text-align:left">
+                    <p style="text-align: left; font-size: 15px">
                         <a href="#" title="chính sách bảo mật thông tin" ref="nofollow">Chính Sách Bảo Mật</a>
                     </p>
                 </div>
@@ -252,19 +337,17 @@
                 <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
             </div>
             <div class=col-md-4>
-                <h3 style="font-size: 14px;"><strong>PET SHOP KVH</strong></h3>
-                <div style="padding-left: 0px;">
-                    <p>
-                        <span><em><strong>Mã số thuế: </strong>41X8037202<strong> Ngày đăng ký: </strong>28/02/2020</em></span>
-                    </p>
+                <h3 style="font-size: 20px;"><strong>PET SHOP KVH</strong></h3>
+                <div style="padding-left: 0px; font-size: 15px">
+
                     <p>
                         <span>
                             <strong>
-                                Tel: <span style="color:#ff0000">
+                                Tel: <span style="color: #ff0000; font-size: 15px">
                                     <a style=color:#ff0000 href="tel:0387908930">038888888</a>
                                 </span>
                             </strong>
-                            <strong>- Hotline:</strong> <span style="color:#ff0000">
+                            <strong>- Hotline:</strong> <span style="color: #ff0000; font-size: 15px">
                                 <strong><a style="color:#ff0000" href="tel:0387908930 ">038888888 </a></strong>
                             </span>
                         </span>
@@ -277,14 +360,11 @@
                     </p>
                     <p>
                         <span>
-                            <strong>Địa chỉ VP: </strong>
+                            <strong>Địa chỉ : </strong>
                             <em>
-                                <a rel="noopener noreferrer" href="" target="_blank">620 Lũy Bán Bích, phường Tân Thành, quận Tân Phú , TPHCM</a>
+                                <a rel="noopener noreferrer" href="" target="_blank">Thủ Dầu Một, Bình Dương</a>
                             </em>
-                            <strong><br>Chi Nhánh:</strong>
-                            <span>
-                                <a href="">Cơ sở 2: 63 Xóm Củi, p11, quận 8, TPHCM</a>
-                            </span>
+
                         </span>
                     </p>
                 </div>
@@ -297,12 +377,12 @@
     </a>
     <ul id=mobile-bar class=visible-xs>
 
-        <li style="background-color:white">
+        <li style="background-color: white; font-size: 15px">
             <a href="tel:0387908930" target="_blank">
                 <img src=/images/za-lo.png width=36>
             </a>
         </li>
-        <li style="background-color:white">
+        <li style="background-color: white; font-size: 15px">
             <a href="https://www.facebook.com/profile.php?id=100048806028664m" target=_blank>
                 <img src="/images/face-book.png?v1" width=36>
             </a>
@@ -313,13 +393,13 @@
             </a>
         </li>
 
-        <li style="background-color:white">
+        <li style="background-color: white; font-size: 15px">
             <a href="tel:0387908930 " target="_blank">
                 <img src="/images/hot-line.png?v=1" width=36>
             </a>
         </li>
 
-        <li style="background-color:white" class="cart-badge">
+        <li style="background-color: white; font-size: 15px" class="cart-badge">
             <a href="https://www.petmom.vn/cart" class="ico-head" style="width: 36px; height: 36px; font-size: 28px;">
                 <i class="glyphicon glyphicon-shopping-cart"></i>
                 <span>0</span>

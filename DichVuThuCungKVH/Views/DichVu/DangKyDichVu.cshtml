@@ -1,0 +1,81 @@
+﻿@model DichVuThuCungKVH.Model.KhachHang
+
+@{
+    ViewBag.Title = "Register";
+}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- Bootstrap JavaScript và Popper.js (cần thiết cho Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Nút "Đặt Lịch" -->
+<style>
+    .custom-btn-text {
+        font-size: 36px; /* Điều chỉnh kích thước chữ theo ý muốn */
+        font-weight: bold; /* Nếu muốn đậm chữ */
+    }
+</style>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+    <h5 class="mb-0 custom-btn-text">Đặt Lịch</h5>
+</button>
+
+<!-- Modal Bootstrap cho form đăng ký -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formModalLabel">Đăng Ký Dịch Vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("DangKyDichVu", "DichVu", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+
+                    <div class="text-center">
+                        <img src="~/Images/LogoKVH.png" class="img-fluid profile-image-pic img-thumbnail my-3 mx-auto d-block" width="200px" alt="profile">
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <label for="TenKH">Tên:</label>
+                        @Html.TextBoxFor(model => model.TenKH, new { @class = "form-control mx-auto d-block" })
+                        @Html.ValidationMessageFor(model => model.TenKH)
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <label for="SDT">Số Điện Thoại</label>
+                        @Html.TextBoxFor(model => model.SDT, new { @class = "form-control mx-auto d-block" })
+                        @Html.ValidationMessageFor(model => model.SDT)
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <label for="DiaChi">Địa Chỉ:</label>
+                        @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control mx-auto d-block" })
+                        @Html.ValidationMessageFor(model => model.DiaChi)
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <label for="Email">Email:</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control mx-auto d-block" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <label for="GhiChu">Notes:</label>
+                        @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control mx-auto d-block", rows = 4, cols = 50 })
+                        @Html.ValidationMessageFor(model => model.GhiChu)
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" value="Đăng Ký" class="btn btn-primary px-5" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

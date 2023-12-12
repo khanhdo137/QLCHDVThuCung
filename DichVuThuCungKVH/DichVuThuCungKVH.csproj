@@ -130,9 +130,11 @@
     <Compile Include="Areas\Admin\Controllers\SanPhamsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaiKhoansController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuCungsController.cs" />
+    <Compile Include="Controllers\DichVuController.cs" />
     <Compile Include="Controllers\DVTCController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -258,6 +260,14 @@
     <Content Include="Images\Slider\petshop.jpg" />
     <Content Include="Images\Slider\petspa.jpg" />
     <Content Include="Images\thoi-trangjpg.jpg" />
+    <Content Include="Images\ThuCung\AvatarCat.jpg" />
+    <Content Include="Images\ThuCung\Cat1.jpg" />
+    <Content Include="Images\ThuCung\Cat2.jpg" />
+    <Content Include="Images\ThuCung\Cat3.jpg" />
+    <Content Include="Images\ThuCung\cho1.jpg" />
+    <Content Include="Images\ThuCung\dog1.jpg" />
+    <Content Include="Images\ThuCung\meo1.jpg" />
+    <Content Include="Images\ThuCung\thucanmeo3.jpg" />
     <Content Include="Images\tw-icon.jpg" />
     <Content Include="Images\yt_iocn.jpg" />
     <Content Include="Model\LTW.Context.tt">
@@ -351,6 +361,9 @@
     <Content Include="Views\GioHang\DatHang.cshtml" />
     <Content Include="Views\GioHang\DatHangPartial.cshtml" />
     <Content Include="Views\GioHang\XacNhanDonHang.cshtml" />
+    <Content Include="Views\DichVu\DangKyDichVu.cshtml" />
+    <Content Include="Views\KhachHang\KhachHang.cshtml" />
+    <Content Include="Views\KhachHang\DanhSachThuCung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
