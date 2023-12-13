@@ -1,0 +1,523 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thống kê doanh thu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+
+</head>
+<body>
+
+
+
+    <h1 style="text-align:center">THỐNG KÊ DOANH THU </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <h3 style="text-align:left">Doanh Thu Theo Sản Phẩm: $@ViewBag.DoanhThu</h3>
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-md-4">
+                <h3 style="text-align:center">Doanh Thu Theo Dịch Vụ: $@ViewBag.TienDichVu</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        let myChart = document.getElementById('myChart').getContext('2d');
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 15;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        /*let massPopChart = new Chart(myChart, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                datasets:[] [{
+                    label: 'Số Tiền',
+
+                    data: [
+                        181045,
+                        153060,
+                        106519,
+                        105162,
+                        95072,
+                        87459,
+                        74531,
+                        87410,
+                        73460,
+                        75910,
+                        74510,
+                        87410
+                    ],
+                    //backgroundColor:'green',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(23, 156, 80, 0.6)',
+                        'rgba(245, 187, 16, 0.6)',
+                        'rgba(100, 50, 200, 0.6)',
+                        'rgba(11, 184, 155, 0.6)',
+                        'rgba(221, 82, 81, 0.6)',
+                        'rgba(87, 128, 233, 0.6)'
+
+                    ],
+                    borderWidth: 1,
+                    borderColor: '#111',
+                    hoverBorderWidth: 2,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    //  text: 'Largest Cities In Massachusetts',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+        */
+
+            let tienThang1 = @Html.Raw(Json.Encode(ViewBag.thang1));
+            let tienThang2 = @Html.Raw(Json.Encode(ViewBag.thang2));
+            let tienThang3 = @Html.Raw(Json.Encode(ViewBag.thang3));
+            let tienThang4 = @Html.Raw(Json.Encode(ViewBag.thang4));
+            let tienThang5= @Html.Raw(Json.Encode(ViewBag.thang5));
+            let tienThang6 = @Html.Raw(Json.Encode(ViewBag.thang6));
+            let tienThang7= @Html.Raw(Json.Encode(ViewBag.thang7));
+            let tienThang8 = @Html.Raw(Json.Encode(ViewBag.thang8));
+            let tienThang9= @Html.Raw(Json.Encode(ViewBag.thang9));
+            let tienThang10 = @Html.Raw(Json.Encode(ViewBag.thang10));
+            let tienThang11= @Html.Raw(Json.Encode(ViewBag.thang11));
+            let tienThang12 = @Html.Raw(Json.Encode(ViewBag.thang12));
+
+            let tienThang1hd = @Html.Raw(Json.Encode(ViewBag.thang1hd));
+            let tienThang2hd = @Html.Raw(Json.Encode(ViewBag.thang2hd));
+            let tienThang3hd = @Html.Raw(Json.Encode(ViewBag.thang3hd));
+            let tienThang4hd = @Html.Raw(Json.Encode(ViewBag.thang4hd));
+            let tienThang5hd = @Html.Raw(Json.Encode(ViewBag.thang5hd));
+            let tienThang6hd = @Html.Raw(Json.Encode(ViewBag.thang6hd));
+            let tienThang7hd = @Html.Raw(Json.Encode(ViewBag.thang7hd));
+            let tienThang8hd = @Html.Raw(Json.Encode(ViewBag.thang8hd));
+            let tienThang9hd = @Html.Raw(Json.Encode(ViewBag.thang9hd));
+            let tienThang10hd = @Html.Raw(Json.Encode(ViewBag.thang10hd));
+            let tienThang11hd = @Html.Raw(Json.Encode(ViewBag.thang11hd));
+            let tienThang12hd = @Html.Raw(Json.Encode(ViewBag.thang12hd));
+
+
+            let massPopChart = new Chart(myChart, {
+                type: 'bar',
+                data: {
+                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    datasets: [{
+                        label: 'Số Tiền',
+                        data: [tienThang1hd, tienThang2hd, tienThang3hd, tienThang4hd, tienThang5hd, tienThang6hd, tienThang7hd, tienThang8hd, tienThang9hd, tienThang10, tienThang11hd, tienThang12hd],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)',
+                            'rgba(23, 156, 80, 0.6)',
+                            'rgba(245, 187, 16, 0.6)',
+                            'rgba(100, 50, 200, 0.6)',
+                            'rgba(11, 184, 155, 0.6)',
+                            'rgba(221, 82, 81, 0.6)',
+                            'rgba(87, 128, 233, 0.6)'
+                        ],
+                        borderWidth: 1,
+                        borderColor: '#111',
+                        hoverBorderWidth: 2,
+                        hoverBorderColor: '#000'
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                       // text: 'Doanh Thu Theo ',
+                        fontSize: 25
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: {
+                            fontColor: '#000'
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 50,
+                            right: 0,
+                            bottom: 0,
+                            top: 0
+                        }
+                    },
+                    tooltips: {
+                        enabled: true
+                    }
+                }
+            });
+
+
+        let pieChart = document.getElementById('pieChart').getContext('2d');
+
+        let data = {
+
+           labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [{
+
+                data: [tienThang1, tienThang2, tienThang3, tienThang4, tienThang5, tienThang6, tienThang7, tienThang8, tienThang9, tienThang10, tienThang11, tienThang12],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(23, 156, 80, 0.6)',
+                    'rgba(245, 187, 16, 0.6)',
+                    'rgba(100, 50, 200, 0.6)',
+                    'rgba(11, 184, 155, 0.6)',
+                    'rgba(221, 82, 81, 0.6)',
+                    'rgba(87, 128, 233, 0.6)'
+                ],
+                borderWidth: 1,
+                borderColor: '#111',
+                hoverBorderWidth: 2,
+                hoverBorderColor: '#000'
+            }]
+        };
+
+        let options = {
+            title: {
+                display: true,
+                //  text: 'Biểu đồ hình tròn',
+                fontSize: 10
+            },
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true
+            }
+        };
+
+        let pieChartInstance = new Chart(pieChart, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    </script>
+
+
+</body>
+</html>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thống kê doanh thu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+
+</head>
+<body>
+
+
+
+    <h1 style="text-align:center">THỐNG KÊ DOANH THU </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <h3 style="text-align:left">Doanh Thu Theo Sản Phẩm: $@ViewBag.DoanhThu</h3>
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-md-4">
+                <h3 style="text-align:center">Doanh Thu Theo Dịch Vụ: $@ViewBag.TienDichVu</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        let myChart = document.getElementById('myChart').getContext('2d');
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 15;
+        Chart.defaults.global.defaultFontColor = '#777';
+
+        /*let massPopChart = new Chart(myChart, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                datasets:[] [{
+                    label: 'Số Tiền',
+
+                    data: [
+                        181045,
+                        153060,
+                        106519,
+                        105162,
+                        95072,
+                        87459,
+                        74531,
+                        87410,
+                        73460,
+                        75910,
+                        74510,
+                        87410
+                    ],
+                    //backgroundColor:'green',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(23, 156, 80, 0.6)',
+                        'rgba(245, 187, 16, 0.6)',
+                        'rgba(100, 50, 200, 0.6)',
+                        'rgba(11, 184, 155, 0.6)',
+                        'rgba(221, 82, 81, 0.6)',
+                        'rgba(87, 128, 233, 0.6)'
+
+                    ],
+                    borderWidth: 1,
+                    borderColor: '#111',
+                    hoverBorderWidth: 2,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    //  text: 'Largest Cities In Massachusetts',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+        */
+
+            let tienThang1 = @Html.Raw(Json.Encode(ViewBag.thang1));
+            let tienThang2 = @Html.Raw(Json.Encode(ViewBag.thang2));
+            let tienThang3 = @Html.Raw(Json.Encode(ViewBag.thang3));
+            let tienThang4 = @Html.Raw(Json.Encode(ViewBag.thang4));
+            let tienThang5= @Html.Raw(Json.Encode(ViewBag.thang5));
+            let tienThang6 = @Html.Raw(Json.Encode(ViewBag.thang6));
+            let tienThang7= @Html.Raw(Json.Encode(ViewBag.thang7));
+            let tienThang8 = @Html.Raw(Json.Encode(ViewBag.thang8));
+            let tienThang9= @Html.Raw(Json.Encode(ViewBag.thang9));
+            let tienThang10 = @Html.Raw(Json.Encode(ViewBag.thang10));
+            let tienThang11= @Html.Raw(Json.Encode(ViewBag.thang11));
+            let tienThang12 = @Html.Raw(Json.Encode(ViewBag.thang12));
+
+            let tienThang1hd = @Html.Raw(Json.Encode(ViewBag.thang1hd));
+            let tienThang2hd = @Html.Raw(Json.Encode(ViewBag.thang2hd));
+            let tienThang3hd = @Html.Raw(Json.Encode(ViewBag.thang3hd));
+            let tienThang4hd = @Html.Raw(Json.Encode(ViewBag.thang4hd));
+            let tienThang5hd = @Html.Raw(Json.Encode(ViewBag.thang5hd));
+            let tienThang6hd = @Html.Raw(Json.Encode(ViewBag.thang6hd));
+            let tienThang7hd = @Html.Raw(Json.Encode(ViewBag.thang7hd));
+            let tienThang8hd = @Html.Raw(Json.Encode(ViewBag.thang8hd));
+            let tienThang9hd = @Html.Raw(Json.Encode(ViewBag.thang9hd));
+            let tienThang10hd = @Html.Raw(Json.Encode(ViewBag.thang10hd));
+            let tienThang11hd = @Html.Raw(Json.Encode(ViewBag.thang11hd));
+            let tienThang12hd = @Html.Raw(Json.Encode(ViewBag.thang12hd));
+
+
+            let massPopChart = new Chart(myChart, {
+                type: 'bar',
+                data: {
+                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    datasets: [{
+                        label: 'Số Tiền',
+                        data: [tienThang1hd, tienThang2hd, tienThang3hd, tienThang4hd, tienThang5hd, tienThang6hd, tienThang7hd, tienThang8hd, tienThang9hd, tienThang10, tienThang11hd, tienThang12hd],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)',
+                            'rgba(23, 156, 80, 0.6)',
+                            'rgba(245, 187, 16, 0.6)',
+                            'rgba(100, 50, 200, 0.6)',
+                            'rgba(11, 184, 155, 0.6)',
+                            'rgba(221, 82, 81, 0.6)',
+                            'rgba(87, 128, 233, 0.6)'
+                        ],
+                        borderWidth: 1,
+                        borderColor: '#111',
+                        hoverBorderWidth: 2,
+                        hoverBorderColor: '#000'
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                       // text: 'Doanh Thu Theo ',
+                        fontSize: 25
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: {
+                            fontColor: '#000'
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 50,
+                            right: 0,
+                            bottom: 0,
+                            top: 0
+                        }
+                    },
+                    tooltips: {
+                        enabled: true
+                    }
+                }
+            });
+
+
+        let pieChart = document.getElementById('pieChart').getContext('2d');
+
+        let data = {
+
+           labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [{
+
+                data: [tienThang1, tienThang2, tienThang3, tienThang4, tienThang5, tienThang6, tienThang7, tienThang8, tienThang9, tienThang10, tienThang11, tienThang12],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(23, 156, 80, 0.6)',
+                    'rgba(245, 187, 16, 0.6)',
+                    'rgba(100, 50, 200, 0.6)',
+                    'rgba(11, 184, 155, 0.6)',
+                    'rgba(221, 82, 81, 0.6)',
+                    'rgba(87, 128, 233, 0.6)'
+                ],
+                borderWidth: 1,
+                borderColor: '#111',
+                hoverBorderWidth: 2,
+                hoverBorderColor: '#000'
+            }]
+        };
+
+        let options = {
+            title: {
+                display: true,
+                //  text: 'Biểu đồ hình tròn',
+                fontSize: 10
+            },
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#000'
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    bottom: 0,
+                    top: 0
+                }
+            },
+            tooltips: {
+                enabled: true
+            }
+        };
+
+        let pieChartInstance = new Chart(pieChart, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    </script>
+
+
+</body>
+</html>
