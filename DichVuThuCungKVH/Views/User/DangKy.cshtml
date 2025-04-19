@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "DangKy";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,69 +7,9 @@
     tr {
         height: 40px;
     }
-</style>
 
-
-<h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
-<table align="center">
-    <h2 style="text-align:center">ĐĂNG KÝ THÀNH VIÊN</h2>
-    @using (Html.BeginForm("DangKy", "User"))
-    {
-        @Html.ValidationSummary(true)
-        <tr>
-            <td>Họ tên:</td>
-            <td>@Html.TextBox("HoTen") @ViewData["err1"]</td>
-        </tr>
-
-        <tr>
-            <td>Tên đăng nhập:</td>
-            <td>@Html.TextBox("TenDN") @ViewData["err2"]</td>
-        </tr>
-
-        <tr>
-            <td>Mật khẩu:</td>
-            <td>@Html.Password("MatKhau") @ViewData["err3"]</td>
-        </tr>
-
-        <tr>
-            <td>Mật khẩu nhập lại:</td>
-            <td>@Html.Password("MatKhauNL") @ViewData["err4"]</td>
-        </tr>
-
-        <tr>
-            <td>Email:</td>
-            <td>@Html.TextBox("Email") @ViewData["err5"]</td>
-        </tr>
-
-        <tr>
-            <td>Điện thoại:</td>
-            <td>@Html.TextBox("DienThoai") @ViewData["err6"]</td>
-        </tr>
-
-        <tr>
-            <td>Ngày sinh:</td>
-            <td><input type="date" name="NgaySinh" /></td>
-        </tr>
-
-        <tr>
-            <td>Địa chỉ:</td>
-            <td><input type="text" name="DiaChi" /></td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Đăng ký" />  <input type="reset" value="Xóa
-Thông Tin" />
-            </td>
-        </tr>
-    }
-</table>
-
-<style type="text/css">
     table {
-        width: 60px;
-        height:150px;
+        width: 60%;
         margin: auto;
         border-collapse: collapse;
         border-spacing: 0;
@@ -119,4 +58,116 @@ Thông Tin" />
         border: none;
         border-radius: 1px;
     }
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 </style>
+
+<div style="text-align: center; margin-top: 20px;">
+    <button onclick="openModal()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Đăng ký</button>
+</div>
+
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
+        <table>
+            <h2>ĐĂNG KÝ THÀNH VIÊN</h2>
+            @using (Html.BeginForm("DangKy", "User"))
+            {
+                @Html.ValidationSummary(true)
+                <tr>
+                    <td>Họ tên:</td>
+                    <td>@Html.TextBox("HoTen") @ViewData["err1"]</td>
+                </tr>
+                <tr>
+                    <td>Tên đăng nhập:</td>
+                    <td>@Html.TextBox("TenDN") @ViewData["err2"]</td>
+                </tr>
+                <tr>
+                    <td>Mật khẩu:</td>
+                    <td>@Html.Password("MatKhau") @ViewData["err3"]</td>
+                </tr>
+                <tr>
+                    <td>Mật khẩu nhập lại:</td>
+                    <td>@Html.Password("MatKhauNL") @ViewData["err4"]</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>@Html.TextBox("Email") @ViewData["err5"]</td>
+                </tr>
+                <tr>
+                    <td>Điện thoại:</td>
+                    <td>@Html.TextBox("DienThoai") @ViewData["err6"]</td>
+                </tr>
+                <tr>
+                    <td>Ngày sinh:</td>
+                    <td><input type="date" name="NgaySinh" /></td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ:</td>
+                    <td><input type="text" name="DiaChi" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Đăng ký" />
+                        <input type="reset" value="Xóa Thông Tin" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById("registerModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("registerModal").style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById("registerModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
