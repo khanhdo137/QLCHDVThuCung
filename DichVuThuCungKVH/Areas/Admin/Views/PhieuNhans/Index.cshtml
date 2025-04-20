@@ -1,94 +1,105 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Phiếu Nhận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh Sách Phiếu Nhận</h6>
+            <a href="@Url.Action("Create")" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm Mới
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Thú Cưng</th>
+                            <th>Ngày Nhận</th>
+                            <th>Tình Trạng Trước</th>
+                            <th>Tình Trạng Sau</th>
+                            <th>Trạng Thái Dịch Vụ</th>
+                            <th>Ghi Chú</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="fas fa-paw text-primary me-2"></i>
+                                    @Html.DisplayFor(modelItem => item.ThuCung.TenTC)
+                                </td>
+                                <td>
+                                    <i class="fas fa-calendar text-primary me-2"></i>
+                                    @Html.DisplayFor(modelItem => item.NgayNhan)
+                                </td>
+                                <td>
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    @Html.DisplayFor(modelItem => item.TinhTrangTruocTiepNhan)
+                                </td>
+                                <td>
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    @Html.DisplayFor(modelItem => item.TinhTrangSauTiepNhan)
+                                </td>
+                                <td>
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    @Html.DisplayFor(modelItem => item.TinhTrangDichVu)
+                                </td>
+                                <td>
+                                    <i class="fas fa-sticky-note text-primary me-2"></i>
+                                    @(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_@item.MaPhieu" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-cog"></i> Thao tác
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.MaPhieu">
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Details", new { id = item.MaPhieu })">
+                                                    <i class="fas fa-eye text-info"></i> Xem chi tiết
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Edit", new { id = item.MaPhieu })">
+                                                    <i class="fas fa-edit text-primary"></i> Sửa thông tin
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Delete", new { id = item.MaPhieu })">
+                                                    <i class="fas fa-trash text-danger"></i> Xóa
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangTruocTiepNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangSauTiepNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiGiao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangDichVu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayTra)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiTra)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SuDungDichVu.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThuCung.TenTC)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangTruocTiepNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangSauTiepNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiGiao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangDichVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayTra)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiTra)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SuDungDichVu.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThuCung.TenTC)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieu }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaPhieu }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieu })
-        </td>
-    </tr>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[1, 'desc']],
+                columnDefs: [
+                    { orderable: false, targets: 6 } // Không cho phép sắp xếp cột thao tác
+                ]
+            });
+        });
+    </script>
 }
-
-</table>

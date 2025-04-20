@@ -1,136 +1,138 @@
 ﻿@model DichVuThuCungKVH.Model.PhieuNhan
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Tạo Phiếu Nhận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm("Create", "PhieuNhans", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>PhieuNhan</h4>
-
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaTC, "MaTC", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaTC", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaTC, "", new { @class = "text-danger" })
-            </div>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Tạo Phiếu Nhận Mới</h6>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
         </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaSDDV, "MaSDDV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.MaSDDV)
-                <strong>@ViewBag.MaSDDV</strong>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.MaTC, "Thú Cưng", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-paw"></i></span>
+                                @Html.DropDownList("MaTC", null, "Chọn thú cưng", new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaTC, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangTruocTiepNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="fileTinhTrangTruocTiepNhan" id="fileTinhTrangTruocTiepNhan" onchange="previewImage('fileTinhTrangTruocTiepNhan', 'previewTinhTrangTruocTiepNhan')" />
-                <img id="previewTinhTrangTruocTiepNhan" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;" />
-                @Html.ValidationMessageFor(model => model.TinhTrangTruocTiepNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.MaSDDV, "Lượt Sử Dụng Dịch Vụ", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                @Html.DropDownList("MaSDDV", null, "Chọn lượt sử dụng", new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaSDDV, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangSauTiepNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="fileTinhTrangSauTiepNhan" id="fileTinhTrangSauTiepNhan" onchange="previewImage('fileTinhTrangSauTiepNhan', 'previewTinhTrangSauTiepNhan')" />
-                <img id="previewTinhTrangSauTiepNhan" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;" />
-                @Html.ValidationMessageFor(model => model.TinhTrangSauTiepNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.TinhTrangTruocTiepNhan, "Tình Trạng Trước Tiếp Nhận", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                                @Html.EditorFor(model => model.TinhTrangTruocTiepNhan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tình trạng trước tiếp nhận" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TinhTrangTruocTiepNhan, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiGiao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiGiao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiGiao, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.NguoiGiao, "Người Giao", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                @Html.EditorFor(model => model.NguoiGiao, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên người giao" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.NguoiGiao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.NgayNhan, "Ngày Nhận", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                @Html.EditorFor(model => model.NgayNhan, new { htmlAttributes = new { @class = "form-control datetimepicker", @Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.NgayNhan, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangDichVu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TinhTrangDichVu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TinhTrangDichVu, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.TinhTrangDichVu, "Tình Trạng Dịch Vụ", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tasks"></i></span>
+                                @Html.EditorFor(model => model.TinhTrangDichVu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tình trạng dịch vụ" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TinhTrangDichVu, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayNhan, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.NgayNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.NguoiNhan, "Người Nhận", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                @Html.EditorFor(model => model.NguoiNhan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên người nhận" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.NguoiNhan, "", new { @class = "text-danger" })
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayTra, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.GhiChu, "Ghi Chú", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+                                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ghi chú (nếu có)" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiTra, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiTra, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiTra, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Hủy
+                    </a>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-<script>
-    function previewImage(inputId, imageId) {
-        var input = document.getElementById(inputId);
-        var image = document.getElementById(imageId);
 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo datetime picker
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                icons: {
+                    time: 'fas fa-clock',
+                    date: 'fas fa-calendar',
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right',
+                    today: 'fas fa-calendar-check',
+                    clear: 'fas fa-trash',
+                    close: 'fas fa-times'
+                }
+            });
 
-            reader.onload = function (e) {
-                image.src = e.target.result;
-                image.style.display = 'block';  // Hiển thị ảnh
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
+            // Khởi tạo select2 cho dropdown
+            $('#MaTC, #MaSDDV').select2({
+                placeholder: "Chọn thú cưng/dịch vụ",
+                allowClear: true
+            });
+        });
+    </script>
+}
