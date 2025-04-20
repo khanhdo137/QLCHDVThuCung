@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "my-mcp-server-f52a629b": {
+      "type": "sse",
+      "url": "https://localhost:44302/Admin/KhachHangs"
+    }
+  }
+}

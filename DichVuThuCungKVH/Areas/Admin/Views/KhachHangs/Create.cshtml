@@ -1,50 +1,144 @@
-﻿@model DichVuThuCungKVH.Model.SuDungDichVu
+﻿@model DichVuThuCungKVH.Model.KhachHang
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm Khách Hàng Mới";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
-
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Thêm Khách Hàng Mới</h4>
+                </div>
+                <div class="card-body">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        <h4>SuDungDichVu</h4>
-        <hr />
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenKH, "Họ và Tên", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập họ và tên khách hàng" } })
+                                    @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-        @Html.HiddenFor(model => model.MaKH)
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NgaySinh, "Ngày Sinh", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SDT, "Số Điện Thoại", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số điện thoại" } })
+                                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, "Email", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập địa chỉ email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiaChi, "Địa Chỉ", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập địa chỉ" } })
+                                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.GioiTinh, "Giới Tính", new { @class = "form-label fw-bold" })
+                                    <div class="form-check">
+                                        @Html.RadioButtonFor(model => model.GioiTinh, true, new { @class = "form-check-input", id = "nam" })
+                                        <label class="form-check-label" for="nam">Nam</label>
+                                    </div>
+                                    <div class="form-check">
+                                        @Html.RadioButtonFor(model => model.GioiTinh, false, new { @class = "form-check-input", id = "nu" })
+                                        <label class="form-check-label" for="nu">Nữ</label>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MaTK, "Tài Khoản", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("MaTK", null, "-- Chọn tài khoản --", new { @class = "form-select" })
+                                    @Html.ValidationMessageFor(model => model.MaTK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ThoiGianDangKy, "Thời Gian Đăng Ký", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.ThoiGianDangKy, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                                    @Html.ValidationMessageFor(model => model.ThoiGianDangKy, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
         <div class="form-group">
-            @Html.LabelFor(model => model.Ngay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.TinhTrangLienHe, "Tình Trạng Liên Hệ", new { @class = "form-label fw-bold" })
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" name="TinhTrangLienHe" value="true" class="form-check-input" id="tinhTrangLienHe" />
+                                        <label class="form-check-label" for="tinhTrangLienHe">Đang hoạt động</label>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.TinhTrangLienHe, "", new { @class = "text-danger" })
             </div>
         </div>
 
+                            <div class="col-12 mb-3">
         <div class="form-group">
-            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.LabelFor(model => model.GhiChu, "Ghi Chú", new { @class = "form-label fw-bold" })
+                                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "3", placeholder = "Nhập ghi chú (nếu có)" })
                 @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Quay Lại
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Lưu Thông Tin
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "LuotSDDV", new { id = ViewBag.MaKH })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Set default date for ThoiGianDangKy to current date and time
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var day = String(now.getDate()).padStart(2, '0');
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            var formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            $("#ThoiGianDangKy").val(formattedDateTime);
+        });
+    </script>
 }

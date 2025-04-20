@@ -1,99 +1,98 @@
 ﻿@model DichVuThuCungKVH.Model.KhachHang
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi Tiết Khách Hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-user me-2"></i>Chi Tiết Khách Hàng</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Họ và Tên</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.TenKH)</p>
+                            </div>
 
-<div>
-    <h4>KhachHang</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenKH)
-        </dt>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ngày Sinh</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.NgaySinh)</p>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenKH)
-        </dd>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Số Điện Thoại</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.SDT)</p>
+                            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </dt>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.Email)</p>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgaySinh)
-        </dd>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tài Khoản</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.TaiKhoan.TenTK)</p>
+                            </div>
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SDT)
-        </dt>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Địa Chỉ</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.DiaChi)</p>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SDT)
-        </dd>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Giới Tính</label>
+                                <p class="form-control-static">@(Model.GioiTinh == true ? "Nam" : "Nữ")</p>
+                            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </dt>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Thời Gian Đăng Ký</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.ThoiGianDangKy)</p>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DiaChi)
-        </dd>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tình Trạng Liên Hệ</label>
+                                <p class="form-control-static">
+                                    @if (Model.TinhTrangLienHe == true)
+                                    {
+                                        <span class="badge bg-success">Đang hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Không hoạt động</span>
+                                    }
+                                </p>
+                            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GioiTinh)
-        </dt>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ghi Chú</label>
+                                <p class="form-control-static">@Html.DisplayFor(model => model.GhiChu)</p>
+                            </div>
+                        </div>
+                    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.GioiTinh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThoiGianDangKy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThoiGianDangKy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhTrangLienHe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TinhTrangLienHe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GhiChu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TaiKhoan.TenTK)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaiKhoan.TenTK)
-        </dd>
-
-    </dl>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="@Url.Action("Index")" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Quay Lại
+                        </a>
+                        <div>
+                            <a href="@Url.Action("Edit", new { id = Model.MaKH })" class="btn btn-primary">
+                                <i class="fas fa-edit me-2"></i>Sửa Thông Tin
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = Model.MaKH })" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Xóa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaKH }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -1,49 +1,79 @@
 ﻿@model DichVuThuCungKVH.Model.SuDungDichVu
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm Lượt Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>SuDungDichVu</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @Html.HiddenFor(model => model.MaKH, new { @Value = ViewBag.MaKH })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ngay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") } })
-                @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
-            </div>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Thêm Lượt Sử Dụng Dịch Vụ</h6>
+            <a href="@Url.Action("LuotSDDV", new { id = ViewBag.MaKH })" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
         </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.MaKH, new { @Value = ViewBag.MaKH })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.Ngay, "Ngày Sử Dụng", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <!-- Thêm các trường khác của model tại đây -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.GhiChu, "Ghi Chú", new { @class = "form-label" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+                                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ghi chú (nếu có)" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
+                    <a href="@Url.Action("LuotSDDV", new { id = ViewBag.MaKH })" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Hủy
+                    </a>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to list", "LuotSDDV", new { id = ViewBag.MaKH })
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo datetime picker
+            $('#Ngay').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                icons: {
+                    time: 'fas fa-clock',
+                    date: 'fas fa-calendar',
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right',
+                    today: 'fas fa-calendar-check',
+                    clear: 'fas fa-trash',
+                    close: 'fas fa-times'
+                }
+            });
+        });
+    </script>
+}
