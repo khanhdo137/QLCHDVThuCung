@@ -22,53 +22,40 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
             return View(phieuNhans.ToList());
         }
 
-        public ActionResult Create(int? maSDDV)
+        public ActionResult Create()
         {
-            if (maSDDV == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            ViewBag.MaSDDV = maSDDV;
-
-            // Use SelectListItems to populate dropdown lists
             ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC");
-
+            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PhieuNhan phieuNhan, HttpPostedFileBase fileTinhTrangTruocTiepNhan, HttpPostedFileBase fileTinhTrangSauTiepNhan)
+        public ActionResult Create([Bind(Include = "MaTC,MaSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,NguoiGiao,NguoiNhan,NgayNhan,TinhTrangDichVu,NgayTra,NguoiTra,GhiChu")] PhieuNhan phieuNhan)
         {
             if (ModelState.IsValid)
             {
-                // Xử lý file ảnh TinhTrangTruocTiepNhan
-                if (fileTinhTrangTruocTiepNhan != null && fileTinhTrangTruocTiepNhan.ContentLength > 0)
+                try
                 {
-                    var fileName = Path.GetFileName(fileTinhTrangTruocTiepNhan.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Images/TinhTrangTruocTiepNhan/"), fileName);
-                    fileTinhTrangTruocTiepNhan.SaveAs(path);
-                    phieuNhan.TinhTrangTruocTiepNhan = fileName;
-                }
+                    // Set default values
+                    phieuNhan.NgayNhan = DateTime.Now;
+                    phieuNhan.TinhTrangSauTiepNhan = "Đang xử lý";
+                    phieuNhan.TinhTrangDichVu = "Chưa hoàn thành";
 
-                // Xử lý file ảnh TinhTrangSauTiepNhan
-                if (fileTinhTrangSauTiepNhan != null && fileTinhTrangSauTiepNhan.ContentLength > 0)
+                    db.PhieuNhans.Add(phieuNhan);
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "Tạo phiếu nhận thành công!";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
                 {
-                    var fileName = Path.GetFileName(fileTinhTrangSauTiepNhan.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Images/TinhTrangSauTiepNhan/"), fileName);
-                    fileTinhTrangSauTiepNhan.SaveAs(path);
-                    phieuNhan.TinhTrangSauTiepNhan = fileName;
+                    ModelState.AddModelError("", "Có lỗi xảy ra khi tạo phiếu nhận: " + ex.Message);
                 }
-
-                db.PhieuNhans.Add(phieuNhan);
-                db.SaveChanges();
-
-                return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaSDDV });
             }
 
-            ViewBag.MaSDDV = phieuNhan.MaSDDV;
             ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV", phieuNhan.MaSDDV);
             return View(phieuNhan);
         }
 
