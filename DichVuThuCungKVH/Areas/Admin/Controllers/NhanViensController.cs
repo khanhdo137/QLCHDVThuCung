@@ -257,14 +257,14 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         {
             try
             {
-                var phieuNhan = _context.PhieuNhans.Find(id);
+                var phieuNhan = db.PhieuNhans.Find(id);
                 if (phieuNhan == null)
                 {
                     return Json(new { success = false, message = "Phiếu nhận không tồn tại." });
                 }
 
-                _context.PhieuNhans.Remove(phieuNhan);
-                _context.SaveChanges();
+                db.PhieuNhans.Remove(phieuNhan);
+                db.SaveChanges();
 
                 return Json(new { success = true });
             }
