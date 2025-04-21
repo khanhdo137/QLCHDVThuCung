@@ -1,98 +1,93 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .login-container {
-        width: 350px;
-        margin: 50px auto;
-        padding: 30px;
-        background-color: #f8f8f8;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        font-family: Arial, sans-serif;
+<style type="text/css">
+    td {
+        height: 40px;
+    }
+</style>
+<h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
+<h2 style="text-align:center;">ĐĂNG NHẬP</h2>
+<table align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr>
+            <td>Tên đăng nhập: </td>
+            <td>
+                @Html.TextBox("TenDN")
+                @ViewData["Err1"]
+            </td>
+        </tr>
+        <tr>
+            <td>Mật khẩu: </td>
+            <td>
+                @Html.Password("MatKhau") @ViewBag.Err2
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Đăng nhập" />
+            </td>
+        </tr>
+    }
+</table>
+
+<style type="text/css">
+    table {
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
 
-        .login-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    th, td {
+        padding: 5px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
 
-        .login-container h4 {
-            text-align: center;
-            color: red;
-            margin-bottom: 15px;
-        }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
 
-        .login-container table {
-            width: 100%;
-        }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
 
-        .login-container td {
-            padding: 10px 0;
-        }
-
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
-        .login-container input[type="submit"] {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-            .login-container input[type="submit"]:hover {
-                background-color: #45a049;
-            }
-
-    .error-message {
+    h4 {
+        text-align: center;
         color: red;
-        font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
     }
 </style>
 
-<div class="login-container">
-    <h4>@ViewBag.ThongBao</h4>
-    <h2>ĐĂNG NHẬP</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true, "", new { @class = "error-message" })
-        <table>
-            <tr>
-                <td>Tên đăng nhập:</td>
-                <td>
-                    @Html.TextBox("TenDN")
-                    <div class="error-message">@ViewData["Err1"]</div>
-                </td>
-            </tr>
-            <tr>
-                <td>Mật khẩu:</td>
-                <td>
-                    @Html.Password("MatKhau")
-                    <div class="error-message">@ViewBag.Err2</div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Đăng nhập" />
-                </td>
-            </tr>
-        </table>
-    }
-</div>
