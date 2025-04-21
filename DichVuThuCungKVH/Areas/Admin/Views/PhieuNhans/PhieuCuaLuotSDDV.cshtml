@@ -69,8 +69,8 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangTruocTiepNhan))
                                         {
-                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Trước Tiếp Nhận">
-                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                            <a href="@Url.Content("~" + phieuNhan.TinhTrangTruocTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Trước Tiếp Nhận">
+                                                <img src="@phieuNhan.TinhTrangTruocTiepNhan" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" onerror="this.onerror=null;this.src='/Images/no-image.png';" />
                                             </a>
                                         }
                                         else
@@ -81,8 +81,8 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangSauTiepNhan))
                                         {
-                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Sau Tiếp Nhận">
-                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                            <a href="@Url.Content("~" + phieuNhan.TinhTrangSauTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Sau Tiếp Nhận">
+                                                <img src="@phieuNhan.TinhTrangSauTiepNhan" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" onerror="this.onerror=null;this.src='/Images/no-image.png';" />
                                             </a>
                                         }
                                         else
@@ -134,10 +134,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="@Url.Action("ChinhSuaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-primary btn-sm" title="Chỉnh sửa">
+                                            <a href="@Url.Action("Edit", "PhieuNhans", new { id = phieuNhan.MaPhieu })" class="btn btn-primary btn-sm" title="Chỉnh sửa">
                                                 <i class="fas fa-edit"></i> Chỉnh sửa
                                             </a>
-                                            <a href="@Url.Action("XoaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
+                                            <a href="@Url.Action("Delete", "PhieuNhans", new { id = phieuNhan.MaPhieu })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
                                                 <i class="fas fa-trash"></i> Xóa
                                             </a>
                                         </div>

@@ -24,38 +24,63 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC");
-            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV");
-            return View();
+            try
+            {
+                ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC");
+                ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV");
+                
+                var nhanViens = db.NhanViens.ToList();
+                if (nhanViens.Any())
+                {
+                    ViewBag.NhanVienList = new SelectList(nhanViens, "MaNV", "TenNV");
+                }
+                else
+                {
+                    ViewBag.NhanVienList = new SelectList(new List<NhanVien>(), "MaNV", "TenNV");
+                }
+                
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                System.Diagnostics.Debug.WriteLine("Error in Create action: " + ex.Message);
+                ModelState.AddModelError("", "Có lỗi xảy ra khi tải danh sách nhân viên: " + ex.Message);
+                return View();
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaTC,MaSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,NguoiGiao,NguoiNhan,NgayNhan,TinhTrangDichVu,NgayTra,NguoiTra,GhiChu")] PhieuNhan phieuNhan)
+        public ActionResult Create([Bind(Include = "MaPhieu,MaLuotSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,MaNhanVien")] PhieuNhan phieuNhan, HttpPostedFileBase TinhTrangTruocTiepNhan)
         {
             if (ModelState.IsValid)
             {
-                try
+                if (TinhTrangTruocTiepNhan != null && TinhTrangTruocTiepNhan.ContentLength > 0)
                 {
-                    // Set default values
-                    phieuNhan.NgayNhan = DateTime.Now;
-                    phieuNhan.TinhTrangSauTiepNhan = "Đang xử lý";
-                    phieuNhan.TinhTrangDichVu = "Chưa hoàn thành";
-
-                    db.PhieuNhans.Add(phieuNhan);
-                    db.SaveChanges();
-
-                    TempData["SuccessMessage"] = "Tạo phiếu nhận thành công!";
-                    return RedirectToAction("Index");
+                    var fileName = Path.GetFileName(TinhTrangTruocTiepNhan.FileName);
+                    var uniqueFileName = $"{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
+                    var uploadPath = "/Images/PhieuNhan";
+                    var serverPath = Server.MapPath(uploadPath);
+                    
+                    if (!Directory.Exists(serverPath))
+                    {
+                        Directory.CreateDirectory(serverPath);
+                    }
+                    
+                    var filePath = Path.Combine(serverPath, uniqueFileName);
+                    TinhTrangTruocTiepNhan.SaveAs(filePath);
+                    
+                    phieuNhan.TinhTrangTruocTiepNhan = $"{uploadPath}/{uniqueFileName}";
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "Có lỗi xảy ra khi tạo phiếu nhận: " + ex.Message);
-                }
+
+                db.PhieuNhans.Add(phieuNhan);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
-            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV", phieuNhan.MaSDDV);
+            ViewBag.MaLuotSDDV = new SelectList(db.LuotSuDungDichVus, "MaLuotSDDV", "MaLuotSDDV", phieuNhan.MaLuotSDDV);
+            ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "HoTen", phieuNhan.MaNhanVien);
             return View(phieuNhan);
         }
 
@@ -88,23 +113,43 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.MaLuotSDDV = new SelectList(db.LuotSuDungDichVus, "MaLuotSDDV", "MaLuotSDDV", phieuNhan.MaLuotSDDV);
+            ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNV", "TenNV", phieuNhan.MaNhanVien);
             return View(phieuNhan);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PhieuNhan phieuNhan)
+        public ActionResult Edit([Bind(Include = "MaPhieu,MaLuotSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,MaNhanVien")] PhieuNhan phieuNhan, HttpPostedFileBase TinhTrangTruocTiepNhan)
         {
             if (ModelState.IsValid)
             {
+                if (TinhTrangTruocTiepNhan != null && TinhTrangTruocTiepNhan.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(TinhTrangTruocTiepNhan.FileName);
+                    var uniqueFileName = $"{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
+                    var uploadPath = "/Images/PhieuNhan";
+                    var serverPath = Server.MapPath(uploadPath);
+                    
+                    if (!Directory.Exists(serverPath))
+                    {
+                        Directory.CreateDirectory(serverPath);
+                    }
+                    
+                    var filePath = Path.Combine(serverPath, uniqueFileName);
+                    TinhTrangTruocTiepNhan.SaveAs(filePath);
+                    
+                    phieuNhan.TinhTrangTruocTiepNhan = $"{uploadPath}/{uniqueFileName}";
+                }
+
                 db.Entry(phieuNhan).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaSDDV });
+                return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaLuotSDDV });
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.MaLuotSDDV = new SelectList(db.LuotSuDungDichVus, "MaLuotSDDV", "MaLuotSDDV", phieuNhan.MaLuotSDDV);
+            ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNV", "TenNV", phieuNhan.MaNhanVien);
             return View(phieuNhan);
         }
 

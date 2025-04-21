@@ -6,62 +6,68 @@
 }
 
 <div class="container-fluid px-4">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Danh Sách Lượt Sử Dụng Dịch Vụ</h6>
-            <a href="@Url.Action("Create")" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Thêm Mới
+    <div class="card shadow-lg mb-4 border-0 rounded-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-gradient-primary text-white">
+            <h6 class="m-0 font-weight-bold">
+                <i class="fas fa-clipboard-list me-2"></i>Danh Sách Lượt Sử Dụng Dịch Vụ
+            </h6>
+            <a href="@Url.Action("Index", "KhachHangs")" class="btn btn-light btn-sm hover-shadow">
+                <i class="fas fa-plus me-1"></i> Thêm Mới
             </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="table-light">
+                <table class="table table-hover align-middle" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="bg-light">
                         <tr>
-                            <th>Ngày Sử Dụng</th>
-                            <th>Ghi Chú</th>
-                            <th>Khách Hàng</th>
-                            <th>Thao Tác</th>
+                            <th class="text-primary">Ngày Sử Dụng</th>
+                            <th class="text-primary">Ghi Chú</th>
+                            <th class="text-primary">Khách Hàng</th>
+                            <th class="text-primary text-center">Thao Tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            <tr class="hover-row">
                                 <td>
-                                    <i class="fas fa-calendar text-primary me-2"></i>
-                                    @Html.DisplayFor(modelItem => item.Ngay)
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar text-primary me-2"></i>
+                                        <span>@Html.DisplayFor(modelItem => item.Ngay)</span>
+                                    </div>
                                 </td>
                                 <td>
-                                    <i class="fas fa-sticky-note text-primary me-2"></i>
-                                    @(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-sticky-note text-primary me-2"></i>
+                                        <span class="text-truncate" style="max-width: 200px;" title="@(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)">
+                                            @(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)
+                                        </span>
+                                    </div>
                                 </td>
                                 <td>
-                                    <i class="fas fa-user text-primary me-2"></i>
-                                    @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-user text-primary me-2"></i>
+                                        <span>@Html.DisplayFor(modelItem => item.KhachHang.TenKH)</span>
+                                    </div>
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_@item.MaSDDV" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-cog"></i> Thao tác
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="@Url.Action("Details", new { id = item.MaSDDV })" class="btn btn-info btn-sm action-btn" title="Xem chi tiết">
+                                            <i class="fas fa-eye me-1"></i>
+                                            <span>Chi tiết</span>
+                                        </a>
+                                        <a href="@Url.Action("Edit", new { id = item.MaSDDV })" class="btn btn-primary btn-sm action-btn" title="Sửa thông tin">
+                                            <i class="fas fa-edit me-1"></i>
+                                            <span>Sửa</span>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm action-btn delete-btn" 
+                                                data-id="@item.MaSDDV" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteModal"
+                                                title="Xóa">
+                                            <i class="fas fa-trash me-1"></i>
+                                            <span>Xóa</span>
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_@item.MaSDDV">
-                                            <li>
-                                                <a class="dropdown-item" href="@Url.Action("Details", new { id = item.MaSDDV })">
-                                                    <i class="fas fa-eye text-info"></i> Xem chi tiết
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="@Url.Action("Edit", new { id = item.MaSDDV })">
-                                                    <i class="fas fa-edit text-primary"></i> Sửa thông tin
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="@Url.Action("Delete", new { id = item.MaSDDV })">
-                                                    <i class="fas fa-trash text-danger"></i> Xóa
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </td>
                             </tr>
@@ -73,6 +79,74 @@
     </div>
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa lượt sử dụng dịch vụ này?</p>
+                <p class="text-danger">Lưu ý: Nếu lượt sử dụng dịch vụ này đã có phiếu nhận, bạn cần xóa phiếu nhận trước.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form id="deleteForm" method="post" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-shadow {
+        transition: all 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .hover-row {
+        transition: all 0.2s ease;
+    }
+    .hover-row:hover {
+        background-color: rgba(0,0,0,0.02);
+    }
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #4e73df 0%, #224abe 100%);
+    }
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .action-btn {
+        min-width: 90px;
+        height: 32px;
+        padding: 0 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        font-size: 13px;
+    }
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .action-btn i {
+        font-size: 14px;
+    }
+    .action-btn span {
+        white-space: nowrap;
+    }
+</style>
+
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -83,12 +157,30 @@
                 order: [[0, 'desc']],
                 columnDefs: [
                     { orderable: false, targets: 3 }
-                ]
+                ],
+                pageLength: 10,
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                drawCallback: function() {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-sm');
+                }
             });
 
-            $('[title]').tooltip({
-                placement: 'top',
-                trigger: 'hover'
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    trigger: 'hover',
+                    placement: 'top'
+                })
+            });
+
+            // Handle delete confirmation
+            let deleteId = null;
+            
+            // When delete button is clicked
+            $('.delete-btn').on('click', function() {
+                deleteId = $(this).data('id');
+                $('#deleteForm').attr('action', '@Url.Action("Delete")/' + deleteId);
             });
         });
     </script>
