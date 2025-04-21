@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.SanPham>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Sản Phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2 class="text-center">QUẢN LÝ SẢN PHẨM</h2>
+<h2 class="text-center">Quản Lý Sản Phẩm</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,24 +13,26 @@
 <table class="table">
     <tr>
         <th>
-            <p>Tên sản phẩm</p>
+            Tên Sản Phẩm
         </th>
         <th>
-            <p>Hình ảnh</p>
+            Hình Ảnh
         </th>
         <th>
-            <p>Loại Sản Phẩm</p>
+            Loại Sản Phẩm
         </th>
         <th>
-            <p>Giá bán</p>
+            Giá Bán
         </th>
         <th>
-            <p>Mô tả sản phẩm</p>
+            Mô Tả Sản Phẩm
         </th>
         <th>
-            <p>Số lượng</p>
+            Số Lượng Còn Lại
         </th>
-        <th></th>
+        <th>
+            Hành Động
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -40,13 +42,13 @@
                 @Html.DisplayFor(modelItem => item.TenSP)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Anh)
+                <img src="~/Images/SanPham/@Html.DisplayFor(modelItem => item.Anh)" alt="@Html.DisplayFor(modelItem => item.TenSP)" style="max-width: 100px; max-height: 100px;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LoaiSP)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GiaBan)
+                @Html.DisplayFor(modelItem => item.GiaBan) VNĐ
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MoTaSP)

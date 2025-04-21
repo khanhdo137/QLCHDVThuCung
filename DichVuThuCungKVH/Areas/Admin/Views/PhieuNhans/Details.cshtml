@@ -1,57 +1,57 @@
 ﻿@model DichVuThuCungKVH.Model.PhieuNhan
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi Tiết Phiếu Nhận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4">Details</h2>
+    <h2 class="mb-4">Chi Tiết Phiếu Nhận</h2>
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">PhieuNhan</h4>
+            <h4 class="card-title">Thông Tin Phiếu Nhận</h4>
             <hr />
 
             <dl class="row">
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TinhTrangTruocTiepNhan)</dt>
+                <dt class="col-sm-3">Tình Trạng Trước Tiếp Nhận</dt>
                 <dd class="col-sm-9">
                     @if (!string.IsNullOrEmpty(Model.TinhTrangTruocTiepNhan))
                     {
-                        <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + Model.TinhTrangTruocTiepNhan)" alt="Image" class="img-thumbnail" />
+                        <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + Model.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class=" آزادیimg-thumbnail" style="max-width: 200px; max-height: 200px;" />
                     }
                 </dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TinhTrangSauTiepNhan)</dt>
+                <dt class="col-sm-3">Tình Trạng Sau Tiếp Nhận</dt>
                 <dd class="col-sm-9">
                     @if (!string.IsNullOrEmpty(Model.TinhTrangSauTiepNhan))
                     {
-                        <img src="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + Model.TinhTrangSauTiepNhan)" alt="Image" class="img-thumbnail" />
+                        <img src="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + Model.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
                     }
                 </dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NguoiGiao)</dt>
+                <dt class="col-sm-3">Người Giao</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.NguoiGiao)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NguoiNhan)</dt>
+                <dt class="col-sm-3">Người Nhận</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.NguoiNhan)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NgayNhan)</dt>
+                <dt class="col-sm-3">Ngày Nhận</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayNhan)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TinhTrangDichVu)</dt>
+                <dt class="col-sm-3">Tình Trạng Dịch Vụ</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.TinhTrangDichVu)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NgayTra)</dt>
+                <dt class="col-sm-3">Ngày Trả</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayTra)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.NguoiTra)</dt>
+                <dt class="col-sm-3">Người Trả</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.NguoiTra)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.GhiChu)</dt>
+                <dt class="col-sm-3">Ghi Chú</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.GhiChu)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ThuCung.TenTC)</dt>
+                <dt class="col-sm-3">Tên Thú Cưng</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.ThuCung.TenTC)</dd>
             </dl>
         </div>

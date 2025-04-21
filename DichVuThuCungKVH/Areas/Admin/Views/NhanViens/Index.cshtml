@@ -1,82 +1,84 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.NhanVien>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh Sách Nhân Viên";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Danh Sách Nhân Viên</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TenNV)
+            Tên Nhân Viên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ChucVu)
+            Chức Vụ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ChiNhanh)
+            Chi Nhánh
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NgaySinh)
+            Ngày Sinh
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SDT)
+            Số Điện Thoại
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DiaChi)
+            Địa Chỉ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GioiTinh)
+            Giới Tính
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TaiKhoan.TenTK)
+            Tên Tài Khoản
         </th>
-        <th></th>
+        <th>
+            Hành Động
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenNV)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChucVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChiNhanh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgaySinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SDT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiaChi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioiTinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaNV }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaNV }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaNV })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChucVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChiNhanh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @(item.GioiTinh == true ? "Nam" : "Nữ")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaNV }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaNV }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaNV }, new { @class = "btn btn-danger", onclick = "return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');" })
+            </td>
+        </tr>
+    }
 </table>

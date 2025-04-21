@@ -343,6 +343,7 @@
     <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\ChiTietPhieu.cshtml" />
     <Content Include="Areas\Admin\Views\DoanhThu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\XoaPhieuNhan.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

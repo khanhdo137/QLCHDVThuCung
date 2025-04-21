@@ -1,119 +1,82 @@
-﻿@{
-    ViewBag.Title = "ChinhSuaPhieuNhan";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-}
-
-@model DichVuThuCungKVH.Model.PhieuNhan
+﻿@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
 
 @{
-    ViewBag.Title = "Chỉnh Sửa Phiếu Nhận";
+    ViewBag.Title = "Danh Sách Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Chỉnh Sửa Phiếu Nhận</h2>
+<h2 class="mt-4 mb-4 text-primary">📋 Danh Sách Sử Dụng Dịch Vụ</h2>
 
-@using (Html.BeginForm("CapNhatPhieuNhan", "NhanViens", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Thông Tin Phiếu Nhận</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaPhieu)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaTC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaTC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaTC, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaSDDV, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaSDDV, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaSDDV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangTruocTiepNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TinhTrangTruocTiepNhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TinhTrangTruocTiepNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangSauTiepNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TinhTrangSauTiepNhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TinhTrangSauTiepNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiGiao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiGiao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiGiao, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayNhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayNhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayNhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TinhTrangDichVu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TinhTrangDichVu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TinhTrangDichVu, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NgayTra, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NguoiTra, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NguoiTra, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NguoiTra, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lưu" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+<div style="max-height: 600px; overflow-y: auto;">
+    <table class="table table-bordered table-hover table-striped text-center align-middle">
+        <thead class="table-dark sticky-top">
+            <tr>
+                <th>Mã Phiếu Nhận</th>
+                <th>Mã Thú Cưng</th>
+                <th>Mã Lượt Sử Dụng Dịch Vụ</th>
+                <th>Ảnh Trước Tiếp Nhận</th>
+                <th>Ảnh Sau Tiếp Nhận</th>
+                <th>Người Giao</th>
+                <th>Người Nhận</th>
+                <th>Ngày Nhận</th>
+                <th>Tình Trạng Dịch Vụ</th>
+                <th>Ngày Trả</th>
+                <th>Người Trả</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var phieuNhan in Model)
+            {
+                <tr>
+                    <td>@phieuNhan.MaPhieu</td>
+                    <td>@phieuNhan.MaTC</td>
+                    <td>@phieuNhan.MaSDDV</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangTruocTiepNhan))
+                        {
+                            <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" 
+                                 alt="Ảnh Trước" width="100" height="100" 
+                                 style="object-fit: cover; border-radius: 5px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Không có ảnh</span>
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangSauTiepNhan))
+                        {
+                            <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" 
+                                 alt="Ảnh Sau" width="100" height="100" 
+                                 style="object-fit: cover; border-radius: 5px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Không có ảnh</span>
+                        }
+                    </td>
+                    <td>@phieuNhan.NguoiGiao</td>
+                    <td>@phieuNhan.NguoiNhan</td>
+                    <td>@phieuNhan.NgayNhan?.ToString("dd/MM/yyyy")</td>
+                    <td>@phieuNhan.TinhTrangDichVu</td>
+                    <td>@phieuNhan.NgayTra?.ToString("dd/MM/yyyy")</td>
+                    <td>@phieuNhan.NguoiTra</td>
+                    <td>@phieuNhan.GhiChu</td>
+                    <td>
+                        <a href="@Url.Action("ChinhSuaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" 
+                           class="btn btn-sm btn-primary mb-1">
+                            ✏️ Sửa
+                        </a>
+                        <a href="@Url.Action("XoaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" 
+                           class="btn btn-sm btn-danger" 
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
+                            🗑️ Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

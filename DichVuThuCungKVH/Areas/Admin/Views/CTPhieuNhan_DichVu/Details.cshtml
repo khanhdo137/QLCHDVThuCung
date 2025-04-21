@@ -1,83 +1,81 @@
 ﻿@model DichVuThuCungKVH.Model.CTPhieuNhan_DichVu
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi Tiết Phiếu Nhận Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi Tiết Phiếu Nhận Dịch Vụ</h2>
 
 <div>
-    <h4>CTPhieuNhan_DichVu</h4>
+    <h4>Thông Tin Chi Tiết Phiếu Nhận Dịch Vụ</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DichVuSuDung)
+            Dịch Vụ Sử Dụng
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.DichVuSuDung)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NguoiThucHien)
+            Người Thực Hiện
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.NguoiThucHien)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ThoiGian)
+            Thời Gian
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.ThoiGian)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
+            Số Lượng
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.SoLuong)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DonGia)
+            Đơn Giá
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.DonGia)
+            @Html.DisplayFor(model => model.DonGia) VNĐ
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.GhiChu)
+            Ghi Chú
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.GhiChu)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
+            Tên Dịch Vụ
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.DichVu.TenDichVu)
+            @(Model.DichVu != null ? Model.DichVu.TenDichVu : "Không có dịch vụ")
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PhieuNhan.TinhTrangTruocTiepNhan)
+            Tình Trạng Trước Tiếp Nhận
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.PhieuNhan.TinhTrangTruocTiepNhan)
+            @if (!string.IsNullOrEmpty(Model.PhieuNhan?.TinhTrangTruocTiepNhan))
+            {
+                <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + Model.PhieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <span>Không có ảnh</span>
+            }
         </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCT }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCT }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
 </p>

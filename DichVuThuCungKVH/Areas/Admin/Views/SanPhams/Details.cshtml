@@ -1,18 +1,18 @@
 ﻿@model DichVuThuCungKVH.Model.SanPham
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi Tiết Sản Phẩm</h2>
 
 <div>
-    <h4>SanPham</h4>
+    <h4>Thông Tin Sản Phẩm</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TenSP)
+            Tên Sản Phẩm
         </dt>
 
         <dd>
@@ -20,15 +20,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Anh)
+            Hình Ảnh
         </dt>
 
         <dd>
-            <img src="~/Images/SanPham/@Html.DisplayFor(model => model.Anh)" />
+            <img src="~/Images/SanPham/@Html.DisplayFor(model => model.Anh)" alt="@Html.DisplayFor(model => model.TenSP)" style="max-width: 200px; max-height: 200px;" />
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LoaiSP)
+            Loại Sản Phẩm
         </dt>
 
         <dd>
@@ -36,15 +36,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.GiaBan)
+            Giá Bán
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.GiaBan)
+            @Html.DisplayFor(model => model.GiaBan) VNĐ
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MoTaSP)
+            Mô Tả Sản Phẩm
         </dt>
 
         <dd>
@@ -52,7 +52,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SoLuongConLai)
+            Số Lượng Còn Lại
         </dt>
 
         <dd>

@@ -1,18 +1,18 @@
 ﻿@model DichVuThuCungKVH.Model.TaiKhoan
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi Tiết Tài Khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi Tiết Tài Khoản</h2>
 
 <div>
-    <h4>TaiKhoan</h4>
+    <h4>Thông Tin Tài Khoản</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TenTK)
+            Tên Tài Khoản
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MatKhau)
+            Mật Khẩu
         </dt>
 
         <dd>
@@ -28,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LoaiTK)
+            Loại Tài Khoản
         </dt>
 
         <dd>
@@ -36,11 +36,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
+            Trạng Thái
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TrangThai)
+            @(Model.TrangThai == true ? "Hoạt động" : "Khóa")
         </dd>
 
     </dl>

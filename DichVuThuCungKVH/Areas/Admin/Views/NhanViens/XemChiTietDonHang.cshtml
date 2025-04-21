@@ -1,59 +1,76 @@
-﻿@{
-    ViewBag.Title = "XemChiTietDonHang";
+﻿@model DichVuThuCungKVH.Model.DonHang
+
+@{
+    ViewBag.Title = "Thông Tin Chi Tiết Đơn Hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
-@model DichVuThuCungKVH.Model.DonHang
-
-
-<h2>Thông tin chi tiết đơn hàng</h2>
+<h2>Thông Tin Chi Tiết Đơn Hàng</h2>
 
 <div>
+    <h4>Thông Tin Đơn Hàng</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.MaDH)
+            Mã Đơn Hàng
         </dt>
         <dd>
             @Html.DisplayFor(model => model.MaDH)
         </dd>
-        <!-- Add other properties of DonHang that you want to display -->
+
         <dt>
-            @Html.DisplayNameFor(model => model.NgayDat)
+            Ngày Đặt
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NgayDat)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.NgayGiao)
+            Ngày Giao
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NgayGiao)
         </dd>
-        <!-- Add other properties of DonHang that you want to display -->
+
+        <dt>
+            Trạng Thái Thanh Toán
+        </dt>
+        <dd>
+            @(Model.TrangThaiThanhToan == true ? "Đã thanh toán" : "Chưa thanh toán")
+        </dd>
     </dl>
 </div>
 
 <div>
-    <h4>Chi tiết đơn hàng</h4>
+    <h4>Chi Tiết Đơn Hàng</h4>
     <table class="table">
         <tr>
-            <th>Mã sản phẩm</th>
-            <th>Số lượng</th>
-            <th>Đơn giá</th>
+            <th>Mã Sản Phẩm</th>
+            <th>Số Lượng</th>
+            <th>Đơn Giá</th>
+            <th>Thành Tiền</th>
         </tr>
-        @foreach (var ctDonHang in Model.CTDonHangs)
+        @if (Model.CTDonHangs != null && Model.CTDonHangs.Any())
+        {
+            foreach (var ctDonHang in Model.CTDonHangs)
+            {
+                <tr>
+                    <td>@ctDonHang.MaSP</td>
+                    <td>@ctDonHang.SoLuong</td>
+                    <td>@ctDonHang.DonGia VNĐ</td>
+                    <td>@(ctDonHang.SoLuong * ctDonHang.DonGia) VNĐ</td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@ctDonHang.MaSP</td>
-                <td>@ctDonHang.SoLuong</td>
-                <td>@ctDonHang.DonGia</td>
+                <td colspan="4" class="text-center">Không có chi tiết đơn hàng.</td>
             </tr>
         }
     </table>
 </div>
 
 <p>
-    @Html.ActionLink("Quay lại danh sách đơn hàng", "Index")
+    @Html.ActionLink("Quay lại danh sách đơn hàng", "Index", null, new { @class = "btn btn-secondary" })
 </p>
