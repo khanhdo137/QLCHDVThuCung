@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.TaiKhoan>
 
 @{
-    ViewBag.Title = "QUẢN LÝ TÀI KHOẢN";
+    ViewBag.Title = "Quản Lý Tài Khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center">QUẢN LÝ TÀI KHOẢN</h2>
+    <h2 class="text-center">Quản Lý Tài Khoản</h2>
     <p>
         <a href="@Url.Action("Create")" class="btn btn-primary">Thêm Mới</a>
     </p>
@@ -14,7 +14,7 @@
     @using (Html.BeginForm("Search", "TaiKhoans", FormMethod.Get))
     {
         <div class="input-group mb-3">
-            <input type="text" name="searchString" class="form-control" placeholder="Tìm kiếm..." aria-describedby="button-search">
+            <input type="text" name="searchString" class="form-control" placeholder="Tìm kiếm tài khoản..." aria-describedby="button-search">
             <button type="submit" class="btn btn-primary" id="button-search">Tìm kiếm</button>
         </div>
     }
@@ -22,11 +22,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.TenTK)</th>
-                <th>@Html.DisplayNameFor(model => model.MatKhau)</th>
-                <th>@Html.DisplayNameFor(model => model.LoaiTK)</th>
-                <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
-                <th></th>
+                <th>Tên Tài Khoản</th>
+                <th>Mật Khẩu</th>
+                <th>Loại Tài Khoản</th>
+                <th>Trạng Thái</th>
+                <th>Hành Động</th>
             </tr>
         </thead>
         <tbody>

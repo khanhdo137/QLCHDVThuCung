@@ -1,76 +1,85 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.CTPhieuNhan_DichVu>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh Sách Chi Tiết Phiếu Nhận Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Danh Sách Chi Tiết Phiếu Nhận Dịch Vụ</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DichVuSuDung)
+            Dịch Vụ Sử Dụng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NguoiThucHien)
+            Người Thực Hiện
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ThoiGian)
+            Thời Gian
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoLuong)
+            Số Lượng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DonGia)
+            Đơn Giá
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GhiChu)
+            Ghi Chú
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
+            Tên Dịch Vụ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhieuNhan.TinhTrangTruocTiepNhan)
+            Tình Trạng Trước Tiếp Nhận
         </th>
-        <th></th>
+        <th>
+            Hành Động
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DichVuSuDung)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiThucHien)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiGian)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoLuong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DonGia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DichVu.TenDichVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhieuNhan.TinhTrangTruocTiepNhan)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaCT }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaCT }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaCT })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DichVuSuDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguoiThucHien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGian)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGia) VNĐ
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                @(item.DichVu != null ? item.DichVu.TenDichVu : "Không có dịch vụ")
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.PhieuNhan?.TinhTrangTruocTiepNhan))
+                {
+                    <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + item.PhieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" style="max-width: 100px; max-height: 100px;" />
+                }
+                else
+                {
+                    <span>Không có ảnh</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaCT }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaCT }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaCT }, new { @class = "btn btn-danger", onclick = "return confirm('Bạn có chắc chắn muốn xóa chi tiết này?');" })
+            </td>
+        </tr>
+    }
 </table>

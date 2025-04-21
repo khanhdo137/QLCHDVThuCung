@@ -1,52 +1,310 @@
-﻿@{
-    ViewBag.Title = "DanhSachSuDungDichVu";
+﻿@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
+
+@{
+    ViewBag.Title = "Danh Sách Phiếu Nhận Của Lượt Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-list-alt me-2"></i> Danh Sách Phiếu Nhận Của Lượt Sử Dụng Dịch Vụ</h6>
+            <div>
+                <a href="@Url.Action("Create", "PhieuNhans", new { maSDDV = ViewBag.MaSDDV })" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i> Thêm Phiếu Nhận
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 d-flex justify-content-end">
+                <div class="dropdown me-2" style="max-width: 200px;">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterStatusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-filter me-2"></i> Lọc Tình Trạng
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterStatusDropdown">
+                        <li><a class="dropdown-item" href="#" data-filter="">Tất cả</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="Hoàn thành">Hoàn thành</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="Đang xử lý">Đang xử lý</a></li>
+                        <li><a class="dropdown-item" href="#" data-filter="Chưa xác định">Chưa xác định</a></li>
+                    </ul>
+                </div>
+                <input type="text" id="searchPet" class="form-control" placeholder="Tìm theo mã thú cưng" style="max-width: 200px;" />
+            </div>
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                    <table class="table table-bordered table-hover table-striped text-center align-middle" id="dataTable">
+                        <thead class="table-dark sticky-top">
+                            <tr>
+                                <th>Mã Phiếu Nhận</th>
+                                <th>Mã Thú Cưng</th>
+                                <th>Mã Lượt Sử Dụng</th>
+                                <th>Ảnh Trước</th>
+                                <th>Ảnh Sau</th>
+                                <th>Người Giao</th>
+                                <th>Người Nhận</th>
+                                <th>Ngày Nhận</th>
+                                <th>Tình Trạng Dịch Vụ</th>
+                                <th>Ngày Trả</th>
+                                <th>Người Trả</th>
+                                <th>Ghi Chú</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var phieuNhan in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-ticket-alt text-primary me-2"></i>
+                                        @phieuNhan.MaPhieu
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-paw text-primary me-2"></i>
+                                        @(phieuNhan.MaTC.HasValue ? phieuNhan.MaTC.ToString() : "Không có thông tin")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-list-alt text-primary me-2"></i>
+                                        @(phieuNhan.MaSDDV.HasValue ? phieuNhan.MaSDDV.ToString() : "Không có thông tin")
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangTruocTiepNhan))
+                                        {
+                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Trước Tiếp Nhận">
+                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không có ảnh</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangSauTiepNhan))
+                                        {
+                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Sau Tiếp Nhận">
+                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không có ảnh</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(phieuNhan.NguoiGiao) ? "Không có thông tin" : phieuNhan.NguoiGiao)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user-check text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(phieuNhan.NguoiNhan) ? "Không có thông tin" : phieuNhan.NguoiNhan)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-calendar text-primary me-2"></i>
+                                        @(phieuNhan.NgayNhan.HasValue ? phieuNhan.NgayNhan.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa xác định")
+                                    </td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(phieuNhan.TinhTrangDichVu))
+                                        {
+                                            <span class="badge bg-secondary">Chưa xác định</span>
+                                        }
+                                        else if (phieuNhan.TinhTrangDichVu == "Hoàn thành")
+                                        {
+                                            <span class="badge bg-success">@phieuNhan.TinhTrangDichVu</span>
+                                        }
+                                        else if (phieuNhan.TinhTrangDichVu == "Đang xử lý")
+                                        {
+                                            <span class="badge bg-warning text-dark">@phieuNhan.TinhTrangDichVu</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-info">@phieuNhan.TinhTrangDichVu</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-calendar-check text-primary me-2"></i>
+                                        @(phieuNhan.NgayTra.HasValue ? phieuNhan.NgayTra.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa trả")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user-minus text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(phieuNhan.NguoiTra) ? "Chưa trả" : phieuNhan.NguoiTra)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-sticky-note text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(phieuNhan.GhiChu) ? "Không có" : phieuNhan.GhiChu)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("ChinhSuaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-sm btn-primary mb-1" title="Sửa">
+                                                <i class="fas fa-edit me-1"></i> Sửa
+                                            </a>
+                                            <button class="btn btn-sm btn-danger delete-btn" data-id="@phieuNhan.MaPhieu" data-masddv="@phieuNhan.MaSDDV" title="Xóa">
+                                                <i class="fas fa-trash me-1"></i> Xóa
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle me-2"></i> Lượt sử dụng dịch vụ này chưa có phiếu nhận nào.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo DataTable
+            var table = $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[7, 'desc']],
+                columnDefs: [
+                    { targets: [3, 4], orderable: false }
+                ],
+                scrollX: true
+            });
 
-<h2>Danh sách sử dụng dịch vụ</h2>
+            // Xử lý xóa bằng AJAX
+            $('.delete-btn').on('click', function () {
+                if (!confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?')) {
+                    return;
+                }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Mã phiếu nhận</th>
-            <th>Mã đơn thú cưng</th>
-            <th>Mã đơn dịch vụ</th>
-            <th>Tình trạng trước tiếp nhận</th>
-            <th>Tình trạng sau tiếp nhận</th>
-            <th>Người giao</th>
-            <th>Người nhận</th>
-            <th>Ngày nhận</th>
-            <th>Tình trạng dịch vụ</th>
-            <th>Ngày trả</th>
-            <th>Người trả</th>
-            <th>Ghi chú</th>
-            <th>Hành động</th> <!-- Thêm cột Hành động -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var phieuNhan in Model)
-        {
-            <tr>
-                <td>@phieuNhan.MaPhieu</td>
-                <td>@phieuNhan.MaTC</td>
-                <td>@phieuNhan.MaSDDV</td>
-                <td><img src="~/Images/ThuCung/@phieuNhan.TinhTrangTruocTiepNhan" alt="Ảnh trước tiếp nhận" width="100" height="100" /></td>
-                <td><img src="~/Images/ThuCung/@phieuNhan.TinhTrangSauTiepNhan" alt="Ảnh sau tiếp nhận" width="100" height="100" /></td>
-                <td>@phieuNhan.NguoiGiao</td>
-                <td>@phieuNhan.NguoiNhan</td>
-                <td>@phieuNhan.NgayNhan</td>
-                <td>@phieuNhan.TinhTrangDichVu</td>
-                <td>@phieuNhan.NgayTra</td>
-                <td>@phieuNhan.NguoiTra</td>
-                <td>@phieuNhan.GhiChu</td>
-                <td>
-                    <a href="@Url.Action("ChinhSuaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-primary">Chỉnh sửa</a>
-                    
-                    <a href="@Url.Action("XoaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-danger">Xóa</a>
-                </td>
-            </tr>
+                var id = $(this).data('id');
+                var maSDDV = $(this).data('masddv');
+                var row = $(this).closest('tr');
+
+                $.ajax({
+                    url: '@Url.Action("XoaPhieuNhan", "NhanViens")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.success) {
+                            table.row(row).remove().draw();
+                            alert('Xóa phiếu nhận thành công!');
+                        } else {
+                            alert('Có lỗi xảy ra khi xóa phiếu nhận: ' + result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                    }
+                });
+            });
+
+            // Lọc và tìm kiếm (giữ nguyên logic trước đó)
+            $('.dropdown-item[data-filter]').on('click', function () {
+                var filterValue = $(this).data('filter');
+                if (filterValue === '') {
+                    table.column(8).search('').draw();
+                } else if (filterValue === 'Chưa xác định') {
+                    table.column(8).search('^$', true, false).draw();
+                } else {
+                    table.column(8).search(filterValue).draw();
+                }
+                $('#filterStatusDropdown').text('Lọc: ' + $(this).text());
+            });
+
+            $('#searchPet').on('keyup', function () {
+                table.column(1).search(this.value).draw();
+            });
+        });
+    </script>
+}
+
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .table-dark th {
+        background: linear-gradient(90deg, #343a40, #495057);
+        color: white;
+        font-weight: 600;
+    }
+
+    .img-thumbnail {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .img-thumbnail:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-    </tbody>
-</table>
+
+    .btn-sm {
+        margin-right: 5px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border-radius: 5px;
+        padding: 6px 12px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+            transform: translateY(-1px);
+        }
+
+    .text-muted {
+        font-style: italic;
+        color: #6c757d;
+    }
+
+    .badge {
+        font-size: 0.9em;
+        padding: 5px 10px;
+        border-radius: 12px;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #f8f9fa, #e9ecef);
+    }
+
+    .alert-info {
+        border-radius: 8px;
+        background-color: #e7f3fe;
+        color: #31708f;
+        padding: 15px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+</style>

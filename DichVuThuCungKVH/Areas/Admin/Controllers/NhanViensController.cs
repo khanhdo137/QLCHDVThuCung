@@ -253,50 +253,25 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 
             return View(phieuNhan);
         }
-
-
-        public ActionResult XoaPhieuNhan(int? id)
+        public ActionResult XoaPhieuNhan(int id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var phieuNhan = _context.PhieuNhans.Find(id);
+                if (phieuNhan == null)
+                {
+                    return Json(new { success = false, message = "Phiếu nhận không tồn tại." });
+                }
+
+                _context.PhieuNhans.Remove(phieuNhan);
+                _context.SaveChanges();
+
+                return Json(new { success = true });
             }
-
-            // Lấy thông tin phiếu nhận từ cơ sở dữ liệu theo id
-            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
-
-            if (phieuNhan == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                return Json(new { success = false, message = ex.Message });
             }
-
-            return View(phieuNhan);
-        }
-
-        [HttpPost]
-        public ActionResult XacNhanXoaPhieuNhan(int id)
-        {
-            // Xử lý xác nhận xóa phiếu nhận trong cơ sở dữ liệu
-            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
-            db.PhieuNhans.Remove(phieuNhan);
-            db.SaveChanges();
-
-            return RedirectToAction("DanhSachSuDungDichVu");
-        }
-        public ActionResult Chitietphieunhan(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            CTPhieuNhan_DichVu ctPhieuNhan = db.CTPhieuNhan_DichVu.Find(id);
-            if (ctPhieuNhan == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(ctPhieuNhan);
         }
     }
 }

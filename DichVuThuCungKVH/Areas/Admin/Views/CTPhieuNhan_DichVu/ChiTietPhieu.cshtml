@@ -1,44 +1,47 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.CTPhieuNhan_DichVu>
 @{
-    ViewBag.Title = "ChiTietPhieu";
+    ViewBag.Title = "Chi Tiết Phiếu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <p>
     @Html.ActionLink("Create New", "Create", new { maPhieu = ViewBag.MaPhieu })
 </p>
 
-<h2>Danh sách dịch vụ của phiếu</h2>
+<h2>Danh Sách Dịch Vụ Của Phiếu</h2>
 
 @if (Model.Any())
 {
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MaCT)
+                Mã Chi Tiết
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaPhieu)
+                Mã Phiếu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaPhieu)
+                Mã Dịch Vụ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DichVuSuDung)
+                Dịch Vụ Sử Dụng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NguoiThucHien)
+                Người Thực Hiện
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThoiGian)
+                Thời Gian
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoLuong)
+                Số Lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DonGia)
+                Đơn Giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
+                Ghi Chú
+            </th>
+            <th>
+                Hành Động
             </th>
         </tr>
 
@@ -91,5 +94,5 @@
 }
 else
 {
-    <p class="alert alert-info">Chưa có dịch vụ cho phiếu</p>
+    <p class="alert alert-info">Chưa Có Dịch Vụ Cho Phiếu</p>
 }

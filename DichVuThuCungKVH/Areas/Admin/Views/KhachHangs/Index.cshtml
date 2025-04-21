@@ -1,12 +1,120 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.KhachHang>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản Lý Khách Hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Quản Lý Khách Hàng</h2>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="fas fa-users me-2"></i>Quản Lý Khách Hàng</h4>
+                    <a href="@Url.Action("Create", "KhachHangs")" class="btn btn-light">
+                        <i class="fas fa-user-plus me-2"></i>Thêm Khách Hàng
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Mã KH</th>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Email</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Tình Trạng</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.MaKH)</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-user-circle me-2 text-primary"></i>
+                                                @Html.DisplayFor(modelItem => item.TenKH)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-phone me-2 text-success"></i>
+                                                @Html.DisplayFor(modelItem => item.SDT)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-envelope me-2 text-info"></i>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @if (item.TinhTrangLienHe == true)
+                                            {
+                                                <span class="badge bg-success">Đang hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Không hoạt động</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("Edit", new { id = item.MaKH })">
+                                                            <i class="fas fa-edit me-2"></i>Sửa
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("Details", new { id = item.MaKH })">
+                                                            <i class="fas fa-info-circle me-2"></i>Chi Tiết
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("Delete", new { id = item.MaKH })">
+                                                            <i class="fas fa-trash me-2"></i>Xóa
+                                                        </a>
+                                                    </li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("ThuCungCuaKhachHang", "ThuCungs", new { id = item.MaKH })">
+                                                            <i class="fas fa-paw me-2"></i>Thú Cưng
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("LuotSDDV", "SuDungDichVus", new { id = item.MaKH })">
+                                                            <i class="fas fa-concierge-bell me-2"></i>Dịch Vụ
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<<<<<<< HEAD
 <p>
     <a href="@Url.Action("Create", "KhachHangs")" class="btn btn-primary">Create New</a>
 </p>
@@ -16,17 +124,17 @@
         <thead class="table-dark">
             <tr>
                 <th>Mã Khách Hàng</th>
-                <th>Tên</th>
+                <th>Tên Khách Hàng</th>
                 <th>Ngày Sinh</th>
-                <th>SĐT</th>
+                <th>Số Điện Thoại</th>
                 <th>Địa Chỉ</th>
-                <th>GT</th>
+                <th>Giới Tính</th>
                 <th>Email</th>
-                <th>TG Đăng Ký</th>
-                <th>TT Liên Hệ</th>
+                <th>Thời Gian Đăng Ký</th>
+                <th>Tình Trạng Liên Hệ</th>
                 <th>Ghi Chú</th>
-                <th>TK</th>
-                <th>Action</th>
+                <th>Tên Tài Khoản</th>
+                <th>Hành Động</th>
             </tr>
         </thead>
         <tbody>
@@ -38,23 +146,23 @@
                     <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
                     <td>@Html.DisplayFor(modelItem => item.SDT)</td>
                     <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
-                    <td>@Html.DisplayFor(modelItem => item.GioiTinh)</td>
+                    <td>@(item.GioiTinh == true ? "Nam" : "Nữ")</td>
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     <td>@Html.DisplayFor(modelItem => item.ThoiGianDangKy)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TinhTrangLienHe)</td>
+                    <td>@(item.TinhTrangLienHe == true ? "Đã liên hệ" : "Chưa liên hệ")</td>
                     <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)</td>
+                    <td>@(item.TaiKhoan != null ? item.TaiKhoan.TenTK : "Không có tài khoản")</td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Actions
+                                Hành Động
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="@Url.Action("Edit", "KhachHangs", new { id = item.MaKH })">Edit</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("Details", "KhachHangs", new { id = item.MaKH })">Details</a></li>
-                                <li><a class="dropdown-item" href="@Url.Action("Delete", "KhachHangs", new { id = item.MaKH })">Delete</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Delete", "KhachHangs", new { id = item.MaKH })" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?');">Delete</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("ThuCungCuaKhachHang", "ThuCungs", new { id = item.MaKH })">Xem Thú Cưng</a></li>
-                                <li><a class="dropdown-item" href="@Url.Action("LuotSDDV", "SuDungDichVus", new { id = item.MaKH })">Sử dụng dịch vụ </a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("LuotSDDV", "SuDungDichVus", new { id = item.MaKH })">Sử dụng dịch vụ</a></li>
                             </ul>
                         </div>
                     </td>
@@ -63,3 +171,18 @@
         </tbody>
     </table>
 </div>
+=======
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                responsive: true,
+                order: [[0, 'desc']]
+            });
+        });
+    </script>
+}
+>>>>>>> 18410c30e7f31206ced2c1a44d893d9c6b45d11d

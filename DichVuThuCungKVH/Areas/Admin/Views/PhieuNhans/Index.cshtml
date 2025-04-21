@@ -1,94 +1,165 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.PhieuNhan>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh Sách Phiếu Nhận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh Sách Phiếu Nhận</h6>
+            <a href="@Url.Action("Create")" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New
+            </a>
+        </div>
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tình Trạng Trước Tiếp Nhận</th>
+                                <th>Tình Trạng Sau Tiếp Nhận</th>
+                                <th>Người Giao</th>
+                                <th>Người Nhận</th>
+                                <th>Ngày Nhận</th>
+                                <th>Tình Trạng Dịch Vụ</th>
+                                <th>Ngày Trả</th>
+                                <th>Người Trả</th>
+                                <th>Ghi Chú</th>
+                                <th>Ghi Chú Lượt Sử Dụng</th>
+                                <th>Tên Thú Cưng</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.TinhTrangTruocTiepNhan))
+                                        {
+                                            <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + item.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không có ảnh</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.TinhTrangSauTiepNhan))
+                                        {
+                                            <img src="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + item.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không có ảnh</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.NguoiGiao) ? "Không có thông tin" : item.NguoiGiao)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user-check text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.NguoiNhan) ? "Không có thông tin" : item.NguoiNhan)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-calendar text-primary me-2"></i>
+                                        @(item.NgayNhan.HasValue ? item.NgayNhan.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa xác định")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-info-circle text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.TinhTrangDichVu) ? "Chưa xác định" : item.TinhTrangDichVu)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-calendar-check text-primary me-2"></i>
+                                        @(item.NgayTra.HasValue ? item.NgayTra.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa trả")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user-minus text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.NguoiTra) ? "Chưa trả" : item.NguoiTra)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-sticky-note text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-sticky-note text-primary me-2"></i>
+                                        @(item.SuDungDichVu != null && !string.IsNullOrEmpty(item.SuDungDichVu.GhiChu) ? item.SuDungDichVu.GhiChu : "Không có")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-paw text-primary me-2"></i>
+                                        @(item.ThuCung != null ? item.ThuCung.TenTC : "Không có thông tin")
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Details", new { id = item.MaPhieu })" class="btn btn-info btn-sm" title="Chi tiết">
+                                                <i class="fas fa-eye"></i> Details
+                                            </a>
+                                            <a href="@Url.Action("Edit", new { id = item.MaPhieu })" class="btn btn-primary btn-sm" title="Sửa">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = item.MaPhieu })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Hiện tại chưa có phiếu nhận nào.
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangTruocTiepNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangSauTiepNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiGiao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrangDichVu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayTra)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NguoiTra)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SuDungDichVu.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThuCung.TenTC)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangTruocTiepNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangSauTiepNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiGiao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TinhTrangDichVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayTra)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NguoiTra)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SuDungDichVu.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThuCung.TenTC)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieu }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaPhieu }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieu })
-        </td>
-    </tr>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[4, 'desc']], // Sắp xếp theo cột "Ngày Nhận" giảm dần
+                columnDefs: [
+                    { targets: [0, 1], orderable: false } // Không cho phép sắp xếp cột hình ảnh
+                ]
+            });
+        });
+    </script>
 }
 
-</table>
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .img-thumbnail {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: transform 0.2s;
+    }
+
+        .img-thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+    .btn-sm {
+        margin-right: 5px;
+    }
+
+    .text-muted {
+        font-style: italic;
+    }
+</style>

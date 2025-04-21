@@ -245,6 +245,7 @@
     <Content Include="Images\LogoKVH.png" />
     <Content Include="Images\phone-icon.jpg" />
     <Content Include="Images\SanPham\bat-an-danh-cho-thu-cung-1.jpg" />
+    <Content Include="Images\SanPham\bat_an.jpg" />
     <Content Include="Images\SanPham\chuongthu1.jpg" />
     <Content Include="Images\SanPham\QuanAo1.jpg" />
     <Content Include="Images\SanPham\thuanmeo4.jpg" />
@@ -342,6 +343,7 @@
     <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CTPhieuNhan_DichVu\ChiTietPhieu.cshtml" />
     <Content Include="Areas\Admin\Views\DoanhThu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\XoaPhieuNhan.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

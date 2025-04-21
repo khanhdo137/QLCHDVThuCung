@@ -1,83 +1,116 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .navbar-nav .nav-link {
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+            footer p {
+                margin: 0;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+
+        .container.mt-4 {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                🐶 Quản Lý Thú Cưng Admin
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navAdmin"
                     aria-controls="navAdmin" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                Quản Lý Thú Cưng Admin
-            </a>
+
             <div class="collapse navbar-collapse" id="navAdmin">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     @if (Session["UserType"] != null && Session["UserType"].ToString() == "1")
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "NhanViens")">Quản Lý Nhân Viên</a>
+                            <a class="nav-link" href="@Url.Action("Index", "NhanViens")">👤 Nhân Viên</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "SanPhams")">Quản Lý Sản Phẩm</a>
+                            <a class="nav-link" href="@Url.Action("Index", "SanPhams")">📦 Sản Phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">Quản Lý Tài Khoản</a>
+                            <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">🔐 Tài Khoản</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "DoanhThu")">Doanh Thu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Login", "Home")">Đăng xuất</a>
+                            <a class="nav-link" href="@Url.Action("Index", "DoanhThu")">💰 Doanh Thu</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">Quản Lý Khách Hàng</a>
+                            <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">👥 Khách Hàng</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "SuDungDichVus")">Sử dụng dịch vụ</a>
+                            <a class="nav-link" href="@Url.Action("Index", "SuDungDichVus")">🛠️ Dịch Vụ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "PhieuNhans")">Quản lý phiếu nhận</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("DonHangDaDat", "NhanViens")">Quản Lý Đơn Hàng</a>
+                            <a class="nav-link" href="@Url.Action("Index", "PhieuNhans")">📄 Phiếu Nhận</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("DanhSachSuDungDichVu", "NhanViens")">Quản Lý Đơn Dịch Vụ</a>
+                            <a class="nav-link" href="@Url.Action("DonHangDaDat", "NhanViens")">🛒 Đơn Hàng</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Login", "Home")">Đăng xuất</a>
+                            <a class="nav-link" href="@Url.Action("DanhSachSuDungDichVu", "NhanViens")">📋 Đơn Dịch Vụ</a>
                         </li>
                     }
+
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="@Url.Action("Login", "Home")">🚪 Đăng Xuất</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container mt-4">
         @RenderBody()
     </div>
-    <footer class="container well mt-4">
-        <div class="text-center">
-            <p>ADMIN</p>
-        </div>
+
+    <footer class="text-center">
+        <p>© @DateTime.Now.Year - Quản Lý Hệ Thống | ADMIN</p>
     </footer>
 
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
-@RenderSection("scripts", required: false)

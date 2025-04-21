@@ -1,60 +1,89 @@
 ﻿@model IEnumerable<DichVuThuCungKVH.Model.SuDungDichVu>
+
 @{
-    ViewBag.Title = "LuotSDDV";
+    ViewBag.Title = "Lượt Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2 class="mb-4">Lượt sử dụng dịch vụ</h2>
-<p>
-    @Html.ActionLink("Create New", "Create", new { maKH = ViewBag.MaKH })
-</p>
-@if (Model.Any())
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ngay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KhachHang.TenKH)
-            </th>
-            <th></th>
-        </tr>
+<div class="container-fluid px-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Lượt Sử Dụng Dịch Vụ</h6>
+            <a href="@Url.Action("Create", new { maKH = ViewBag.MaKH })" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New
+            </a>
+        </div>
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ngày Sử Dụng</th>
+                                <th>Ghi Chú</th>
+                                <th>Tên Khách Hàng</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-calendar text-primary me-2"></i>
+                                        @Html.DisplayFor(modelItem => item.Ngay, "{0:dd/MM/yyyy HH:mm}")
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-sticky-note text-primary me-2"></i>
+                                        @(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-user text-primary me-2"></i>
+                                        @(item.KhachHang != null ? item.KhachHang.TenKH : "Không có thông tin")
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Details", new { id = item.MaSDDV })" class="btn btn-info btn-sm" title="Chi tiết">
+                                                <i class="fas fa-eye"></i> Details
+                                            </a>
+                                            <a href="@Url.Action("Edit", new { id = item.MaSDDV })" class="btn btn-primary btn-sm" title="Sửa">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = item.MaSDDV })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa lượt sử dụng dịch vụ này?');">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                            <a href="@Url.Action("PhieuCuaLuotSDDV", "PhieuNhans", new { id = item.MaSDDV })" class="btn btn-success btn-sm" title="Xem phiếu">
+                                                <i class="fas fa-file-alt"></i> Xem Phiếu
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    Khách hàng chưa có lượt sử dụng dịch vụ.
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ngay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GhiChu)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-                </td>
-                <td>
-                    <!-- Hành động -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Action
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="@Url.Action("Details", "SuDungDichVus", new { id = item.MaSDDV })">Details</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Edit", "SuDungDichVus",  new { id = item.MaSDDV })">Edit</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Delete", "SuDungDichVus",  new { id = item.MaSDDV })">Delete</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("PhieuCuaLuotSDDV", "PhieuNhans",  new { id = item.MaSDDV })">Xem  phiếu</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <p class="alert alert-info">Khách hàng chưa có lượt sử dụng dịch vụ.</p>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[0, 'desc']]
+            });
+        });
+    </script>
 }

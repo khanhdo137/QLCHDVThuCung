@@ -1,8 +1,7 @@
-﻿using System.Web.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using DichVuThuCungKVH.Model;
 
 namespace DichVuThuCungKVH.Controllers
@@ -10,12 +9,12 @@ namespace DichVuThuCungKVH.Controllers
     public class GioHangController : Controller
     {
         private DACSEntities db = new DACSEntities();
-        // GET: GioHang
 
         public ActionResult GioHang()
         {
             List<GioHang> lstGioHang = LayGioHang();
-            if (lstGioHang.Count == 0)
+
+            if (!lstGioHang.Any())
             {
                 ViewBag.GioHangTrong = "Giỏ hàng bạn đang trống!";
             }
@@ -38,9 +37,9 @@ namespace DichVuThuCungKVH.Controllers
 
         public ActionResult ThemGioHang(int ms, string url)
         {
-            //Lay gio hang hien tai
             List<GioHang> lstGioHang = LayGioHang();
-            GioHang sp = lstGioHang.Find(n => n.iMaSanPham == ms);
+            GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == ms);
+
             if (sp == null)
             {
                 sp = new GioHang(ms);
@@ -50,134 +49,137 @@ namespace DichVuThuCungKVH.Controllers
             {
                 sp.iSoLuong++;
             }
+
             return Redirect(url);
         }
 
         private int TongSoLuong()
         {
-            int iTongSoLuong = 0;
-            List<GioHang> lstGioHang = Session["GioHang"] as List<GioHang>;
-            if (lstGioHang != null)
-            {
-                iTongSoLuong = lstGioHang.Sum(n => n.iSoLuong);
-            }
-            return iTongSoLuong;
+            var lstGioHang = Session["GioHang"] as List<GioHang>;
+            return lstGioHang?.Sum(n => n.iSoLuong) ?? 0;
         }
 
         private double TongTien()
         {
-            double dTongTien = 0;
-            List<GioHang> lstGioHang = Session["GioHang"] as List<GioHang>; if (lstGioHang != null)
-            {
-                dTongTien = lstGioHang.Sum(n => n.dThanhTien);
-            }
-
-            return dTongTien;
+            var lstGioHang = Session["GioHang"] as List<GioHang>;
+            return lstGioHang?.Sum(n => n.dThanhTien) ?? 0;
         }
 
         public ActionResult GioHangPartial()
         {
             ViewBag.TongSoLuong = TongSoLuong();
             ViewBag.TongTien = TongTien();
-
             return PartialView();
         }
 
         public ActionResult XoaSPKhoiGioHang(int iMaSP)
         {
-            List<GioHang> lstGioHang = LayGioHang();
+            var lstGioHang = LayGioHang();
+            var sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP);
 
-            GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP);
             if (sp != null)
             {
-                // Xoa sp
                 lstGioHang.Remove(sp);
-
-                if (lstGioHang.Count == 0)
-                {
-                    return RedirectToAction("Index", "DVTC");
-                }
             }
-            ViewBag.TongSoLuong = TongSoLuong();
-            ViewBag.TongTien = TongTien();
+
+            if (!lstGioHang.Any())
+            {
+                return RedirectToAction("Index", "DVTC");
+            }
 
             return RedirectToAction("GioHang");
         }
 
         public ActionResult CapNhatGioHang(int iMaSP, FormCollection f)
         {
-            List<GioHang> lstGioHang = LayGioHang();
-            GioHang sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP); //Nếu tồn tại thì cho sửa số lượng
-            if (sp != null)
+            var lstGioHang = LayGioHang();
+            var sp = lstGioHang.SingleOrDefault(n => n.iMaSanPham == iMaSP);
+
+            if (sp != null && int.TryParse(f["txtSoLuong"], out int soLuong))
             {
+                sp.iSoLuong = soLuong;
             }
-            sp.iSoLuong = int.Parse(f["txtSoLuong"].ToString());
+
             return RedirectToAction("GioHang");
         }
 
         public ActionResult XoaGioHang()
         {
-            List<GioHang> lstGioHang = LayGioHang();
-            lstGioHang.Clear();
+            LayGioHang().Clear();
             return RedirectToAction("Index", "DVTC");
         }
-
         [HttpGet]
         public ActionResult DatHang()
         {
-            //Kiểm tra đăng nhập chưa
-            if (Session["TaiKhoan"] == null || Session["TaiKhoan"].ToString() == "")
+            var lstGioHang = LayGioHang();
+            if (!lstGioHang.Any())
             {
-                return RedirectToAction("DangNhap", "User");
+                return RedirectToAction("Index", "DVTC");
             }
-            //Kiểm tra có hàng trong giỏ chưa
-            if (Session["GioHang"] == null)
-            {
-                return RedirectToAction("Index", "GioHang");
-            }
-            List<GioHang> lstGioHang = LayGioHang();
 
-            ViewBag.TongSoLuong = TongSoLuong();
-            ViewBag.TongTien = TongTien();
-            return View(lstGioHang);
+            return View(lstGioHang); // truyền danh sách giỏ hàng vào View
         }
-
-        public ActionResult DatHangPartial()
-        {
-            var maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"].ToString());
-            var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
-            return PartialView(kh);
-        }
-
         [HttpPost]
         public ActionResult DatHang(FormCollection f)
         {
-            DonHang ddh = new DonHang();
-            var maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"].ToString());
-            var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
-            List<GioHang> lstGioHang = LayGioHang();
-            ddh.MaKH = kh.MaKH;
-            ddh.NgayDat = DateTime.Now;
-            var NgayGiao = f["NgayGiao"];
-            ddh.NgayGiao = DateTime.Parse(NgayGiao);
-
-            //ddh.TrangThaiThanhToan = 1;
-            ddh.TrangThaiThanhToan = false;
-            db.DonHangs.Add(ddh);
-            //db.SaveChanges();
-            // Thêm chi tiết đơn hàng
-            foreach (var item in lstGioHang)
+            try
             {
-                CTDonHang ctdh = new CTDonHang();
-                ctdh.MaDH = ddh.MaDH;
-                ctdh.MaSP = item.iMaSanPham;
-                ctdh.SoLuong = item.iSoLuong;
-                ctdh.DonGia = (decimal)item.dDonGia;
-                db.CTDonHangs.Add(ctdh);
+                // Kiểm tra đăng nhập
+                if (Session["MaTaiKhoan"] == null)
+                    return RedirectToAction("DangNhap", "User");
+
+                var lstGioHang = LayGioHang();
+                if (!lstGioHang.Any())
+                    return RedirectToAction("Index", "GioHang");
+
+                int maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"]);
+                var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
+                if (kh == null)
+                    return RedirectToAction("DangNhap", "User");
+
+                // Xử lý ngày giao
+                if (!DateTime.TryParse(f["NgayGiao"], out DateTime ngayGiao))
+                {
+                    ModelState.AddModelError("NgayGiao", "Ngày giao không hợp lệ");
+                    return View("DatHang", lstGioHang);
+                }
+
+                // Tạo đơn hàng
+                var ddh = new DonHang
+                {
+                    MaKH = kh.MaKH,
+                    NgayDat = DateTime.Now,
+                    NgayGiao = ngayGiao,
+                    TrangThaiThanhToan = false
+                };
+                db.DonHangs.Add(ddh);
+                db.SaveChanges(); // Để lấy MaDH
+
+                // Thêm chi tiết đơn hàng
+                foreach (var item in lstGioHang)
+                {
+                    var ctdh = new CTDonHang
+                    {
+                        MaDH = ddh.MaDH,
+                        MaSP = item.iMaSanPham,
+                        SoLuong = item.iSoLuong,
+                        DonGia = (decimal)item.dDonGia
+                    };
+                    db.CTDonHangs.Add(ctdh);
+                }
+
+                db.SaveChanges();
+
+                // Xoá giỏ hàng
+                Session["GioHang"] = null;
+
+                return RedirectToAction("XacNhanDonHang", "GioHang");
             }
-            //db.SaveChanges();
-            Session["GioHang"] = null;
-            return RedirectToAction("XacNhanDonHang", "GioHang");
+            catch (Exception ex)
+            {
+                ViewBag.Loi = "Đặt hàng thất bại: " + ex.Message;
+                return View("DatHang", LayGioHang());
+            }
         }
 
         public ActionResult XacNhanDonHang()
