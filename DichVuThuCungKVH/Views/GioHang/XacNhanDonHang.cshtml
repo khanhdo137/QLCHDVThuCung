@@ -3,6 +3,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+}
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -32,20 +36,18 @@
 </div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).ready(function () {
-            // Hiển thị thông báo popup khi trang được tải
-            alert("Đặt hàng thành công! Cảm ơn quý khách đã mua hàng.");
-            
-            // Hoặc sử dụng SweetAlert2 nếu có
-            /*
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiển thị thông báo SweetAlert2 khi trang được tải
             Swal.fire({
                 title: 'Đặt hàng thành công!',
                 text: 'Cảm ơn quý khách đã mua hàng.',
                 icon: 'success',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#28a745',
+                allowOutsideClick: false
             });
-            */
         });
     </script>
 }

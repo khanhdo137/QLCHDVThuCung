@@ -179,7 +179,7 @@ namespace DichVuThuCungKVH.Controllers
                 // Xoá giỏ hàng
                 Session["GioHang"] = null;
 
-                return RedirectToAction("XacNhanDonHang", "GioHang");
+                return RedirectToAction("DatHangThanhCong", "GioHang");
             }
             catch (Exception ex)
             {
@@ -188,7 +188,7 @@ namespace DichVuThuCungKVH.Controllers
             }
         }
 
-        public ActionResult XacNhanDonHang()
+        public ActionResult DatHangThanhCong()
         {
             // Lấy thông tin đơn hàng vừa đặt từ Session
             if (Session["MaDonHang"] != null)
@@ -208,13 +208,13 @@ namespace DichVuThuCungKVH.Controllers
         {
             // Kiểm tra đăng nhập
             if (Session["MaTaiKhoan"] == null)
-                return RedirectToAction("DangNhap", "User");
+                return PartialView("_DatHangChuaDangNhap");
 
             int maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"]);
             var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
             
             if (kh == null)
-                return RedirectToAction("DangNhap", "User");
+                return PartialView("_DatHangChuaDangNhap");
                 
             return PartialView(kh);
         }

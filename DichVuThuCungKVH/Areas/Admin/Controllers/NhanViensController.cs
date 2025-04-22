@@ -199,11 +199,33 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult XacNhanXoa(int id)
         {
-            DonHang donHang = db.DonHangs.Find(id);
-            db.DonHangs.Remove(donHang);
-            db.SaveChanges();
+            try
+            {
+                DonHang donHang = db.DonHangs.Find(id);
+                if (donHang == null)
+                {
+                    return HttpNotFound();
+                }
 
-            return RedirectToAction("DonHangDaDat");
+                // Xóa tất cả chi tiết đơn hàng trước
+                var chiTietDonHang = db.CTDonHangs.Where(ct => ct.MaDH == id).ToList();
+                foreach (var ct in chiTietDonHang)
+                {
+                    db.CTDonHangs.Remove(ct);
+                }
+
+                // Sau đó xóa đơn hàng
+                db.DonHangs.Remove(donHang);
+                db.SaveChanges();
+
+                TempData["Success"] = "Đã xóa đơn hàng thành công!";
+                return RedirectToAction("DonHangDaDat");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Không thể xóa đơn hàng: " + ex.Message;
+                return RedirectToAction("DonHangDaDat");
+            }
         }
         public ActionResult DanhSachSuDungDichVu()
         {

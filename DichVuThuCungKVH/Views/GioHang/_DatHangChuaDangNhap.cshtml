@@ -1,0 +1,19 @@
+@{
+    Layout = null;
+}
+
+<div class="alert alert-warning">
+    <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Vui lòng đăng nhập!</h4>
+    <p>Bạn cần đăng nhập để có thể đặt hàng. Vui lòng <a href="@Url.Action("DangNhap", "User")" class="alert-link">đăng nhập</a> hoặc <a href="@Url.Action("DangKy", "User")" class="alert-link">đăng ký</a> tài khoản mới.</p>
+    <hr>
+    <p class="mb-0">Nếu bạn đã có tài khoản, vui lòng đăng nhập để tiếp tục quá trình đặt hàng.</p>
+</div>
+
+<div class="text-center mt-3">
+    <a href="@Url.Action("DangNhap", "User")" class="btn btn-primary">
+        <i class="fas fa-sign-in-alt"></i> ĐĂNG NHẬP
+    </a>
+    <a href="@Url.Action("DangKy", "User")" class="btn btn-outline-primary ms-2">
+        <i class="fas fa-user-plus"></i> ĐĂNG KÝ
+    </a>
+</div> 

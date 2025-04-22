@@ -1,0 +1,48 @@
+@{
+    ViewBag.Title = "Đặt Hàng Thành Công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-success">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h2 class="mb-0"><i class="fas fa-check-circle me-2"></i>ĐẶT HÀNG THÀNH CÔNG</h2>
+                </div>
+                <div class="card-body text-center p-4">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                    </div>
+                    <h3 class="mb-3">Cảm ơn quý khách đã đặt hàng!</h3>
+                    <p class="lead">Đơn hàng của quý khách đã được chúng tôi ghi nhận và xử lý.</p>
+                    <p>Chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất và giao hàng đúng hẹn.</p>
+                    
+                    <div class="alert alert-info mt-4">
+                        <h5 class="alert-heading">Thông tin đơn hàng:</h5>
+                        <p class="mb-1">Mã đơn hàng: <strong>@ViewBag.MaDonHang</strong></p>
+                        <p class="mb-0">Tổng giá trị: <strong>@string.Format("{0:#,##0,0}", ViewBag.TongTien) VNĐ</strong></p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="@Url.Action("Index", "DVTC")" class="btn btn-primary btn-lg me-2">
+                            <i class="fas fa-home"></i> VỀ TRANG CHỦ
+                        </a>
+                        <a href="@Url.Action("Index", "DonHang")" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-list"></i> XEM ĐƠN HÀNG
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiển thị thông báo khi trang được tải
+            alert("Đặt hàng thành công! Cảm ơn quý khách đã mua hàng.");
+        });
+    </script>
+} 
