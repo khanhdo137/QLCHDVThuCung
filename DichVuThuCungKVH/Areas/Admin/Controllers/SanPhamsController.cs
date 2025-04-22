@@ -1,4 +1,5 @@
 ﻿using DichVuThuCungKVH.Model;
+using System;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -44,10 +45,27 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaSP,TenSP,Anh,LoaiSP,GiaBan,MoTaSP,SoLuongConLai")] SanPham sanPham)
+        public ActionResult Create([Bind(Include = "MaSP,TenSP,Anh,LoaiSP,GiaBan,MoTaSP,SoLuongConLai")] SanPham sanPham, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    // Tạo tên file duy nhất bằng cách thêm timestamp
+                    string fileName = DateTime.Now.Ticks + "_" + Path.GetFileName(imageFile.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Images/SanPham/"), fileName);
+                    
+                    // Tạo thư mục nếu chưa tồn tại
+                    if (!Directory.Exists(Path.GetDirectoryName(path)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    }
+
+                    // Lưu file
+                    imageFile.SaveAs(path);
+                    sanPham.Anh = fileName;
+                }
+
                 db.SanPhams.Add(sanPham);
                 db.SaveChanges();
                 return RedirectToAction("Index");
