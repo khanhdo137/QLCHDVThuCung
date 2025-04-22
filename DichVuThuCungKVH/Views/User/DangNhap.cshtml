@@ -1,116 +1,93 @@
-﻿@{
-    ViewBag.Title = "Đăng nhập";
+﻿
+@{
+    ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    body {
-        background: linear-gradient(to right, #e3f2fd, #bbdefb); /* Nền nhẹ nhàng */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<style type="text/css">
+    td {
+        height: 40px;
+    }
+</style>
+<h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
+<h2 style="text-align:center;">ĐĂNG NHẬP</h2>
+<table align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr>
+            <td>Tên đăng nhập: </td>
+            <td>
+                @Html.TextBox("TenDN")
+                @ViewData["Err1"]
+            </td>
+        </tr>
+        <tr>
+            <td>Mật khẩu: </td>
+            <td>
+                @Html.Password("MatKhau") @ViewBag.Err2
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Đăng nhập" />
+            </td>
+        </tr>
+    }
+</table>
+
+<style type="text/css">
+    table {
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
 
-    .login-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
+    th, td {
+        padding: 5px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
     }
 
-    .login-form {
-        width: 100%;
-        max-width: 400px;
-        background-color: #fff;
-        padding: 30px 40px;
-        border-radius: 15px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    tr:hover {
+        background-color: #f5f5f5;
     }
 
-        .login-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #0d47a1;
-        }
-
-    .error-message {
-        color: red;
+    h2 {
         text-align: center;
-        margin-bottom: 10px;
+        color: #333;
     }
 
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    label {
-        font-weight: 600;
-        margin-bottom: 6px;
-        display: block;
+    h4 {
+        text-align: center;
+        color: red;
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="date"] {
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+        padding: 8px;
+        margin: 5px 0;
         box-sizing: border-box;
-        transition: border 0.3s;
     }
 
-    input:focus {
-        border: 1px solid #1976d2;
-        outline: none;
-    }
-
-    .btn-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    input[type="submit"] {
-        background-color: #1976d2;
+    input[type="submit"],
+    input[type="reset"] {
+        background-color: #4CAF50;
         color: white;
-        padding: 10px 20px;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
         font-size: 16px;
-        border: none;
-        border-radius: 6px;
+        margin: 4px 2px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        border: none;
+        border-radius: 4px;
     }
-
-        input[type="submit"]:hover {
-            background-color: #1565c0;
-        }
 </style>
 
-<div class="login-wrapper">
-    <div class="login-form">
-        <h2>ĐĂNG NHẬP</h2>
-
-        @if (!string.IsNullOrEmpty(ViewBag.ThongBao as string))
-        {
-            <div class="error-message">@ViewBag.ThongBao</div>
-        }
-
-        @using (Html.BeginForm("DangNhap", "User"))
-        {
-            @Html.ValidationSummary(true, "", new { @class = "error-message" })
-
-            <div class="form-group">
-                <label>Tên đăng nhập:</label>
-                @Html.TextBox("TenDN")
-            </div>
-
-            <div class="form-group">
-                <label>Mật khẩu:</label>
-                @Html.Password("MatKhau")
-            </div>
-
-            <div class="btn-container">
-                <input type="submit" value="Đăng nhập" />
-            </div>
-        }
-    </div>
-</div>

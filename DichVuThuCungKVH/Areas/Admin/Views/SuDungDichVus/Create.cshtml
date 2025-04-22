@@ -1,6 +1,31 @@
 ﻿@model DichVuThuCungKVH.Model.SuDungDichVu
 
 @{
+<<<<<<< HEAD
+    ViewBag.Title = "Tạo Mới Lượt Sử Dụng Dịch Vụ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Tạo Mới Lượt Sử Dụng Dịch Vụ</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Thông Tin Lượt Sử Dụng Dịch Vụ</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.MaKH, new { @Value = ViewBag.MaKH })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ngay, "Ngày Sử Dụng", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") } })
+                @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
+            </div>
+=======
     ViewBag.Title = "Thêm Lượt Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -12,6 +37,7 @@
             <a href="@Url.Action("LuotSDDV", new { id = ViewBag.MaKH })" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Quay lại
             </a>
+>>>>>>> 18410c30e7f31206ced2c1a44d893d9c6b45d11d
         </div>
         <div class="card-body">
             @using (Html.BeginForm())
@@ -19,6 +45,20 @@
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.MaKH, new { @Value = ViewBag.MaKH })
 
+<<<<<<< HEAD
+        <div class="form-group">
+            @Html.LabelFor(model => model.GhiChu, "Ghi Chú", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+=======
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
@@ -52,10 +92,29 @@
                     </a>
                 </div>
             }
+>>>>>>> 18410c30e7f31206ced2c1a44d893d9c6b45d11d
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo datetime picker
+            $('#Ngay').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                icons: {
+                    time: 'fas fa-clock',
+                    date: 'fas fa-calendar',
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right',
+                    today: 'fas fa-calendar-check',
+                    clear: 'fas fa-trash',
+                    close: 'fas fa-times'
+                }
+            });
+        });
+    </script>
 }
