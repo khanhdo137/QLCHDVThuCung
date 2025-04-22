@@ -5,62 +5,53 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Chi Tiết Sản Phẩm</h2>
-
-<div>
-    <h4>Thông Tin Sản Phẩm</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Tên Sản Phẩm
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenSP)
-        </dd>
-
-        <dt>
-            Hình Ảnh
-        </dt>
-
-        <dd>
-            <img src="~/Images/SanPham/@Html.DisplayFor(model => model.Anh)" alt="@Html.DisplayFor(model => model.TenSP)" style="max-width: 200px; max-height: 200px;" />
-        </dd>
-
-        <dt>
-            Loại Sản Phẩm
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiSP)
-        </dd>
-
-        <dt>
-            Giá Bán
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaBan) VNĐ
-        </dd>
-
-        <dt>
-            Mô Tả Sản Phẩm
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoTaSP)
-        </dd>
-
-        <dt>
-            Số Lượng Còn Lại
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoLuongConLai)
-        </dd>
-    </dl>
+<div class="container">
+    <h2 class="text-center text-primary">Chi Tiết Sản Phẩm</h2>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Thông Tin Sản Phẩm</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row mb-3">
+                <div class="col-md-4 text-center">
+                    @if (!string.IsNullOrEmpty(Model.Anh))
+                    {
+                        <img src="~/Images/SanPham/@Model.Anh" alt="@Model.TenSP" class="img-thumbnail" style="max-width: 250px;" />
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">Chưa có hình ảnh</div>
+                    }
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <td>@Html.DisplayFor(model => model.TenSP)</td>
+                        </tr>
+                        <tr>
+                            <th>Loại Sản Phẩm</th>
+                            <td>@Html.DisplayFor(model => model.LoaiSP)</td>
+                        </tr>
+                        <tr>
+                            <th>Giá Bán</th>
+                            <td>@String.Format("{0:N0} VNĐ", Model.GiaBan)</td>
+                        </tr>
+                        <tr>
+                            <th>Số Lượng Còn Lại</th>
+                            <td>@Html.DisplayFor(model => model.SoLuongConLai)</td>
+                        </tr>
+                        <tr>
+                            <th>Mô Tả</th>
+                            <td>@Html.DisplayFor(model => model.MoTaSP)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaSP }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaSP }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

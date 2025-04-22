@@ -5,62 +5,44 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2 class="text-center">Quản Lý Sản Phẩm</h2>
+<h2 class="text-center mb-4">🐾 Quản Lý Sản Phẩm</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Tên Sản Phẩm
-        </th>
-        <th>
-            Hình Ảnh
-        </th>
-        <th>
-            Loại Sản Phẩm
-        </th>
-        <th>
-            Giá Bán
-        </th>
-        <th>
-            Mô Tả Sản Phẩm
-        </th>
-        <th>
-            Số Lượng Còn Lại
-        </th>
-        <th>
-            Hành Động
-        </th>
-    </tr>
+<div class="text-end mb-3">
+    @Html.ActionLink("➕ Thêm Sản Phẩm Mới", "Create", null, new { @class = "btn btn-success" })
+</div>
 
-    @foreach (var item in Model)
-    {
+<table class="table table-bordered table-hover table-striped align-middle text-center">
+    <thead class="table-dark">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenSP)
-            </td>
-            <td>
-                <img src="~/Images/SanPham/@Html.DisplayFor(modelItem => item.Anh)" alt="@Html.DisplayFor(modelItem => item.TenSP)" style="max-width: 100px; max-height: 100px;" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiSP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaBan) VNĐ
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTaSP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoLuongConLai)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
-            </td>
+            <th>Tên Sản Phẩm</th>
+            <th>Hình Ảnh</th>
+            <th>Loại</th>
+            <th>Giá Bán</th>
+            <th>Mô Tả</th>
+            <th>Số Lượng</th>
+            <th>Hành Động</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                <td>
+                    <img src="~/Images/SanPham/@item.Anh" alt="@item.TenSP" class="img-thumbnail" style="max-width: 100px;" />
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.LoaiSP)</td>
+                <td>@string.Format("{0:N0} VNĐ", item.GiaBan)</td>
+                <td>@Html.DisplayFor(modelItem => item.MoTaSP)</td>
+                <td>@Html.DisplayFor(modelItem => item.SoLuongConLai)</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        @Html.ActionLink("✏️", "Edit", new { id = item.MaSP }, new { @class = "btn btn-sm btn-primary", title = "Chỉnh sửa" })
+                        @Html.ActionLink("🔍", "Details", new { id = item.MaSP }, new { @class = "btn btn-sm btn-info", title = "Chi tiết" })
+                        @Html.ActionLink("🗑️", "Delete", new { id = item.MaSP }, new { @class = "btn btn-sm btn-danger", title = "Xoá" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
