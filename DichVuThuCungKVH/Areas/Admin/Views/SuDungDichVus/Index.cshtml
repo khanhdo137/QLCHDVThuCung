@@ -31,6 +31,7 @@
                         <tr>
                             <th>Ngày Sử Dụng</th>
                             <th>Ghi Chú</th>
+                            <th>Mã Khách Hàng</th>
                             <th>Tên Khách Hàng</th>
                             <th>Thao Tác</th>
                         </tr>
@@ -41,6 +42,7 @@
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.Ngay)</td>
                                 <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
+                                <td>@Html.DisplayFor(modelItem => item.KhachHang.MaKH)</td>
                                 <td>@Html.DisplayFor(modelItem => item.KhachHang.TenKH)</td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -52,6 +54,12 @@
                                         </a>
                                         <a href="@Url.Action("Delete", new { id = item.MaSDDV })" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i> Xóa
+                                        </a>
+                                        <a href="@Url.Action("Create", "PhieuNhans", new { maSDDV = item.MaSDDV })" class="btn btn-sm btn-success">
+                                            <i class="fas fa-file-alt"></i> Tạo Phiếu
+                                        </a>
+                                        <a href="@Url.Action("PhieuCuaLuotSDDV", "PhieuNhans", new { id = item.MaSDDV })" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-list"></i> Xem Phiếu
                                         </a>
                                     </div>
                                 </td>

@@ -134,23 +134,111 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            // Lấy danh sách thú cưng của khách hàng
+            var suDungDichVu = db.SuDungDichVus.Find(phieuNhan.MaSDDV);
+            var thuCungs = db.ThuCungs.Where(t => t.MaKH == suDungDichVu.MaKH).ToList();
+
+            // Lấy danh sách nhân viên
+            var nhanViens = db.NhanViens.ToList();
+
+            ViewBag.MaTC = new SelectList(thuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.NguoiGiao = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiGiao);
+            ViewBag.NguoiNhan = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiNhan);
+            ViewBag.NguoiTra = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiTra);
+            
             return View(phieuNhan);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PhieuNhan phieuNhan)
+        public ActionResult Edit(PhieuNhan phieuNhan, HttpPostedFileBase fileTruoc, HttpPostedFileBase fileSau)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(phieuNhan).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    // Lấy thông tin phiếu nhận hiện tại từ cơ sở dữ liệu
+                    var phieuNhanHienTai = db.PhieuNhans.Find(phieuNhan.MaPhieu);
+                    if (phieuNhanHienTai == null)
+                    {
+                        return HttpNotFound();
+                    }
 
-                return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaSDDV });
+                    // Cập nhật thông tin từ form vào đối tượng hiện tại
+                    phieuNhanHienTai.MaTC = phieuNhan.MaTC;
+                    phieuNhanHienTai.MaSDDV = phieuNhan.MaSDDV;
+                    phieuNhanHienTai.NguoiGiao = phieuNhan.NguoiGiao;
+                    phieuNhanHienTai.NguoiNhan = phieuNhan.NguoiNhan;
+                    phieuNhanHienTai.NgayNhan = phieuNhan.NgayNhan;
+                    phieuNhanHienTai.TinhTrangDichVu = phieuNhan.TinhTrangDichVu;
+                    phieuNhanHienTai.NgayTra = phieuNhan.NgayTra;
+                    phieuNhanHienTai.NguoiTra = phieuNhan.NguoiTra;
+                    phieuNhanHienTai.GhiChu = phieuNhan.GhiChu;
+
+                    // Xử lý upload ảnh tình trạng trước tiếp nhận
+                    if (fileTruoc != null && fileTruoc.ContentLength > 0)
+                    {
+                        // Xóa ảnh cũ nếu có
+                        if (!string.IsNullOrEmpty(phieuNhanHienTai.TinhTrangTruocTiepNhan))
+                        {
+                            string oldPath = Path.Combine(Server.MapPath("~/Images/TinhTrangTruocTiepNhan"), phieuNhanHienTai.TinhTrangTruocTiepNhan);
+                            if (System.IO.File.Exists(oldPath))
+                            {
+                                System.IO.File.Delete(oldPath);
+                            }
+                        }
+
+                        // Lưu ảnh mới
+                        string fileName = Path.GetFileName(fileTruoc.FileName);
+                        string path = Path.Combine(Server.MapPath("~/Images/TinhTrangTruocTiepNhan"), fileName);
+                        fileTruoc.SaveAs(path);
+                        phieuNhanHienTai.TinhTrangTruocTiepNhan = fileName;
+                    }
+
+                    // Xử lý upload ảnh tình trạng sau tiếp nhận
+                    if (fileSau != null && fileSau.ContentLength > 0)
+                    {
+                        // Xóa ảnh cũ nếu có
+                        if (!string.IsNullOrEmpty(phieuNhanHienTai.TinhTrangSauTiepNhan))
+                        {
+                            string oldPath = Path.Combine(Server.MapPath("~/Images/TinhTrangSauTiepNhan"), phieuNhanHienTai.TinhTrangSauTiepNhan);
+                            if (System.IO.File.Exists(oldPath))
+                            {
+                                System.IO.File.Delete(oldPath);
+                            }
+                        }
+
+                        // Lưu ảnh mới
+                        string fileName = Path.GetFileName(fileSau.FileName);
+                        string path = Path.Combine(Server.MapPath("~/Images/TinhTrangSauTiepNhan"), fileName);
+                        fileSau.SaveAs(path);
+                        phieuNhanHienTai.TinhTrangSauTiepNhan = fileName;
+                    }
+
+                    db.Entry(phieuNhanHienTai).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "Cập nhật phiếu nhận thành công!";
+                    return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhanHienTai.MaSDDV });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Có lỗi xảy ra khi cập nhật phiếu nhận: " + ex.Message);
+                }
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            // Lấy danh sách thú cưng của khách hàng
+            var suDungDichVu = db.SuDungDichVus.Find(phieuNhan.MaSDDV);
+            var thuCungs = db.ThuCungs.Where(t => t.MaKH == suDungDichVu.MaKH).ToList();
+
+            // Lấy danh sách nhân viên
+            var nhanViens = db.NhanViens.ToList();
+
+            ViewBag.MaTC = new SelectList(thuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.NguoiGiao = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiGiao);
+            ViewBag.NguoiNhan = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiNhan);
+            ViewBag.NguoiTra = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiTra);
+            
             return View(phieuNhan);
         }
 

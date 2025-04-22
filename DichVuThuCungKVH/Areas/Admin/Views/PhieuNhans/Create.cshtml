@@ -26,6 +26,7 @@
                                 <span class="input-group-text"><i class="fas fa-paw"></i></span>
                                 @Html.DropDownList("MaTC", null, "Chọn thú cưng", new { @class = "form-control" })
                             </div>
+                            <small class="form-text text-muted">Chỉ hiển thị thú cưng của khách hàng sử dụng dịch vụ này</small>
                             @Html.ValidationMessageFor(model => model.MaTC, "", new { @class = "text-danger" })
                         </div>
 
