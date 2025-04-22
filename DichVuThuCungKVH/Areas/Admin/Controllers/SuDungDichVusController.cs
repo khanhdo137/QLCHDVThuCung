@@ -114,10 +114,40 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SuDungDichVu suDungDichVu = db.SuDungDichVus.Find(id);
-            db.SuDungDichVus.Remove(suDungDichVu);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                SuDungDichVu suDungDichVu = db.SuDungDichVus.Find(id);
+                if (suDungDichVu == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // First, delete all related PhieuNhan records
+                var relatedPhieuNhans = db.PhieuNhans.Where(p => p.MaSDDV == id).ToList();
+                foreach (var phieuNhan in relatedPhieuNhans)
+                {
+                    // Delete related CTPhieuNhan_DichVu records first
+                    var relatedCTPhieuNhans = db.CTPhieuNhan_DichVu.Where(c => c.MaPhieu == phieuNhan.MaPhieu).ToList();
+                    foreach (var ctPhieuNhan in relatedCTPhieuNhans)
+                    {
+                        db.CTPhieuNhan_DichVu.Remove(ctPhieuNhan);
+                    }
+                    
+                    // Then delete the PhieuNhan record
+                    db.PhieuNhans.Remove(phieuNhan);
+                }
+
+                // Now it's safe to delete the SuDungDichVu record
+                db.SuDungDichVus.Remove(suDungDichVu);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                TempData["ErrorMessage"] = "Không thể xóa bản ghi này vì có dữ liệu liên quan. Lỗi: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
