@@ -10,9 +10,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
             font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
         }
 
         .navbar-brand {
@@ -29,7 +41,7 @@
             background-color: #343a40;
             color: #fff;
             padding: 20px 0;
-            margin-top: 40px;
+            text-align: center;
         }
 
             footer p {
@@ -48,67 +60,69 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                🐶 Quản Lý Thú Cưng Admin
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navAdmin"
-                    aria-controls="navAdmin" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    🐶 Quản Lý Thú Cưng Admin
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navAdmin"
+                        aria-controls="navAdmin" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navAdmin">
-                <ul class="navbar-nav ms-auto">
-                    @if (Session["UserType"] != null && Session["UserType"].ToString() == "1")
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "NhanViens")">👤 Nhân Viên</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "SanPhams")">📦 Sản Phẩm</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">🔐 Tài Khoản</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "DoanhThu")">💰 Doanh Thu</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">👥 Khách Hàng</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "SuDungDichVus")">🛠️ Dịch Vụ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "PhieuNhans")">📄 Phiếu Nhận</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("DonHangDaDat", "NhanViens")">🛒 Đơn Hàng</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("DanhSachSuDungDichVu", "NhanViens")">📋 Đơn Dịch Vụ</a>
-                        </li>
-                    }
+                <div class="collapse navbar-collapse" id="navAdmin">
+                    <ul class="navbar-nav ms-auto">
+                        @if (Session["UserType"] != null && Session["UserType"].ToString() == "1")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "NhanViens")">👤 Nhân Viên</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "SanPhams")">📦 Sản Phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">🔐 Tài Khoản</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "DoanhThu")">💰 Doanh Thu</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">👥 Khách Hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "SuDungDichVus")">🛠️ Dịch Vụ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "PhieuNhans")">📄 Phiếu Nhận</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("DonHangDaDat", "NhanViens")">🛒 Đơn Hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("DanhSachSuDungDichVu", "NhanViens")">📋 Đơn Dịch Vụ</a>
+                            </li>
+                        }
 
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="@Url.Action("Login", "Home")">🚪 Đăng Xuất</a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="@Url.Action("Login", "Home")">🚪 Đăng Xuất</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="container mt-4">
-        @RenderBody()
+        <main class="container mt-4">
+            @RenderBody()
+        </main>
+
+        <footer>
+            <p>© @DateTime.Now.Year - Quản Lý Hệ Thống | ADMIN</p>
+        </footer>
     </div>
-
-    <footer class="text-center">
-        <p>© @DateTime.Now.Year - Quản Lý Hệ Thống | ADMIN</p>
-    </footer>
 
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @RenderSection("scripts", required: false)
