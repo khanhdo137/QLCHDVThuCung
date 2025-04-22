@@ -1,44 +1,92 @@
 ﻿@model DichVuThuCungKVH.Model.KhachHang
 @{
-    ViewBag.Title = "KhachHang";
+    ViewBag.Title = "Thông tin khách hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model != null)
-{
-    <table align="center">
-        @using (Html.BeginForm())
+<style>
+    .customer-label {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+    }
 
-        {
-            @Html.ValidationSummary(true)
-            <tr style="height:40px;">
-                <td> Họ tên khách hàng:</td>
-                <td style="font-weight:bold"> @Model.TenKH </td>
-            </tr>
-            <tr style="height:40px;">
-                <td> Ngày sinh:</td>
-                <td style="font-weight:bold"> @Model.NgaySinh </td>
-            </tr>
-            <tr style="height:40px;">
-                <td> Địa chỉ:</td>
-                <td style="font-weight:bold"> @Model.DiaChi </td>
-            </tr>
-            <tr style="height:40px;">
-                <td> Điện thoại:</td>
-                <td style="font-weight:bold"> @Model.SDT </td>
-            </tr>
-            <tr style="height:40px;">
-                <td> Giới tính :</td>
-                <td style="font-weight:bold"> @Model.GioiTinh </td>
-            </tr>
-            <tr style="height:40px;">
-                <td> Email:</td>
-                <td style="font-weight:bold"> @Model.Email </td>
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <p>Không tìm thấy thông tin khách hàng.</p>
-}
+    .customer-value {
+        font-size: 1.2rem;
+        color: #555;
+    }
+
+    .card-custom {
+        font-size: 1.1rem;
+        padding: 30px;
+    }
+
+    .card-header-custom {
+        font-size: 1.6rem;
+        font-weight: bold;
+        padding: 20px;
+    }
+
+    .btn-custom {
+        font-size: 1.1rem;
+        padding: 10px 25px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg card-custom">
+                <div class="card-header bg-primary text-white text-center card-header-custom">
+                    Thông tin khách hàng
+                </div>
+                <div class="card-body">
+                    @if (Model != null)
+                    {
+                        using (Html.BeginForm())
+                        {
+                            @Html.ValidationSummary(true)
+
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Họ tên khách hàng:</div>
+                                <div class="col-md-8 customer-value">@Model.TenKH</div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Ngày sinh:</div>
+                                <div class="col-md-8 customer-value">
+                                    @(Model.NgaySinh.HasValue ? Model.NgaySinh.Value.ToString("dd/MM/yyyy") : "Chưa cung cấp")
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Địa chỉ:</div>
+                                <div class="col-md-8 customer-value">@Model.DiaChi</div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Điện thoại:</div>
+                                <div class="col-md-8 customer-value">@Model.SDT</div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Giới tính:</div>
+                                <div class="col-md-8 customer-value">@Model.GioiTinh</div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4 customer-label">Email:</div>
+                                <div class="col-md-8 customer-value">@Model.Email</div>
+                            </div>
+
+                            <div class="text-center mt-5">
+                                <a href="@Url.Action("Index", "DVTC")" class="btn btn-secondary btn-custom">Về trang chủ</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center fs-5 mt-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Không tìm thấy thông tin khách hàng.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
