@@ -60,6 +60,9 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Đặt trạng thái mặc định là hoạt động
+                taiKhoan.TrangThai = true;
+                
                 db.TaiKhoans.Add(taiKhoan);
                 db.SaveChanges();
                 return RedirectToAction("Index");

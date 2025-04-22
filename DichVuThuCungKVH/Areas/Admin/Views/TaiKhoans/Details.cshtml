@@ -5,47 +5,38 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Chi Tiết Tài Khoản</h2>
+<div class="container mt-4">
+    <div class="card shadow rounded">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Chi Tiết Tài Khoản</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Tên Tài Khoản:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TenTK)</dd>
 
-<div>
-    <h4>Thông Tin Tài Khoản</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Tên Tài Khoản
-        </dt>
+                <dt class="col-sm-4">Mật Khẩu:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MatKhau)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenTK)
-        </dd>
+                <dt class="col-sm-4">Loại Tài Khoản:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.LoaiTK)</dd>
 
-        <dt>
-            Mật Khẩu
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MatKhau)
-        </dd>
-
-        <dt>
-            Loại Tài Khoản
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiTK)
-        </dd>
-
-        <dt>
-            Trạng Thái
-        </dt>
-
-        <dd>
-            @(Model.TrangThai == true ? "Hoạt động" : "Khóa")
-        </dd>
-
-    </dl>
+                <dt class="col-sm-4">Trạng Thái:</dt>
+                <dd class="col-sm-8">
+                    @if (Model.TrangThai == true)
+                    {
+                        <span class="badge bg-success">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Khóa</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-end">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaTK }, new { @class = "btn btn-warning me-2" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaTK }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -5,58 +5,75 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Tạo Mới Tài Khoản</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Thông Tin Tài Khoản</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TenTK, "Tên Tài Khoản", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TenTK, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenTK, "", new { @class = "text-danger" })
-            </div>
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tạo Mới Tài Khoản</h6>
         </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MatKhau, "Mật Khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    
+                    <div class="form-group row mb-3">
+                        @Html.LabelFor(model => model.TenTK, "Tên Tài Khoản", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TenTK, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenTK, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LoaiTK, "Loại Tài Khoản", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LoaiTK, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LoaiTK, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group row mb-3">
+                        @Html.LabelFor(model => model.MatKhau, "Mật Khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TrangThai, "Trạng Thái", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TrangThai)
-                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                    <div class="form-group row mb-3">
+                        @Html.LabelFor(model => model.LoaiTK, "Loại Tài Khoản", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.LoaiTK, 
+                                new List<SelectListItem> {
+                                    new SelectListItem { Text = "Admin", Value = "Admin" },
+                                    new SelectListItem { Text = "Nhân Viên", Value = "NhanVien" },
+                                    new SelectListItem { Text = "Khách Hàng", Value = "KhachHang" }
+                                }, 
+                                "Chọn loại tài khoản", 
+                                new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LoaiTK, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        @Html.LabelFor(model => model.TrangThai, "Trạng Thái", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="custom-control custom-switch">
+                                @Html.CheckBoxFor(model => model.TrangThai.Value, new { @class = "custom-control-input", @checked = "checked" })
+                                <label class="custom-control-label" for="TrangThai_Value">Hoạt động</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu
+                            </button>
+                            @Html.ActionLink("Quay Lại", "Index", null, new { @class = "btn btn-secondary" })
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
