@@ -5,80 +5,49 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Danh Sách Nhân Viên</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Danh Sách Nhân Viên</h2>
+        @Html.ActionLink("➕ Thêm Nhân Viên", "Create", null, new { @class = "btn btn-success shadow-sm" })
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Tên Nhân Viên
-        </th>
-        <th>
-            Chức Vụ
-        </th>
-        <th>
-            Chi Nhánh
-        </th>
-        <th>
-            Ngày Sinh
-        </th>
-        <th>
-            Số Điện Thoại
-        </th>
-        <th>
-            Địa Chỉ
-        </th>
-        <th>
-            Giới Tính
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            Tên Tài Khoản
-        </th>
-        <th>
-            Hành Động
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenNV)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChucVu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChiNhanh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SDT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @(item.GioiTinh == true ? "Nam" : "Nữ")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaNV }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaNV }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaNV }, new { @class = "btn btn-danger", onclick = "return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');" })
-            </td>
-        </tr>
-    }
-</table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm rounded bg-white">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th>Tên Nhân Viên</th>
+                    <th>Chức Vụ</th>
+                    <th>Chi Nhánh</th>
+                    <th>Ngày Sinh</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Địa Chỉ</th>
+                    <th>Giới Tính</th>
+                    <th>Email</th>
+                    <th>Tên Tài Khoản</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.TenNV)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ChucVu)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ChiNhanh)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SDT)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                        <td>@(item.GioiTinh == true ? "Nam" : "Nữ")</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TaiKhoan.TenTK)</td>
+                        <td class="text-nowrap text-center">
+                            @Html.ActionLink("✏️", "Edit", new { id = item.MaNV }, new { @class = "btn btn-sm btn-warning", title = "Chỉnh sửa" })
+                            @Html.ActionLink("🔍", "Details", new { id = item.MaNV }, new { @class = "btn btn-sm btn-info", title = "Chi tiết" })
+                            @Html.ActionLink("🗑️", "Delete", new { id = item.MaNV }, new { @class = "btn btn-sm btn-danger", title = "Xoá", onclick = "return confirm('Bạn có chắc chắn muốn xóa nhân viên này?');" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
