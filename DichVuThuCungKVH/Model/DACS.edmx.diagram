@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bc6deef1156b42c699b651727600b437" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="bc6deef1156b42c699b651727600b437" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="DACSModel.CTDonHang" Width="1.5" PointX="10.5" PointY="8.875" />
-        <EntityTypeShape EntityType="DACSModel.CTPhieuNhan_DichVu" Width="1.5" PointX="9.75" PointY="11.75" />
+        <EntityTypeShape EntityType="DACSModel.CTPhieuNhan_DichVu" Width="2.75" PointX="9.75" PointY="11.75" />
         <EntityTypeShape EntityType="DACSModel.CTPhieuNhapKho" Width="1.5" PointX="7.5" PointY="5" />
         <EntityTypeShape EntityType="DACSModel.DichVu" Width="1.5" PointX="7.5" PointY="8.375" />
         <EntityTypeShape EntityType="DACSModel.DonHang" Width="1.5" PointX="5.25" PointY="11.625" />

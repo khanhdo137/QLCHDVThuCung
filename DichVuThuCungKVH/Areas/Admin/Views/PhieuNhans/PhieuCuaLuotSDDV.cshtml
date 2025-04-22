@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Danh Sách Phiếu Nhận Của Lượt Sử Dụng Dịch Vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var nhanViens = ViewBag.NhanViens as Dictionary<string, string>;
 }
 
 <div class="container-fluid px-4">
@@ -69,8 +70,8 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangTruocTiepNhan))
                                         {
-                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Trước Tiếp Nhận">
-                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                            <a href="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + phieuNhan.TinhTrangTruocTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Trước Tiếp Nhận">
+                                                <img src="@Url.Content("~/Images/TinhTrangTruocTiepNhan/" + phieuNhan.TinhTrangTruocTiepNhan)" alt="Ảnh Trước Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
                                             </a>
                                         }
                                         else
@@ -81,8 +82,8 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(phieuNhan.TinhTrangSauTiepNhan))
                                         {
-                                            <a href="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Sau Tiếp Nhận">
-                                                <img src="@Url.Content("~/Images/ThuCung/" + phieuNhan.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                                            <a href="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + phieuNhan.TinhTrangSauTiepNhan)" data-lightbox="image-@phieuNhan.MaPhieu" data-title="Ảnh Sau Tiếp Nhận">
+                                                <img src="@Url.Content("~/Images/TinhTrangSauTiepNhan/" + phieuNhan.TinhTrangSauTiepNhan)" alt="Ảnh Sau Tiếp Nhận" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
                                             </a>
                                         }
                                         else
@@ -92,11 +93,21 @@
                                     </td>
                                     <td>
                                         <i class="fas fa-user text-primary me-2"></i>
-                                        @(string.IsNullOrEmpty(phieuNhan.NguoiGiao) ? "Không có thông tin" : phieuNhan.NguoiGiao)
+                                        @{
+                                            var nguoiGiao = !string.IsNullOrEmpty(phieuNhan.NguoiGiao) && nhanViens != null && nhanViens.ContainsKey(phieuNhan.NguoiGiao) 
+                                                ? nhanViens[phieuNhan.NguoiGiao] 
+                                                : "Không có thông tin";
+                                        }
+                                        @nguoiGiao
                                     </td>
                                     <td>
                                         <i class="fas fa-user-check text-primary me-2"></i>
-                                        @(string.IsNullOrEmpty(phieuNhan.NguoiNhan) ? "Không có thông tin" : phieuNhan.NguoiNhan)
+                                        @{
+                                            var nguoiNhan = !string.IsNullOrEmpty(phieuNhan.NguoiNhan) && nhanViens != null && nhanViens.ContainsKey(phieuNhan.NguoiNhan) 
+                                                ? nhanViens[phieuNhan.NguoiNhan] 
+                                                : "Không có thông tin";
+                                        }
+                                        @nguoiNhan
                                     </td>
                                     <td>
                                         <i class="fas fa-calendar text-primary me-2"></i>
@@ -126,7 +137,12 @@
                                     </td>
                                     <td>
                                         <i class="fas fa-user-minus text-primary me-2"></i>
-                                        @(string.IsNullOrEmpty(phieuNhan.NguoiTra) ? "Chưa trả" : phieuNhan.NguoiTra)
+                                        @{
+                                            var nguoiTra = !string.IsNullOrEmpty(phieuNhan.NguoiTra) && nhanViens != null && nhanViens.ContainsKey(phieuNhan.NguoiTra) 
+                                                ? nhanViens[phieuNhan.NguoiTra] 
+                                                : "Chưa trả";
+                                        }
+                                        @nguoiTra
                                     </td>
                                     <td>
                                         <i class="fas fa-sticky-note text-primary me-2"></i>
@@ -134,10 +150,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="@Url.Action("ChinhSuaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-primary btn-sm" title="Chỉnh sửa">
+                                            <a href="@Url.Action("Edit", "PhieuNhans", new { id = phieuNhan.MaPhieu })" class="btn btn-primary btn-sm" title="Chỉnh sửa">
                                                 <i class="fas fa-edit"></i> Chỉnh sửa
                                             </a>
-                                            <a href="@Url.Action("XoaPhieuNhan", "NhanViens", new { id = phieuNhan.MaPhieu })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
+                                            <a href="@Url.Action("Delete", "PhieuNhans", new { id = phieuNhan.MaPhieu })" class="btn btn-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhận này?');">
                                                 <i class="fas fa-trash"></i> Xóa
                                             </a>
                                         </div>
@@ -201,10 +217,10 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-        .img-thumbnail:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+    .img-thumbnail:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
     .btn-sm {
         margin-right: 5px;

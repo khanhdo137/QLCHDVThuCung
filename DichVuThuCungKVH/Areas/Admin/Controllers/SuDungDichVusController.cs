@@ -12,7 +12,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
     public class SuDungDichVusController : Controller
     {
-        private readonly DACSEntities db = new DACSEntities();
+        private DACSEntities db = new DACSEntities();
 
         // GET: Admin/SuDungDichVus
         public ActionResult Index()
@@ -37,32 +37,27 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
         }
 
         // GET: Admin/SuDungDichVus/Create
-        public ActionResult Create(int? maKH)
+        public ActionResult Create()
         {
-            if (maKH == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.MaKH = maKH;
-
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH");
             return View();
         }
 
+        // POST: Admin/SuDungDichVus/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SuDungDichVu suDungDichVu, int maKH)
+        public ActionResult Create([Bind(Include = "MaSDDV,MaKH,Ngay,GhiChu")] SuDungDichVu suDungDichVu)
         {
             if (ModelState.IsValid)
             {
-                // Set mã khách hàng cho lượt sử dụng dịch vụ
-                suDungDichVu.MaKH = maKH;
-
                 db.SuDungDichVus.Add(suDungDichVu);
                 db.SaveChanges();
-                return RedirectToAction("LuotSDDV", new { id = maKH });
+                return RedirectToAction("Index");
             }
 
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", suDungDichVu.MaKH);
             return View(suDungDichVu);
         }
 
@@ -78,13 +73,16 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", suDungDichVu.MaKH);
             return View(suDungDichVu);
         }
 
         // POST: Admin/SuDungDichVus/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SuDungDichVu suDungDichVu)
+        public ActionResult Edit([Bind(Include = "MaSDDV,MaKH,Ngay,GhiChu")] SuDungDichVu suDungDichVu)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +90,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "TenKH", suDungDichVu.MaKH);
             return View(suDungDichVu);
         }
 
@@ -128,25 +127,6 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult LuotSDDV(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            KhachHang khachHang = db.KhachHangs.Find(id);
-            if (khachHang == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.MaKH = id;
-
-            var LuotSDDV = db.SuDungDichVus.Where(dv => dv.MaKH == id).ToList();
-            return View(LuotSDDV);
         }
     }
 }

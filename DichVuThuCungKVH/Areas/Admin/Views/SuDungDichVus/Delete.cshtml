@@ -5,55 +5,42 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid px-4">
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0 text-gray-800">Xóa Lượt Sử Dụng Dịch Vụ</h2>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay Lại
+        </a>
+    </div>
+
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-danger">Xóa Lượt Sử Dụng Dịch Vụ</h6>
-            <a href="@Url.Action("LuotSDDV", new { id = Model.MaKH })" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Quay lại
-            </a>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-danger">Bạn có chắc chắn muốn xóa lượt sử dụng dịch vụ này?</h6>
         </div>
         <div class="card-body">
-            <div class="alert alert-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong>Bạn có chắc chắn muốn xóa lượt sử dụng dịch vụ này?</strong>
-                <p class="mb-0">Hành động này không thể hoàn tác.</p>
-            </div>
-
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-header bg-light">
-                            <h6 class="m-0 font-weight-bold">Thông tin lượt sử dụng</h6>
-                        </div>
-                        <div class="card-body">
-                            <dl class="row">
-                                <dt class="col-sm-4">Ngày sử dụng:</dt>
-                                <dd class="col-sm-8">@Html.DisplayFor(model => model.Ngay)</dd>
+                    <dl class="row">
+                        <dt class="col-sm-4">Ngày Sử Dụng:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Ngay)</dd>
 
-                                <dt class="col-sm-4">Ghi chú:</dt>
-                                <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.GhiChu) ? "Không có" : Model.GhiChu)</dd>
+                        <dt class="col-sm-4">Khách Hàng:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
 
-                                <dt class="col-sm-4">Khách hàng:</dt>
-                                <dd class="col-sm-8">@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
-                            </dl>
-                        </div>
-                    </div>
+                        <dt class="col-sm-4">Ghi Chú:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.GhiChu)</dd>
+                    </dl>
                 </div>
             </div>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.MaSDDV)
 
-                <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa lượt sử dụng dịch vụ này?');">
+                <div class="form-actions no-color mt-4">
+                    <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash"></i> Xóa
                     </button>
-                    <a href="@Url.Action("LuotSDDV", new { id = Model.MaKH })" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Hủy
-                    </a>
                 </div>
             }
         </div>

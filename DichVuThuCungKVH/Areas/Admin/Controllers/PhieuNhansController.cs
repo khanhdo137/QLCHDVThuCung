@@ -22,31 +22,69 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
             return View(phieuNhans.ToList());
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? maSDDV)
         {
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC");
-            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV");
+            if (maSDDV == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Lấy thông tin lượt sử dụng dịch vụ
+            var suDungDichVu = db.SuDungDichVus.Find(maSDDV);
+            if (suDungDichVu == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Lấy danh sách thú cưng của khách hàng
+            var thuCungs = db.ThuCungs.Where(t => t.MaKH == suDungDichVu.MaKH).ToList();
+
+            // Lấy danh sách nhân viên
+            var nhanViens = db.NhanViens.ToList();
+
+            ViewBag.MaTC = new SelectList(thuCungs, "MaTC", "TenTC");
+            ViewBag.MaSDDV = maSDDV;
+            ViewBag.NguoiGiao = new SelectList(nhanViens, "MaNV", "TenNV");
+            ViewBag.NguoiNhan = new SelectList(nhanViens, "MaNV", "TenNV");
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaTC,MaSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,NguoiGiao,NguoiNhan,NgayNhan,TinhTrangDichVu,NgayTra,NguoiTra,GhiChu")] PhieuNhan phieuNhan)
+        public ActionResult Create([Bind(Include = "MaTC,MaSDDV,TinhTrangTruocTiepNhan,TinhTrangSauTiepNhan,NguoiGiao,NguoiNhan,NgayNhan,TinhTrangDichVu,NgayTra,NguoiTra,GhiChu")] PhieuNhan phieuNhan, HttpPostedFileBase fileTruoc, HttpPostedFileBase fileSau)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Xử lý upload ảnh tình trạng trước tiếp nhận
+                    if (fileTruoc != null && fileTruoc.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(fileTruoc.FileName);
+                        string path = Path.Combine(Server.MapPath("~/Images/TinhTrangTruocTiepNhan"), fileName);
+                        fileTruoc.SaveAs(path);
+                        phieuNhan.TinhTrangTruocTiepNhan = fileName;
+                    }
+
+                    // Xử lý upload ảnh tình trạng sau tiếp nhận
+                    if (fileSau != null && fileSau.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(fileSau.FileName);
+                        string path = Path.Combine(Server.MapPath("~/Images/TinhTrangSauTiepNhan"), fileName);
+                        fileSau.SaveAs(path);
+                        phieuNhan.TinhTrangSauTiepNhan = fileName;
+                    }
+
                     // Set default values
                     phieuNhan.NgayNhan = DateTime.Now;
-                    phieuNhan.TinhTrangSauTiepNhan = "Đang xử lý";
                     phieuNhan.TinhTrangDichVu = "Chưa hoàn thành";
 
                     db.PhieuNhans.Add(phieuNhan);
                     db.SaveChanges();
 
                     TempData["SuccessMessage"] = "Tạo phiếu nhận thành công!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaSDDV });
                 }
                 catch (Exception ex)
                 {
@@ -54,8 +92,16 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 }
             }
 
-            ViewBag.MaTC = new SelectList(db.ThuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
-            ViewBag.MaSDDV = new SelectList(db.SuDungDichVus, "MaSDDV", "MaSDDV", phieuNhan.MaSDDV);
+            // Lấy lại dữ liệu cho dropdown
+            var suDungDichVu = db.SuDungDichVus.Find(phieuNhan.MaSDDV);
+            var thuCungs = db.ThuCungs.Where(t => t.MaKH == suDungDichVu.MaKH).ToList();
+            var nhanViens = db.NhanViens.ToList();
+
+            ViewBag.MaTC = new SelectList(thuCungs, "MaTC", "TenTC", phieuNhan.MaTC);
+            ViewBag.MaSDDV = phieuNhan.MaSDDV;
+            ViewBag.NguoiGiao = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiGiao);
+            ViewBag.NguoiNhan = new SelectList(nhanViens, "MaNV", "TenNV", phieuNhan.NguoiNhan);
+
             return View(phieuNhan);
         }
 
@@ -108,7 +154,7 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
             return View(phieuNhan);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? maSDDV)
         {
             if (id == null)
             {
@@ -121,18 +167,61 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.MaSDDV = maSDDV;
             return View(phieuNhan);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int? maSDDV)
         {
-            PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
-            db.PhieuNhans.Remove(phieuNhan);
-            db.SaveChanges();
+            try
+            {
+                PhieuNhan phieuNhan = db.PhieuNhans.Find(id);
+                if (phieuNhan == null)
+                {
+                    return HttpNotFound();
+                }
 
-            return RedirectToAction("PhieuCuaLuotSDDV", new { id = phieuNhan.MaSDDV });
+                // Xóa ảnh tình trạng trước tiếp nhận
+                if (!string.IsNullOrEmpty(phieuNhan.TinhTrangTruocTiepNhan))
+                {
+                    string pathTruoc = Path.Combine(Server.MapPath("~/Images/TinhTrangTruocTiepNhan"), phieuNhan.TinhTrangTruocTiepNhan);
+                    if (System.IO.File.Exists(pathTruoc))
+                    {
+                        System.IO.File.Delete(pathTruoc);
+                    }
+                }
+
+                // Xóa ảnh tình trạng sau tiếp nhận
+                if (!string.IsNullOrEmpty(phieuNhan.TinhTrangSauTiepNhan))
+                {
+                    string pathSau = Path.Combine(Server.MapPath("~/Images/TinhTrangSauTiepNhan"), phieuNhan.TinhTrangSauTiepNhan);
+                    if (System.IO.File.Exists(pathSau))
+                    {
+                        System.IO.File.Delete(pathSau);
+                    }
+                }
+
+                // Xóa các chi tiết phiếu nhận dịch vụ liên quan
+                var ctPhieuNhans = db.CTPhieuNhan_DichVu.Where(ct => ct.MaPhieu == id).ToList();
+                foreach (var ct in ctPhieuNhans)
+                {
+                    db.CTPhieuNhan_DichVu.Remove(ct);
+                }
+
+                // Xóa phiếu nhận
+                db.PhieuNhans.Remove(phieuNhan);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Xóa phiếu nhận thành công!";
+                return RedirectToAction("PhieuCuaLuotSDDV", new { id = maSDDV ?? phieuNhan.MaSDDV });
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa phiếu nhận: " + ex.Message;
+                return RedirectToAction("PhieuCuaLuotSDDV", new { id = maSDDV });
+            }
         }
 
         public ActionResult PhieuCuaLuotSDDV(int? id)
@@ -144,7 +233,16 @@ namespace DichVuThuCungKVH.Areas.Admin.Controllers
 
             ViewBag.MaSDDV = id;
 
-            var phieuNhans = db.PhieuNhans.Where(pn => pn.MaSDDV == id).ToList();
+            // Lấy danh sách phiếu nhận và thông tin nhân viên
+            var phieuNhans = db.PhieuNhans
+                .Include(p => p.SuDungDichVu)
+                .Include(p => p.ThuCung)
+                .Where(pn => pn.MaSDDV == id)
+                .ToList();
+
+            // Lấy thông tin nhân viên
+            var nhanViens = db.NhanViens.ToDictionary(nv => nv.MaNV.ToString(), nv => nv.TenNV);
+            ViewBag.NhanViens = nhanViens;
 
             return View(phieuNhans);
         }

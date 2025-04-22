@@ -1,23 +1,27 @@
-﻿using DichVuThuCungKVH.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using DichVuThuCungKVH.Model;
 
-namespace DichVuThuCungKVH.Areas.Admin
+namespace DichVuThuCungKVH.Areas.Admin.Controllers
 {
-    public class CTPhieuNhan_DichVuController : Controller
+    public class CTPhieuNhan_DichVu1Controller : Controller
     {
         private DACSEntities db = new DACSEntities();
 
-        // GET: Admin/CTPhieuNhan_DichVu
+        // GET: Admin/CTPhieuNhan_DichVu1
         public ActionResult Index()
         {
             var cTPhieuNhan_DichVu = db.CTPhieuNhan_DichVu.Include(c => c.DichVu).Include(c => c.PhieuNhan);
             return View(cTPhieuNhan_DichVu.ToList());
         }
 
-        // GET: Admin/CTPhieuNhan_DichVu/Details/5
+        // GET: Admin/CTPhieuNhan_DichVu1/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -32,7 +36,7 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View(cTPhieuNhan_DichVu);
         }
 
-        // GET: Admin/CTPhieuNhan_DichVu/Create
+        // GET: Admin/CTPhieuNhan_DichVu1/Create
         public ActionResult Create()
         {
             ViewBag.MaDV = new SelectList(db.DichVus, "MaDV", "TenDichVu");
@@ -40,8 +44,8 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View();
         }
 
-        // POST: Admin/CTPhieuNhan_DichVu/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // POST: Admin/CTPhieuNhan_DichVu1/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,7 +63,7 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View(cTPhieuNhan_DichVu);
         }
 
-        // GET: Admin/CTPhieuNhan_DichVu/Edit/5
+        // GET: Admin/CTPhieuNhan_DichVu1/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,8 +80,8 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View(cTPhieuNhan_DichVu);
         }
 
-        // POST: Admin/CTPhieuNhan_DichVu/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // POST: Admin/CTPhieuNhan_DichVu1/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,7 +98,7 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View(cTPhieuNhan_DichVu);
         }
 
-        // GET: Admin/CTPhieuNhan_DichVu/Delete/5
+        // GET: Admin/CTPhieuNhan_DichVu1/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +113,7 @@ namespace DichVuThuCungKVH.Areas.Admin
             return View(cTPhieuNhan_DichVu);
         }
 
-        // POST: Admin/CTPhieuNhan_DichVu/Delete/5
+        // POST: Admin/CTPhieuNhan_DichVu1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

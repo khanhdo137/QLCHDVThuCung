@@ -5,69 +5,55 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid px-4">
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0 text-gray-800">Chỉnh Sửa Lượt Sử Dụng Dịch Vụ</h2>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay Lại
+        </a>
+    </div>
+
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Chỉnh Sửa Lượt Sử Dụng Dịch Vụ</h6>
-            <a href="@Url.Action("LuotSDDV", new { id = Model.MaKH })" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Quay lại
-            </a>
-        </div>
         <div class="card-body">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.MaSDDV)
-                @Html.HiddenFor(model => model.MaKH)
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            @Html.LabelFor(model => model.Ngay, "Ngày Sử Dụng", new { @class = "form-label" })
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                @Html.TextBoxFor(model => model.Ngay, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control", @id = "Ngay", @type = "datetime-local" })
-                            </div>
-                            @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            @Html.LabelFor(model => model.GhiChu, "Ghi Chú", new { @class = "form-label" })
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
-                                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ghi chú (nếu có)" } })
-                            </div>
-                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            @Html.LabelFor(model => model.MaKH, "Mã Khách Hàng", new { @class = "form-label" })
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                @Html.TextBoxFor(model => model.MaKH, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaSDDV)
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.MaKH, "Khách Hàng", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("MaKH", null, "-- Chọn Khách Hàng --", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            @Html.LabelFor(model => model.KhachHang.TenKH, "Tên Khách Hàng", new { @class = "form-label" })
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                @Html.TextBoxFor(model => model.KhachHang.TenKH, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.Ngay, "Ngày Sử Dụng", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Ngay, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(model => model.Ngay, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu
-                    </button>
-                    <a href="@Url.Action("LuotSDDV", new { id = Model.MaKH })" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Hủy
-                    </a>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.GhiChu, "Ghi Chú", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", rows = "3" })
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu Thay Đổi
+                            </button>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
