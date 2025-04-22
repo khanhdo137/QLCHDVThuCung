@@ -4,49 +4,127 @@
     ViewBag.Title = "DatHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2 style="text-align:center">THÔNG TIN ĐƠN HÀNG</h2>
-<table align="center" border="1">
-    <tr style="text-align:center; font-weight:bold;">
-        <td>Mã Sản Phẩm</td>
-        <td>Tên Ản Phẩm</td>
-        <td>Ảnh</td>
-        <td>Số Lượng</td>
-        <td>Đơn Giá</td>
-        <td>Thành Tiền</td>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr style="text-align:center; font-weight:bold;">
-            <td align="center">@item.iMaSanPham</td>
-            <td>@item.sTenSP</td>
-            <td><img src="~/Images/SanPham/@item.sAnh" style="width:100px;"></td>
-            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSP = item.iMaSanPham }))
-            {
-                <td align="center">
-                    @item.iSoLuong
-                    
-                </td>
-                <td align="center">@string.Format("{0:#,##0,0}", @item.dDonGia)</td>
-                <td align="center">@string.Format("{0:#,##0,0}", @item.dThanhTien)</td>
-            }
-        </tr>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .order-table {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        overflow-x: auto;
     }
-    <tr>
-    <tr>
-        <td colspan="3" style="text-align:right; color:red; font-weight:bold; padding-right:5px;">
-            Số lượng sản phẩm: @string.Format("{0:#,##0}", @ViewBag.TongSoLuong)
-        </td>
-        <td colspan="3" style="text-align:center; color:red; font-weight:bold;">
-            Tổng tiền: @string.Format("{0:#,##0,0}", @ViewBag.TongTien) VNĐ
-        </td>
-    </tr>
-    <tr style="font-weight:bold; color:blue; text-align:right;">
-        <td colspan="9">
-            @Html.ActionLink("TRỞ VỀ GIỎ HÀNG", "GioHang", "GioHang")
-        </td>
-    </tr>
-</table>
+    .order-table th, .order-table td {
+        vertical-align: middle;
+        padding: 15px;
+    }
+    .order-table th {
+        background: #f8f9fa;
+        color: #333;
+    }
+    .product-img {
+        max-width: 80px;
+        border-radius: 5px;
+    }
+    .total-row {
+        background: #f1f3f5;
+        font-weight: 600;
+    }
+    .btn-back {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+    .btn-back:hover {
+        background: #0056b3;
+    }
+    .section-title {
+        color: #333;
+        margin-bottom: 30px;
+        font-weight: 700;
+    }
+    /* CSS cho màn hình nhỏ */
+    .mobile-view .order-table th, 
+    .mobile-view .order-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .mobile-view .product-img {
+        max-width: 60px;
+    }
+</style>
 
+<div class="container my-5">
+    <h2 class="section-title text-center">THÔNG TIN ĐƠN HÀNG</h2>
 
-<h2 style="text-align:center">THÔNG TIN ĐẶT HÀNG</h2>
-@Html.Action("DatHangPartial","GioHang")
+    <div class="order-table table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>Mã Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Ảnh</th>
+                    <th>Số Lượng</th>
+                    <th>Đơn Giá</th>
+                    <th>Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@item.iMaSanPham</td>
+                            <td>@item.sTenSP</td>
+                            <td><img src="~/Images/SanPham/@item.sAnh" class="product-img" alt="@item.sTenSP"></td>
+                            <td>
+                                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSP = item.iMaSanPham }, FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @item.iSoLuong
+                                }
+                            </td>
+                            <td>@string.Format("{0:#,##0}", item.dDonGia) VNĐ</td>
+                            <td>@string.Format("{0:#,##0}", item.dThanhTien) VNĐ</td>
+                        </tr>
+                    }
+                }
+                <tr class="total-row">
+                    <td colspan="3" class="text-end pe-4">
+                        Số lượng sản phẩm: @(ViewBag.TongSoLuong != null ? string.Format("{0:#,##0}", ViewBag.TongSoLuong) : "0")
+                    </td>
+                    <td colspan="3" class="text-center">
+                        Tổng tiền: @(ViewBag.TongTien != null ? string.Format("{0:#,##0}", ViewBag.TongTien) : "0") VNĐ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-end mt-3">
+        @Html.ActionLink("TRỞ VỀ GIỎ HÀNG", "GioHang", "GioHang", null, new { @class = "btn-back" })
+    </div>
+
+    <h2 class="section-title text-center mt-5">THÔNG TIN ĐẶT HÀNG</h2>
+    <div class="card p-4">
+        @Html.Action("DatHangPartial", "GioHang")
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Thêm class mobile-view cho container khi màn hình nhỏ hơn 768px
+    function checkScreenSize() {
+        if (window.innerWidth <= 768) {
+            document.querySelector('.container').classList.add('mobile-view');
+        } else {
+            document.querySelector('.container').classList.remove('mobile-view');
+        }
+    }
+    
+    // Kiểm tra kích thước màn hình khi trang tải và khi thay đổi kích thước cửa sổ
+    window.addEventListener('load', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+</script>

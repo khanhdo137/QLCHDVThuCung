@@ -117,7 +117,9 @@ namespace DichVuThuCungKVH.Controllers
                 return RedirectToAction("Index", "DVTC");
             }
 
-            return View(lstGioHang); // truyền danh sách giỏ hàng vào View
+            ViewBag.TongSoLuong = TongSoLuong();
+            ViewBag.TongTien = TongTien();
+            return View(lstGioHang);
         }
         [HttpPost]
         public ActionResult DatHang(FormCollection f)
@@ -170,6 +172,10 @@ namespace DichVuThuCungKVH.Controllers
 
                 db.SaveChanges();
 
+                // Lưu thông tin đơn hàng vào Session
+                Session["MaDonHang"] = ddh.MaDH;
+                Session["TongTien"] = TongTien();
+
                 // Xoá giỏ hàng
                 Session["GioHang"] = null;
 
@@ -184,7 +190,33 @@ namespace DichVuThuCungKVH.Controllers
 
         public ActionResult XacNhanDonHang()
         {
+            // Lấy thông tin đơn hàng vừa đặt từ Session
+            if (Session["MaDonHang"] != null)
+            {
+                ViewBag.MaDonHang = Session["MaDonHang"];
+                ViewBag.TongTien = Session["TongTien"];
+                
+                // Xóa thông tin đơn hàng khỏi Session
+                Session["MaDonHang"] = null;
+                Session["TongTien"] = null;
+            }
+            
             return View();
+        }
+
+        public ActionResult DatHangPartial()
+        {
+            // Kiểm tra đăng nhập
+            if (Session["MaTaiKhoan"] == null)
+                return RedirectToAction("DangNhap", "User");
+
+            int maTaiKhoan = Convert.ToInt32(Session["MaTaiKhoan"]);
+            var kh = db.KhachHangs.SingleOrDefault(n => n.MaTK == maTaiKhoan);
+            
+            if (kh == null)
+                return RedirectToAction("DangNhap", "User");
+                
+            return PartialView(kh);
         }
     }
 }

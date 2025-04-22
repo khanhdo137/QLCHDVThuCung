@@ -1,76 +1,228 @@
 ﻿@using DichVuThuCungKVH.Model
 @model List<GioHang>
 
-@{ ViewBag.Title = "GioHang";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 @{
-    int stt = 1; //tangstt
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int stt = 1;
 }
 
-@if (ViewBag.GioHangTrong != null)
-{
-    <p style=" text-align:center; font-size: 25px;">@ViewBag.GioHangTrong</p>
-}
-else
-{
-    <h2 style="text-align:center;">THÔNG TIN GIỎ HÀNG</h2>
-    <table border="1">
-        <tr>
-            <th>STT</th>
-            <th>Tên Sản Phẩm</th>
-            <th>Ảnh Sản Phẩm</th>
-            <th>Số Lượng</th>
-            <th>Đơn Giá</th>
-            <th>Thành Tiền</th>
-            <th></th>
-            <th></th>
+<style>
+    /* Tăng độ đặc hiệu để ghi đè Bootstrap và các CSS khác */
+    .container .btn,
+    .container .btn-danger,
+    .container .btn-primary,
+    .container .btn-outline-danger,
+    .container .btn-outline-primary,
+    .container .btn-sm,
+    .container input[type="submit"].btn {
+        /* Loại bỏ mọi hiệu ứng và dịch chuyển */
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        margin: 0 !important;
+        padding: 8px 15px !important;
+        border-radius: 4px !important;
+        font-weight: bold !important;
+        min-width: 90px !important;
+        border-width: 2px !important;
+        text-align: center !important;
+        cursor: pointer !important;
+        text-decoration: none !important;
+        position: relative !important; /* Ngăn dịch chuyển do position */
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        display: inline-block !important;
+    }
 
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@stt</td>
-                <td>@item.sTenSP</td>
-                <td><img src="~/Images/SanPham/@item.sAnh" style="width:100px;"></td>
-
-                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSP = item.iMaSanPham }))
-                {
-                    <td align="center">
-                        <input type="number" min="1" name="txtSoLuong" value="@item.iSoLuong" />
-                    </td>
-                    <td align="center">@string.Format("{0:#,##0,0}", @item.dDonGia)</td>
-                    <td align="center">@string.Format("{0:#,##0,0}", @item.dThanhTien)</td>
-                    <td>
-                        @Html.ActionLink("Xóa", "XoaSPKhoiGioHang", new { @iMaSP = item.iMaSanPham })
-                    </td>
-                    <td>
-                        <input type="submit" value="Cập nhật" />
-                    </td>
-                }
-            </tr>
-            { stt++; }
+        /* Loại bỏ mọi hiệu ứng hover */
+        .container .btn:hover,
+        .container .btn-danger:hover,
+        .container .btn-primary:hover,
+        .container .btn-outline-danger:hover,
+        .container .btn-outline-primary:hover,
+        .container .btn-sm:hover,
+        .container input[type="submit"].btn:hover {
+            background-color: inherit !important;
+            color: inherit !important;
+            border-color: inherit !important;
+            transform: none !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            padding: 8px 15px !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
         }
-        <tr>
-            <td colspan="4">
-                Tổng số lượng: @string.Format("{0:#,##0}", @ViewBag.TongSoLuong)
-            </td>
-            <td colspan="5">
-                Tổng tiền: @string.Format("{0:#,##0,0}", @ViewBag.TongTien) VNĐ
-            </td>
-        </tr>
-        <tr style="font-weight:bold; color:blue; text-align:right;">
-            <td colspan="9">
-                @Html.ActionLink("Xóa giỏ hàng", "XoaGioHang")
-            </td>
-        </tr>
-        <tr style="font-weight:bold; color:blue; text-align:center;">
-            <td colspan="9">
-                @Html.ActionLink("ĐẶT HÀNG", "DatHang", "GioHang")
-            </td>
-        </tr>
 
-    </table>
-}
+        /* Loại bỏ hiệu ứng focus và active */
+        .container .btn:focus,
+        .container .btn:active,
+        .container .btn-danger:focus,
+        .container .btn-danger:active,
+        .container .btn-primary:focus,
+        .container .btn-primary:active,
+        .container .btn-outline-danger:focus,
+        .container .btn-outline-danger:active,
+        .container .btn-outline-primary:focus,
+        .container .btn-outline-primary:active,
+        .container .btn-sm:focus,
+        .container .btn-sm:active,
+        .container input[type="submit"].btn:focus,
+        .container input[type="submit"].btn:active {
+            outline: none !important;
+            box-shadow: none !important;
+            transform: none !important;
+            background-color: inherit !important;
+            color: inherit !important;
+            border-color: inherit !important;
+            margin: 0 !important;
+            padding: 8px 15px !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+        }
 
+        /* Loại bỏ pseudo-elements có thể gây dịch chuyển */
+        .container .btn::before,
+        .container .btn::after,
+        .container .btn-danger::before,
+        .container .btn-danger::after,
+        .container .btn-primary::before,
+        .container .btn-primary::after,
+        .container .btn-outline-danger::before,
+        .container .btn-outline-danger::after,
+        .container .btn-outline-primary::before,
+        .container .btn-outline-primary::after,
+        .container .btn-sm::before,
+        .container .btn-sm::after,
+        .container input[type="submit"].btn::before,
+        .container input[type="submit"].btn::after {
+            content: none !important;
+            display: none !important;
+        }
 
+    /* Định dạng màu sắc và viền cố định */
+    .container .btn-danger {
+        background-color: #dc3545 !important;
+        color: white !important;
+        border-color: #dc3545 !important;
+    }
+
+    .container .btn-primary {
+        background-color: #0d6efd !important;
+        color: white !important;
+        border-color: #0d6efd !important;
+    }
+
+    .container .btn-outline-danger {
+        background-color: transparent !important;
+        color: #dc3545 !important;
+        border-color: #dc3545 !important;
+    }
+
+    .container .btn-outline-primary {
+        background-color: transparent !important;
+        color: #0d6efd !important;
+        border-color: #0d6efd !important;
+    }
+
+    /* Định dạng nút nhỏ */
+    .container .btn-sm {
+        padding: 4px 10px !important;
+        font-size: 0.875rem !important;
+        min-width: 70px !important;
+    }
+
+    /* Định dạng cho bảng */
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle !important;
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    @if (ViewBag.GioHangTrong != null)
+    {
+        <div class="alert alert-warning text-center fs-4">
+            @ViewBag.GioHangTrong
+        </div>
+    }
+    else
+    {
+        <h2 class="text-center text-primary mb-4">THÔNG TIN GIỎ HÀNG</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Ảnh Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Đơn Giá</th>
+                        <th>Thành Tiền</th>
+                        <th>Xóa</th>
+                        <th>Cập Nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td>@item.sTenSP</td>
+                            <td>
+                                <img src="~/Images/SanPham/@item.sAnh" class="img-thumbnail" style="width:100px;" />
+                            </td>
+
+                            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSP = item.iMaSanPham }))
+                            {
+                                <td>
+                                    <input type="number" min="1" name="txtSoLuong" value="@item.iSoLuong" class="form-control text-center" style="max-width: 80px; margin: auto;" />
+                                </td>
+                                <td>@string.Format("{0:#,##0,0}", item.dDonGia) VNĐ</td>
+                                <td>@string.Format("{0:#,##0,0}", item.dThanhTien) VNĐ</td>
+                                <td>
+                                    @Html.ActionLink("Xóa", "XoaSPKhoiGioHang", new { iMaSP = item.iMaSanPham }, new { @class = "btn btn-outline-danger btn-sm" })
+                                </td>
+                                <td>
+                                    <input type="submit" value="Cập nhật" class="btn btn-outline-primary btn-sm" />
+                                </td>
+                            }
+                        </tr>
+                        stt++;
+                    }
+
+                    <tr class="table-warning fw-bold">
+                        <td colspan="4" class="text-end text-danger">Tổng số lượng:</td>
+                        <td colspan="4" class="text-start text-danger">
+                            @string.Format("{0:#,##0}", ViewBag.TongSoLuong)
+                        </td>
+                    </tr>
+                    <tr class="table-success fw-bold">
+                        <td colspan="4" class="text-end text-success">Tổng tiền:</td>
+                        <td colspan="4" class="text-start text-success">
+                            @string.Format("{0:#,##0,0}", ViewBag.TongTien) VNĐ
+                        </td>
+                    </tr>
+                    <tr class="text-end">
+                        <td colspan="8">
+                            @Html.ActionLink("🗑️ Xóa giỏ hàng", "XoaGioHang", null, new { @class = "btn btn-danger me-2" })
+                            @Html.ActionLink("🛒 ĐẶT HÀNG", "DatHang", "GioHang", null, new { @class = "btn btn-primary" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

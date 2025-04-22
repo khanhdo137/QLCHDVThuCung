@@ -1,19 +1,53 @@
-﻿
-@{
-    ViewBag.Title = "XacNhanDonHang";
+﻿@{
+    ViewBag.Title = "Xác Nhận Đơn Hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h2>XÁC NHẬN ĐƠN HÀNG THÀNH CÔNG</h2>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                    </div>
+                    <h4 class="mb-4">Cảm ơn quý khách đã đặt hàng!</h4>
+                    <p class="lead">Đơn hàng của quý khách đã được chúng tôi ghi nhận.</p>
+                    <p>Chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất và giao hàng đúng hẹn.</p>
+                    <hr class="my-4">
+                    <p>Mã đơn hàng của quý khách: <strong>@ViewBag.MaDonHang</strong></p>
+                    <p>Tổng giá trị đơn hàng: <strong>@string.Format("{0:#,##0,0}", ViewBag.TongTien) VNĐ</strong></p>
+                    <div class="mt-4">
+                        <a href="@Url.Action("Index", "DVTC")" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home"></i> VỀ TRANG CHỦ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2 class="text-center">XÁC NHẬN ĐƠN HÀNG </h2>
-<br>
-<h4 class="text-center"> Đơn hàng của quý khách đã được chúng tôi ghi nhận,chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất và giao hàng đúng hẹn</h4>
-<br>
-<br>
-<p>
-
-    <h3 class="text-center"> @Html.ActionLink("VỀ TRANG CHỦ", "Index", "DVTC")</h3>
-
-</p>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Hiển thị thông báo popup khi trang được tải
+            alert("Đặt hàng thành công! Cảm ơn quý khách đã mua hàng.");
+            
+            // Hoặc sử dụng SweetAlert2 nếu có
+            /*
+            Swal.fire({
+                title: 'Đặt hàng thành công!',
+                text: 'Cảm ơn quý khách đã mua hàng.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            */
+        });
+    </script>
+}
 
 
